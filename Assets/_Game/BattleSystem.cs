@@ -22,6 +22,9 @@ public class BattleSystem : MonoBehaviour
     public GameObject enemyPrefab;
     public GameObject jasperPrefab;
     public GameObject yaelPrefab;
+    public bool isRise;
+    public Animator riseAttack;
+    public AudioSource riseAttacksource;
 
     [Header("Transforms")]
     public Transform playerBS;
@@ -324,6 +327,9 @@ public class BattleSystem : MonoBehaviour
     {
         GameObject Yael = GameObject.Find("Yael_BASE");
         Unit YaelUN = Yael.GetComponent<Unit>();
+        riseAttack.SetBool("isRise", true);
+        riseAttack.SetBool("isStay", true);
+        riseAttacksource.Play();
         YaelUN.Defend();
     }
 

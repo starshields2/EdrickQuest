@@ -2,25 +2,31 @@ VAR JPoints = 0
 VAR YPoints = 0
 VAR medPoints = 100
 
-
+=BEGINNING
 What's on your mind? #Yael
 
-+[Talk] ->START
++[Talk] -> START
++[Leave] ->DONE
+->DONE
 
 =START
 #Edrick
-**If you didn't want to travel with Jasper, why are you even here?
+**[If you didn't want to travel with Jasper, why are you even here?]
 #Yael
 I'm not a fan of impending doom or anything like that. I'd rather work with a beast than watch my people suffer.
-***
+***[Really?]
+***[That makes sense.] 
+
 ->DONE
-**How will you prepare for the journey ahead?
+**[How will you prepare for the journey ahead?]
 #Yael
 The Goddess will bless me and keep me, all I must do is give myself to her.
-***Give yourself to her? Doesn't that sound a bit... too much? #Edrick
+***[Give yourself to her? Doesn't that sound a bit... too much?] #Edrick
+#Yael
+It is our way. Moonwalkers can't see themselves as people, only vessels for her will. 
 ->DONE
 
-**"What will you do in your free time?"
+**["What will you do in your free time?"]
 #Yael
 Most likely I will return to prayer. I don't find anything here endearing enough to go outside. It's just gross. 
 
