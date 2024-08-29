@@ -1,20 +1,23 @@
 VAR JPoints = 0
 VAR YPoints = 0
 VAR medPoints = 100
-
+->BEGINNING
 =BEGINNING
-What's on your mind? #Yael
+You had something to say? #Yael
 
 +[Talk] -> START
 +[Leave] ->DONE
 ->DONE
 
 =START
-#Edrick
+#Yael
+Well, what is it?
 **[If you didn't want to travel with Jasper, why are you even here?]
 #Yael
 I'm not a fan of impending doom or anything like that. I'd rather work with a beast than watch my people suffer.
 ***[Really?]
+Yes really.
+->DONE
 ***[That makes sense.] 
 
 ->DONE
@@ -29,5 +32,5 @@ It is our way. Moonwalkers can't see themselves as people, only vessels for her 
 **["What will you do in your free time?"]
 #Yael
 Most likely I will return to prayer. I don't find anything here endearing enough to go outside. It's just gross. 
-
+->DONE
 ->END

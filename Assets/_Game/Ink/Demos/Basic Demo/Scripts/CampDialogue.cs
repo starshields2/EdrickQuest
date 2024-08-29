@@ -3,16 +3,17 @@ using Ink.Runtime;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BasicInkExample2 : MonoBehaviour
+public class CampDialogue : MonoBehaviour
 {
     public static event Action<Story> OnCreateStory;
-
+    public UnityEngine.UI.Slider YSlider;
+    public UnityEngine.UI.Slider JSlider;
     public GameObject backgroundCanvas;
     public AudioSource reverseAud;
     public Text speakerName;
     public string[] currentInktags;
     public GameObject[] speakerID;
-
+    public SkillTree skillManager;
 
     // Define the UI prefab for narrator text (set in Unity editor)
     [SerializeField]
@@ -32,7 +33,8 @@ public class BasicInkExample2 : MonoBehaviour
         story = new Story(inkJSONAsset.text);
        
         if (OnCreateStory != null) OnCreateStory(story);
-    
+        YSlider.value = (int)story.variablesState["YPoints"];
+        JSlider.value = (int)story.variablesState["JPoints"];
         RefreshView();
         DisplayTags();
     }
@@ -49,11 +51,31 @@ public class BasicInkExample2 : MonoBehaviour
        
     }
 
+    void SetSkill()
+    { 
+        if(skillManager.BerateOn = true)
+        {
+            skillManager.SetBerateOn();
+        }
+        else
+        {
+  skillManager.SetHealOn();
+        }
+      
+       
 
+    }
 
     void Update()
     {
+        YSlider.value = (int)story.variablesState["YPoints"];
+        JSlider.value = (int)story.variablesState["JPoints"];
 
+        if(YSlider.value >=5)
+        {
+            Debug.Log("skill set");
+            SetSkill();
+        }
     }
     void RefreshView()
     {
@@ -70,12 +92,12 @@ public class BasicInkExample2 : MonoBehaviour
         textLayoutGroup.childForceExpandHeight = false;
         textLayoutGroup.childControlWidth = false;
         textLayoutGroup.childControlHeight = true;
-        textLayoutGroup.childAlignment = TextAnchor.MiddleRight;
-        textLayoutGroup.padding.left = 0;
-        textLayoutGroup.padding.right = -90;
-        textLayoutGroup.padding.top = -80;
-        textLayoutGroup.padding.bottom = 0;
-        textLayoutGroup.spacing = 0;
+        textLayoutGroup.childAlignment = TextAnchor.LowerLeft;
+        textLayoutGroup.padding.left = -191;
+        textLayoutGroup.padding.right = -73;
+        textLayoutGroup.padding.top = 217;
+        textLayoutGroup.padding.bottom = 130;
+        textLayoutGroup.spacing = 15;
 
         // Read all the content until we can't continue any more
         while (story.canContinue)
@@ -95,15 +117,15 @@ public class BasicInkExample2 : MonoBehaviour
 
         VerticalLayoutGroup choicesLayoutGroup = choicesContainer.AddComponent<VerticalLayoutGroup>();
         choicesLayoutGroup.childControlHeight = false;
-        choicesLayoutGroup.childForceExpandWidth = true;
+        choicesLayoutGroup.childForceExpandWidth = false;
         choicesLayoutGroup.childForceExpandHeight = false;
         choicesLayoutGroup.childControlWidth = false;
         choicesLayoutGroup.childControlHeight = true;
         choicesLayoutGroup.childAlignment = TextAnchor.LowerLeft;
-        choicesLayoutGroup.padding.left = 500;
+        choicesLayoutGroup.padding.left = 331;
         choicesLayoutGroup.padding.right = 0;
-        choicesLayoutGroup.padding.top = 0;
-        choicesLayoutGroup.padding.bottom = -180;
+        choicesLayoutGroup.padding.top = 171;
+        choicesLayoutGroup.padding.bottom = 0;
         choicesLayoutGroup.spacing = 0;
 
         // Display all the choices, if there are any!
@@ -129,7 +151,7 @@ public class BasicInkExample2 : MonoBehaviour
     {
         if (choice.text.Trim() == "Back")
         {
-            
+            RestartStory();
             Deactivate();
         }
         else
@@ -145,7 +167,9 @@ public class BasicInkExample2 : MonoBehaviour
             {
                 reverseAud.Play();
                 Debug.Log("Restarting the story.");
+                RestartStory();
                 Deactivate();
+
             }
             else
             {
@@ -234,6 +258,7 @@ public class BasicInkExample2 : MonoBehaviour
         {
             // Handle the "Back" button to close the dialogue
             choice.onClick.AddListener(() => Deactivate());
+            RestartStory();
         }
         else
         {
@@ -258,6 +283,19 @@ public class BasicInkExample2 : MonoBehaviour
         {
             Destroy(canvas.transform.GetChild(i).gameObject);
         }
+    }
+
+    public void RestartStory()
+    {
+        // Reset the state of the story
+        story.ResetState();
+
+        // Restart the story from the beginning
+       // story.ResetErrors();
+        story.ChoosePathString("START");
+
+        // Call a function to display the first content
+        //DisplayNextLine();
     }
 
     [SerializeField]
