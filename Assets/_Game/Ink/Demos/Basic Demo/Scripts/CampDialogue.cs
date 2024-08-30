@@ -13,7 +13,8 @@ public class CampDialogue : MonoBehaviour
     public Text speakerName;
     public string[] currentInktags;
     public GameObject[] speakerID;
-    public SkillTree skillManager;
+    public int YML;
+
 
     // Define the UI prefab for narrator text (set in Unity editor)
     [SerializeField]
@@ -33,7 +34,7 @@ public class CampDialogue : MonoBehaviour
         story = new Story(inkJSONAsset.text);
        
         if (OnCreateStory != null) OnCreateStory(story);
-        YSlider.value = (int)story.variablesState["YPoints"];
+        YSlider.value = (int)story.variablesState["YMorale"];
         JSlider.value = (int)story.variablesState["JPoints"];
         RefreshView();
         DisplayTags();
@@ -51,31 +52,14 @@ public class CampDialogue : MonoBehaviour
        
     }
 
-    void SetSkill()
-    { 
-        if(skillManager.BerateOn = true)
-        {
-            skillManager.SetBerateOn();
-        }
-        else
-        {
-  skillManager.SetHealOn();
-        }
-      
-       
-
-    }
+ 
 
     void Update()
     {
-        YSlider.value = (int)story.variablesState["YPoints"];
+        YSlider.value = (int)story.variablesState["YMorale"];
         JSlider.value = (int)story.variablesState["JPoints"];
+        YML = (int)story.variablesState["YMorale"];
 
-        if(YSlider.value >=5)
-        {
-            Debug.Log("skill set");
-            SetSkill();
-        }
     }
     void RefreshView()
     {
