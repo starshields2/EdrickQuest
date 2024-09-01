@@ -17,10 +17,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/_Game/_IMPORTANT/PasstimeStuff/Phase1 1.unity
     guid: e4fe5b46b928cde4791ff17eb154227d
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Game/_IMPORTANT/Scenes/TESTBATTLE.unity
     guid: 66b82a56ef3ff9447a65c3890fe4f984
   - enabled: 0
     path: Assets/_Game/_IMPORTANT/Scenes/Phase1 2.unity
     guid: d599f89f7bc41ea4284edede4996b9ce
+  - enabled: 1
+    path: Assets/_Game/_IMPORTANT/Scenes/CAMP.unity
+    guid: 1f16d0229d9b4e7419715a10820f377d
   m_configObjects: {}

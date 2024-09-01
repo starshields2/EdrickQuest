@@ -136,7 +136,7 @@ public class CampDialogue : MonoBehaviour
         if (choice.text.Trim() == "Back")
         {
             RestartStory();
-            Deactivate();
+           // Deactivate();
         }
         else
         {
@@ -152,7 +152,7 @@ public class CampDialogue : MonoBehaviour
                 reverseAud.Play();
                 Debug.Log("Restarting the story.");
                 RestartStory();
-                Deactivate();
+              //  Deactivate();
 
             }
             else
