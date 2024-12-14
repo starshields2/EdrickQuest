@@ -5,7 +5,9 @@ using UnityEngine.UI;
 using TMPro;
 
 public class BattleSystem : MonoBehaviour
-{   
+{
+    public GameObject winCanvas;
+    public GameObject HUD;
     
     public bool isTurn;
     public bool isEdTurn;
@@ -190,6 +192,8 @@ public class BattleSystem : MonoBehaviour
 
             case BattleState.Won:
                 Debug.Log("You win");
+                winCanvas.SetActive(true);
+                HUD.SetActive(false);
             break;
 
         }
