@@ -9,6 +9,8 @@ TagManager:
   - Ally
   - BSystem
   - InkConversation
+  - LeftDoor
+  - RightDoor
   layers:
   - Default
   - TransparentFX

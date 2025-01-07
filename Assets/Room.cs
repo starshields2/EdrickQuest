@@ -4,10 +4,37 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
+   
+
     [SerializeField] GameObject topDoor;
     [SerializeField] GameObject bottomDoor;
     [SerializeField] GameObject leftDoor;
     [SerializeField] GameObject rightDoor;
+
+    public GameObject mediationMedallion;
+
+    public RoomType roomType;
+
+    public enum RoomType { 
+        None,
+        Passageway,
+        Encounter,
+        Campsite,
+        Settlement,
+        Narrative
+    }
+
+    void Start()
+    {
+        // Assign to the class-level roomType field directly
+        roomType = (RoomType)Random.Range(1, System.Enum.GetValues(typeof(RoomType)).Length);
+        
+        if(roomType == RoomType.Narrative)
+        {
+            mediationMedallion.SetActive(true);
+        }
+
+    }
 
     public Vector2Int RoomIndex { get; set; }
 
@@ -30,4 +57,6 @@ public class Room : MonoBehaviour
             rightDoor.SetActive(true);
         }
     }
+
+    
 }
