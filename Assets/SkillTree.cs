@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 
 public class SkillTree : MonoBehaviour
 {
+    public CampDialogue campDialogue;
     public GameObject[] Skills;
     public List<string> SkillInfo;
     public List<string> EdQuote;
@@ -23,6 +24,8 @@ public class SkillTree : MonoBehaviour
     public Button skill2;
 
     private RectTransform skillBoxRectTransform;
+
+
 
     void Start()
     {
@@ -108,4 +111,6 @@ public class SkillTree : MonoBehaviour
         // Set the position of the skillBox
         skillBoxRectTransform.position = skillBoxPosition;
     }
+
+
 }

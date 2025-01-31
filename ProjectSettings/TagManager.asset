@@ -11,6 +11,9 @@ TagManager:
   - InkConversation
   - LeftDoor
   - RightDoor
+  - Ladder
+  - Room
+  - Mediation
   layers:
   - Default
   - TransparentFX

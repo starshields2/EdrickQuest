@@ -7,6 +7,7 @@ public class RoomManager : MonoBehaviour
     [SerializeField] private GameObject roomPrefab;
     [SerializeField] private int maxRooms = 15;
     [SerializeField] private int minRooms = 10;
+    [SerializeField] public GameObject[] rooms;
 
     private int roomWidth = 17;
     private int roomHeight = 9;
@@ -22,6 +23,11 @@ public class RoomManager : MonoBehaviour
     private int roomCount;
 
     private bool generationComplete = false;
+
+    // Flags to track if Shop and Campsite have been generated
+    private bool hasShop = false;
+    private bool hasCampsite = false;
+
     private void Start()
     {
         roomGrid = new int[gridSizeX, gridSizeY];
@@ -29,11 +35,16 @@ public class RoomManager : MonoBehaviour
 
         Vector2Int initialRoomIndex = new Vector2Int(gridSizeX / 2, gridSizeY / 2);
         StartRoomGenerationFromRoom(initialRoomIndex);
+        rooms = GameObject.FindGameObjectsWithTag("Room");
+        foreach (GameObject room in rooms)
+        {
+            // Do any setup needed for existing rooms here
+        }
     }
 
     private void Update()
     {
-        if(roomQueue.Count > 0 && roomCount < maxRooms && !generationComplete)
+        if (roomQueue.Count > 0 && roomCount < maxRooms && !generationComplete)
         {
             Vector2Int roomIndex = roomQueue.Dequeue();
             int gridX = roomIndex.x;
@@ -42,15 +53,15 @@ public class RoomManager : MonoBehaviour
             TryGenerateRoom(new Vector2Int(gridX - 1, gridY));
             TryGenerateRoom(new Vector2Int(gridX + 1, gridY));
             TryGenerateRoom(new Vector2Int(gridX, gridY + 1));
-            TryGenerateRoom(new Vector2Int(gridX, gridY -1));
+            TryGenerateRoom(new Vector2Int(gridX, gridY - 1));
         }
-
         else if (roomCount < minRooms)
         {
             Debug.Log("RoomCount was less than minimum. Trying again...");
             RegenerateRooms();
         }
-        else if(!generationComplete){
+        else if (!generationComplete)
+        {
             Debug.Log($"Generation complete, {roomCount} rooms created");
             generationComplete = true;
         }
@@ -82,7 +93,7 @@ public class RoomManager : MonoBehaviour
             return false;
         }
 
-        if(Random.value < 0.5 && roomIndex != Vector2Int.zero)
+        if (Random.value < 0.5 && roomIndex != Vector2Int.zero)
         {
             return false;
         }
@@ -100,11 +111,37 @@ public class RoomManager : MonoBehaviour
         var newRoom = Instantiate(roomPrefab, GetPositionFromGridIndex(roomIndex), Quaternion.identity);
         newRoom.GetComponent<Room>().RoomIndex = roomIndex;
         newRoom.name = $"Room-{roomCount}";
+
+        // Assign room type (Shop, Campsite, etc.)
+        AssignRoomType(newRoom.GetComponent<Room>());
+
         roomObjects.Add(newRoom);
 
         OpenDoors(newRoom, x, y);
 
         return true;
+    }
+
+    // Assign room types (Shop, Campsite, etc.)
+    private void AssignRoomType(Room roomScript)
+    {
+        if (!hasShop && Random.value < 0.1f) // 10% chance for Shop
+        {
+            roomScript.roomType = Room.RoomType.Settlement; // Assign as Shop
+            hasShop = true;
+        }
+        else if (!hasCampsite && Random.value < 0.1f) // 10% chance for Campsite
+        {
+            roomScript.roomType = Room.RoomType.Campsite; // Assign as Campsite
+            hasCampsite = true;
+        }
+        else
+        {
+            roomScript.roomType = (Room.RoomType)Random.Range(1, System.Enum.GetValues(typeof(Room.RoomType)).Length);
+        }
+
+        // Set up the room's features (like activating items, combat, etc.)
+        roomScript.SetRooms();
     }
 
     private void RegenerateRooms()
@@ -118,7 +155,6 @@ public class RoomManager : MonoBehaviour
 
         Vector2Int initialRoomIndex = new Vector2Int(gridSizeX / 2, gridSizeY / 2);
         StartRoomGenerationFromRoom(initialRoomIndex);
-
     }
 
     void OpenDoors(GameObject room, int x, int y)
@@ -160,7 +196,6 @@ public class RoomManager : MonoBehaviour
         }
     }
 
-
     Room GetRoomScriptAt(Vector2Int index)
     {
         GameObject roomObject = roomObjects.Find(r => r.GetComponent<Room>().RoomIndex == index);
@@ -180,9 +215,7 @@ public class RoomManager : MonoBehaviour
         if (y > 0 && roomGrid[x, y - 1] != 0) count++; // bottom neighbor
         if (y < gridSizeY - 1 && roomGrid[x, y + 1] != 0) count++; // top neighbor
 
-
         return count;
-
     }
 
     private Vector3Int GetPositionFromGridIndex(Vector2Int gridIndex)
@@ -211,5 +244,10 @@ public class RoomManager : MonoBehaviour
                 );
             }
         }
+    }
+
+    public void CheckRoomTypes()
+    {
+        // This method can be used for additional checks or actions on room types
     }
 }

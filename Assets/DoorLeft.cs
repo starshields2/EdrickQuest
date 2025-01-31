@@ -4,69 +4,75 @@ using UnityEngine;
 
 public class DoorLeft : MonoBehaviour
 {
-    public Transform mainCamera;  // Camera's transform
-    public float moveDuration = 1.0f;  // Duration for the camera to move (in seconds)
     private bool isMoving = false;  // Flag to check if the camera is currently moving
     private Vector3 targetPosition;  // Target position for the camera
+    public GameObject _cam;
+    [SerializeField] private MainCameraControl _camControl;
 
-    void Start()
+    void Awake()
     {
-        mainCamera = GameObject.Find("Main Camera").transform;
+        Invoke("SetCamera", 1f);
     }
 
-    void Update()
+    [ContextMenu("SET CAM")]
+    public void SetCamera()
     {
-        if (isMoving)
+        GameObject cameraObject = GameObject.Find("MainCamera");
+        if (cameraObject != null)
         {
-            // Move the camera smoothly towards the target position over time using Lerp
-            mainCamera.position = Vector3.Lerp(mainCamera.position, targetPosition, Time.deltaTime / moveDuration);
-
-            // Stop the movement when the camera is very close to the target
-            if (Vector3.Distance(mainCamera.position, targetPosition) < 0.1f)
-            {
-                mainCamera.position = targetPosition;
-                isMoving = false;  // Movement complete
-            }
+            _cam = cameraObject;
+            Debug.Log("Cam set");
+            SetCameraScript();
+        }
+        else
+        {
+            Debug.LogError("Main Camera not found!");
         }
     }
 
-    // Trigger method to detect player's entry to a door
+    public void SetCameraScript()
+    {
+        if (_cam != null)
+        {
+            _camControl = _cam.GetComponent<MainCameraControl>(); // Get the MainCameraControl component
+            if (_camControl != null)
+            {
+                Debug.Log("CamControlSet");
+            }
+            else
+            {
+                Debug.LogError("MainCameraControl script not found on camera.");
+            }
+        }
+        else
+        {
+            Debug.LogError("Camera object is null!");
+        }
+    }
+
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
-        {
-            // Check which side of the door the player is entering from
-            if (other.transform.position.x < transform.position.x)  // Player is to the left of the door
-            {
-                // Player is entering from the left door (we move camera to the left)
-                StartCameraMoveLeft();
-            }
-            else  // Player is to the right of the door
-            {
-                // Player is entering from the right door (we move camera to the right)
-                StartCameraMoveRight();
-            }
-        }
-    }
+        //if (other.CompareTag("Player"))
+        //{
+        //    if (other.transform.position.x < transform.position.x)
+        //    {
+        //        // Player is entering from the left door
+        //         _camControl.MoveCameraLeft();
+        //    }
+        //    else
+        //    {
+        //        // Player is entering from the right door
+        //         _camControl.MoveCameraRight();
+        //    }
 
-    public void StartCameraMoveLeft()
-    {
-
-        Debug.Log("m-left");
-        if (!isMoving)
-        {
-            targetPosition = mainCamera.position + new Vector3(17f, 0f, 0f);  // Move left
-            isMoving = true;
-        }
-    }
-
-    public void StartCameraMoveRight()
-    {
-        Debug.Log("m-right");
-        if (!isMoving)
-        {
-            targetPosition = mainCamera.position + new Vector3(-17f, 0f, 0f);  // Move right
-            isMoving = true;
-        }
+        //    if(other.transform.position.y < transform.position.y)
+        //    {
+        //        _camControl.MoveCameraUp();
+        //    }
+        //    if(other.transform.position.y > transform.position.y)
+        //    {
+        //        _camControl.MoveCameraDown();
+        //    }
+        //}
     }
 }

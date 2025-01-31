@@ -14,6 +14,7 @@ public class CampDialogue : MonoBehaviour
     public string[] currentInktags;
     public GameObject[] speakerID;
     public int YML;
+    public SkillMenu skillMenu;
 
 
     // Define the UI prefab for narrator text (set in Unity editor)
@@ -25,6 +26,7 @@ public class CampDialogue : MonoBehaviour
         // Remove the default message
         RemoveChildren();
         StartStory();
+        skillMenu = GameObject.Find("SkillManager").GetComponent<SkillMenu>();
       //  Debug.Log(story.currentTags.Length);
     }
 
@@ -56,11 +58,19 @@ public class CampDialogue : MonoBehaviour
 
     void Update()
     {
-        YSlider.value = (int)story.variablesState["YMorale"];
+       
+        YSlider.value = Convert.ToInt32(story.variablesState["YMorale"]);
         JSlider.value = (int)story.variablesState["JPoints"];
         YML = (int)story.variablesState["YMorale"];
 
+
     }
+    [ContextMenu("Collect SK")]
+    public void CollectPoints()
+    {
+        skillMenu._skillPoints = Convert.ToInt32(YSlider.value);
+    }
+
     void RefreshView()
     {
         // Remove all the UI on screen
@@ -75,11 +85,11 @@ public class CampDialogue : MonoBehaviour
         textLayoutGroup.childForceExpandWidth = false;
         textLayoutGroup.childForceExpandHeight = false;
         textLayoutGroup.childControlWidth = false;
-        textLayoutGroup.childControlHeight = true;
+        textLayoutGroup.childControlHeight = false;
         textLayoutGroup.childAlignment = TextAnchor.LowerLeft;
-        textLayoutGroup.padding.left = -191;
-        textLayoutGroup.padding.right = -73;
-        textLayoutGroup.padding.top = 217;
+        textLayoutGroup.padding.left = -540;
+        textLayoutGroup.padding.right = 0;
+        textLayoutGroup.padding.top = 112;
         textLayoutGroup.padding.bottom = 130;
         textLayoutGroup.spacing = 15;
 
@@ -168,6 +178,7 @@ public class CampDialogue : MonoBehaviour
         Debug.Log("deactivating...");
         this.gameObject.SetActive(false);
         backgroundCanvas.SetActive(false);
+        CollectPoints();
     }
 
     // Creates a textbox showing the line of text
