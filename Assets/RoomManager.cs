@@ -184,15 +184,15 @@ public class RoomManager : MonoBehaviour
         // Bottom neighbor (below)
         if (y > 0 && roomGrid[x, y - 1] != 0 && bottomRoomScript != null)
         {
-            newRoomScript.OpenDoor(Vector2Int.up);
-            bottomRoomScript.OpenDoor(Vector2Int.down);
+            newRoomScript.OpenDoor(Vector2Int.down); // Corrected from Vector2Int.up
+            bottomRoomScript.OpenDoor(Vector2Int.up); // Corrected from Vector2Int.down
         }
 
         // Top neighbor (above)
         if (y < gridSizeY - 1 && roomGrid[x, y + 1] != 0 && topRoomScript != null)
         {
-            newRoomScript.OpenDoor(Vector2Int.down);
-            topRoomScript.OpenDoor(Vector2Int.up);
+            newRoomScript.OpenDoor(Vector2Int.up); // Corrected from Vector2Int.down
+            topRoomScript.OpenDoor(Vector2Int.down); // Corrected from Vector2Int.up
         }
     }
 

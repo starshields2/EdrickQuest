@@ -15,6 +15,7 @@ public class Room : MonoBehaviour
     public GameObject combat;
     public GameObject shop;
     public GameObject item;
+    public GameObject rope;
 
     public RoomType roomType;
 
@@ -71,10 +72,12 @@ public class Room : MonoBehaviour
         if (direction == Vector2Int.up)
         {
             topDoor.SetActive(true);
+            rope.SetActive(true);
         }
         if (direction == Vector2Int.down)
         {
             bottomDoor.SetActive(true);
+            rope.SetActive(true);
         }
         if (direction == Vector2Int.left)
         {

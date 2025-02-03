@@ -23,6 +23,7 @@ You see the gleaning whetstone, yes? Dead gods can't help us, steel can.
 
 =MEDIATIONSTART
 #Edrick
+What should I do?
 +[Talk to Yael] ->YAEL
 +[Talk to Jasper] ->JASPER
 +[Regroup] ->COMP
@@ -43,7 +44,7 @@ And what do you want, ghost?
   Exactly. 
   ~increaseYMorale(2)
   +++[Continue] -> MEDIATIONSTART
- *[Preparedness for the journey ahead is more important than the shrine.]
+ *[We'll die without those whetstones.]
  ~decreaseYMorale(3)
   Who knows when I'll get another chance to pray? The gods will forsake me. 
   ++[Continue] -> MEDIATIONSTART
@@ -75,7 +76,7 @@ If you're here to talk sense into me, I have plenty to spare.
 {JPoints >= 3: Well, as long as it's over with quickly. #Jasper}
 +[Continue]
 #Yael
- {YMorale < 3: Me neither. You were going to destroy it anyway. #Yael}
+ {YMorale < 3: You were going to destroy it anyway. #Yael}
 {YMorale >= 3:Let's just talk this out. #Yael}
 ++[How about Yael just prays before the shrine is destroyed?]
 ~compromise(1)

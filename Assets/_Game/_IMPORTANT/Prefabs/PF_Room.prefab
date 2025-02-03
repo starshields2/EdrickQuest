@@ -695,6 +695,38 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &5820568907097871349
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1770482734854062034}
+  m_Layer: 0
+  m_Name: LadderHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1770482734854062034
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5820568907097871349}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3321571068317271159}
+  m_Father: {fileID: 5922731541291527033}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5922731539415643492
 GameObject:
   m_ObjectHideFlags: 0
@@ -1282,7 +1314,7 @@ Transform:
   - {fileID: 242429549410091571}
   - {fileID: 2535033513934957336}
   - {fileID: 4286006521887325468}
-  - {fileID: 3321571068317271159}
+  - {fileID: 1770482734854062034}
   - {fileID: 3155189391272102333}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -1308,6 +1340,7 @@ MonoBehaviour:
   combat: {fileID: 8989192322589752092}
   shop: {fileID: 2965280681089722979}
   item: {fileID: 3155189391272102328}
+  rope: {fileID: 7501980063796015358}
   roomType: 0
 --- !u!1 &5922731541371059705
 GameObject:
@@ -1633,7 +1666,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3321571068317271159}
   - component: {fileID: 5533669478186932789}
-  - component: {fileID: 2734499195743805921}
   - component: {fileID: 3777301355521386401}
   m_Layer: 0
   m_Name: Ladder
@@ -1641,7 +1673,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3321571068317271159
 Transform:
   m_ObjectHideFlags: 0
@@ -1651,11 +1683,11 @@ Transform:
   m_GameObject: {fileID: 7501980063796015358}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.01, y: 0.02, z: 0}
-  m_LocalScale: {x: -0.17, y: 12.352226, z: 1}
+  m_LocalScale: {x: -0.17, y: 8.91596, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5922731541291527033}
-  m_RootOrder: 6
+  m_Father: {fileID: 1770482734854062034}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5533669478186932789
 SpriteRenderer:
@@ -1700,7 +1732,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6,
     type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.4627451}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1710,18 +1742,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2734499195743805921
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7501980063796015358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b43c826ec57a39f46b2cf3b33fa3071d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &3777301355521386401
 BoxCollider2D:
   m_ObjectHideFlags: 0
