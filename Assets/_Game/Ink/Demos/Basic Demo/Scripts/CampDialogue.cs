@@ -116,11 +116,11 @@ public class CampDialogue : MonoBehaviour
         choicesLayoutGroup.childControlWidth = false;
         choicesLayoutGroup.childControlHeight = true;
         choicesLayoutGroup.childAlignment = TextAnchor.LowerLeft;
-        choicesLayoutGroup.padding.left = 331;
+        choicesLayoutGroup.padding.left = 26;
         choicesLayoutGroup.padding.right = 0;
-        choicesLayoutGroup.padding.top = 171;
+        choicesLayoutGroup.padding.top = 57;
         choicesLayoutGroup.padding.bottom = 0;
-        choicesLayoutGroup.spacing = 0;
+        choicesLayoutGroup.spacing = 25;
 
         // Display all the choices, if there are any!
         if (story.currentChoices.Count > 0)
