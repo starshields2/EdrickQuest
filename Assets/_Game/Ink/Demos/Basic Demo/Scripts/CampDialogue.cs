@@ -15,6 +15,8 @@ public class CampDialogue : MonoBehaviour
     public GameObject[] speakerID;
     public int YML;
     public SkillMenu skillMenu;
+    public TensionCounter _tensMeter;
+    public int _medPoints;
 
 
     // Define the UI prefab for narrator text (set in Unity editor)
@@ -27,6 +29,7 @@ public class CampDialogue : MonoBehaviour
         RemoveChildren();
         StartStory();
         skillMenu = GameObject.Find("SkillManager").GetComponent<SkillMenu>();
+        _tensMeter = GameObject.Find("TensionHolder").GetComponent<TensionCounter>();
       //  Debug.Log(story.currentTags.Length);
     }
 
@@ -58,10 +61,15 @@ public class CampDialogue : MonoBehaviour
 
     void Update()
     {
-       
+        skillMenu._skillPoints = Convert.ToInt32(YSlider.value);
+        skillMenu._skillPointsAVO = (int)story.variablesState["avoidanceSP"];
+        skillMenu._skillPointsAC = (int)story.variablesState["acommoSP"];
+        skillMenu._skillPointsCOMPET = (int)story.variablesState["comproSP"];
+        skillMenu._skillPointsAC = (int)story.variablesState["acommoSP"];
         YSlider.value = Convert.ToInt32(story.variablesState["YMorale"]);
         JSlider.value = (int)story.variablesState["JPoints"];
         YML = (int)story.variablesState["YMorale"];
+        _medPoints = (int)story.variablesState["medPoints"];
 
 
     }
@@ -69,6 +77,15 @@ public class CampDialogue : MonoBehaviour
     public void CollectPoints()
     {
         skillMenu._skillPoints = Convert.ToInt32(YSlider.value);
+        skillMenu._skillPointsAVO = (int)story.variablesState["avoidanceSP"];
+        skillMenu._skillPointsAC = (int)story.variablesState["acommoSP"];
+        skillMenu._skillPointsCOMPET = (int)story.variablesState["comproSP"];
+    }
+
+    public void CollectMedPoints()
+    {
+        _tensMeter._newInfluence = _medPoints;
+        _tensMeter.UpdateInfluence();
     }
 
     void RefreshView()
@@ -120,7 +137,7 @@ public class CampDialogue : MonoBehaviour
         choicesLayoutGroup.padding.right = 0;
         choicesLayoutGroup.padding.top = 57;
         choicesLayoutGroup.padding.bottom = 0;
-        choicesLayoutGroup.spacing = 25;
+        choicesLayoutGroup.spacing = 50;
 
         // Display all the choices, if there are any!
         if (story.currentChoices.Count > 0)
@@ -175,10 +192,12 @@ public class CampDialogue : MonoBehaviour
 
     void Deactivate()
     {
+        CollectPoints();
+        CollectMedPoints();
         Debug.Log("deactivating...");
         this.gameObject.SetActive(false);
         backgroundCanvas.SetActive(false);
-        CollectPoints();
+        
     }
 
     // Creates a textbox showing the line of text

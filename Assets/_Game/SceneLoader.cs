@@ -54,7 +54,7 @@ public class SceneLoader : MonoBehaviour
         ///wait for stop
         yield return new WaitForSeconds(_transitionTime);
         ///load scene
-        RoomGenerationState.Instance.SaveGenerationState(RoomManager.Instance);
+        //RoomGenerationState.Instance.SaveGenerationState(RoomManager.Instance);
         SceneManager.LoadScene("TESTBATTLE");
 
     }

@@ -4,13 +4,30 @@ using UnityEngine;
 
 public class MainCameraControl : MonoBehaviour
 {
-    
+
+    public static MainCameraControl Instance;
+
     public Transform thisCamera;
     public Transform player;
     public float smoothSpeed;
 
     private Vector3 targetPos, newPos;
     public Vector3 minPos, maxPos;
+
+    
+
+    void Start()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+        player = GameObject.Find("HeroKnight").transform;
+    }
 
     void LateUpdate()
     {
