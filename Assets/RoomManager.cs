@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RoomManager : MonoBehaviour
 {
+    public static RoomManager Instance { get; private set; }
+
     [SerializeField] private GameObject roomPrefab;
     [SerializeField] private int maxRooms = 15;
     [SerializeField] private int minRooms = 10;
@@ -16,7 +19,6 @@ public class RoomManager : MonoBehaviour
     [SerializeField] int gridSizeY = 10;
 
     private List<GameObject> roomObjects = new List<GameObject>();
-
     private Queue<Vector2Int> roomQueue = new Queue<Vector2Int>();
 
     private int[,] roomGrid;
@@ -24,22 +26,45 @@ public class RoomManager : MonoBehaviour
 
     private bool generationComplete = false;
 
-    // Flags to track if Shop and Campsite have been generated
     private bool hasShop = false;
     private bool hasCampsite = false;
+
+    private int randomSeed;
+
+    private void Awake()
+    {
+        // Ensure that only one instance of RoomManager exists
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);  // Destroy duplicate RoomManager instances
+        }
+        else
+        {
+            Instance = this; // Set the static instance to this instance
+            DontDestroyOnLoad(gameObject); // Ensure it persists across scenes
+            Debug.Log("RoomManager Instance Init");
+        }
+    }
 
     private void Start()
     {
         roomGrid = new int[gridSizeX, gridSizeY];
         roomQueue = new Queue<Vector2Int>();
 
-        Vector2Int initialRoomIndex = new Vector2Int(gridSizeX / 2, gridSizeY / 2);
-        StartRoomGenerationFromRoom(initialRoomIndex);
-        rooms = GameObject.FindGameObjectsWithTag("Room");
-        foreach (GameObject room in rooms)
+        if (RoomGenerationState.Instance != null)
         {
-            // Do any setup needed for existing rooms here
+            // Load the previous state if available
+            RoomGenerationState.Instance.LoadGenerationState(this);
         }
+        else
+        {
+            // Otherwise, start fresh
+            Vector2Int initialRoomIndex = new Vector2Int(gridSizeX / 2, gridSizeY / 2);
+            StartRoomGenerationFromRoom(initialRoomIndex);
+        }
+
+        //RoomGenerationState.Instance.SaveGenerationState(RoomManager.Instance);
+
     }
 
     private void Update()
@@ -57,29 +82,56 @@ public class RoomManager : MonoBehaviour
         }
         else if (roomCount < minRooms)
         {
-            Debug.Log("RoomCount was less than minimum. Trying again...");
             RegenerateRooms();
         }
         else if (!generationComplete)
         {
-            Debug.Log($"Generation complete, {roomCount} rooms created");
             generationComplete = true;
         }
     }
 
-    private void StartRoomGenerationFromRoom(Vector2Int roomIndex)
+    // Set random seed for generation
+    public void SetRandomSeed(int seed)
     {
-        roomQueue.Enqueue(roomIndex);
-        int x = roomIndex.x;
-        int y = roomIndex.y;
-        roomGrid[x, y] = 1;
-        roomCount++;
-        var initialRoom = Instantiate(roomPrefab, GetPositionFromGridIndex(roomIndex), Quaternion.identity);
-        initialRoom.name = $"Room-{roomCount}";
-        initialRoom.GetComponent<Room>().RoomIndex = roomIndex;
-        roomObjects.Add(initialRoom);
+        randomSeed = seed;
+        Random.InitState(seed); // Set the random seed to ensure reproducibility
     }
 
+    // Get the current random seed
+    public int GetRandomSeed()
+    {
+        return randomSeed;
+    }
+
+    // Get a copy of the room grid (for saving the state)
+    public int[,] GetRoomGridCopy()
+    {
+        return (int[,])roomGrid.Clone();
+    }
+
+    // Get the position of the room queue
+    public Vector2Int GetRoomQueuePosition()
+    {
+        return roomQueue.Peek();
+    }
+
+    public void SetRoomGridCopy(int[,] grid)
+    {
+        roomGrid = grid;
+    }
+
+    public void SetRoomQueuePosition(Vector2Int position)
+    {
+        roomQueue.Enqueue(position);
+    }
+
+    public bool HasShop() => hasShop;
+    public bool HasCampsite() => hasCampsite;
+
+    public void SetHasShop(bool value) => hasShop = value;
+    public void SetHasCampsite(bool value) => hasCampsite = value;
+
+    // Try generating a room at the given position
     private bool TryGenerateRoom(Vector2Int roomIndex)
     {
         int x = roomIndex.x;
@@ -111,7 +163,7 @@ public class RoomManager : MonoBehaviour
         var newRoom = Instantiate(roomPrefab, GetPositionFromGridIndex(roomIndex), Quaternion.identity);
         newRoom.GetComponent<Room>().RoomIndex = roomIndex;
         newRoom.name = $"Room-{roomCount}";
-
+        newRoom.transform.SetParent(transform);
         // Assign room type (Shop, Campsite, etc.)
         AssignRoomType(newRoom.GetComponent<Room>());
 
@@ -157,6 +209,7 @@ public class RoomManager : MonoBehaviour
         StartRoomGenerationFromRoom(initialRoomIndex);
     }
 
+    // Open the doors to neighboring rooms
     void OpenDoors(GameObject room, int x, int y)
     {
         Room newRoomScript = room.GetComponent<Room>();
@@ -184,15 +237,15 @@ public class RoomManager : MonoBehaviour
         // Bottom neighbor (below)
         if (y > 0 && roomGrid[x, y - 1] != 0 && bottomRoomScript != null)
         {
-            newRoomScript.OpenDoor(Vector2Int.down); // Corrected from Vector2Int.up
-            bottomRoomScript.OpenDoor(Vector2Int.up); // Corrected from Vector2Int.down
+            newRoomScript.OpenDoor(Vector2Int.down);
+            bottomRoomScript.OpenDoor(Vector2Int.up);
         }
 
         // Top neighbor (above)
         if (y < gridSizeY - 1 && roomGrid[x, y + 1] != 0 && topRoomScript != null)
         {
-            newRoomScript.OpenDoor(Vector2Int.up); // Corrected from Vector2Int.down
-            topRoomScript.OpenDoor(Vector2Int.down); // Corrected from Vector2Int.up
+            newRoomScript.OpenDoor(Vector2Int.up);
+            topRoomScript.OpenDoor(Vector2Int.down);
         }
     }
 
@@ -220,14 +273,14 @@ public class RoomManager : MonoBehaviour
 
     private Vector3Int GetPositionFromGridIndex(Vector2Int gridIndex)
     {
-        int gridX = gridIndex.x;
-        int gridY = gridIndex.y;
         return new Vector3Int(
-            roomWidth * (gridX - gridSizeX / 2),
-            roomHeight * (gridY - gridSizeY / 2)
+            roomWidth * (gridIndex.x - gridSizeX / 2),
+            roomHeight * (gridIndex.y - gridSizeY / 2),
+            0
         );
     }
 
+    // For visual debugging
     private void OnDrawGizmos()
     {
         Color gizmoColor = new Color(0, 1, 1, 0.05f);
@@ -235,19 +288,30 @@ public class RoomManager : MonoBehaviour
 
         for (int x = 0; x < gridSizeX; x++)
         {
-            for (int y = 0; y < gridSizeY; y++) // Corrected condition
+            for (int y = 0; y < gridSizeY; y++)
             {
                 Vector3 position = GetPositionFromGridIndex(new Vector2Int(x, y));
                 Gizmos.DrawWireCube(
-                    new Vector3(position.x, position.y, 0), // Corrected arguments
+                    new Vector3(position.x, position.y, 0),
                     new Vector3(roomWidth, roomHeight, 1)
                 );
             }
         }
     }
 
-    public void CheckRoomTypes()
+    private void StartRoomGenerationFromRoom(Vector2Int roomIndex)
     {
-        // This method can be used for additional checks or actions on room types
+        roomQueue.Enqueue(roomIndex);
+        int x = roomIndex.x;
+        int y = roomIndex.y;
+        roomGrid[x, y] = 1;
+        roomCount++;
+        var initialRoom = Instantiate(roomPrefab, GetPositionFromGridIndex(roomIndex), Quaternion.identity);
+        initialRoom.name = $"Room-{roomCount}";
+        initialRoom.GetComponent<Room>().RoomIndex = roomIndex;
+        roomObjects.Add(initialRoom);
+
+        initialRoom.transform.SetParent(transform);
+       
     }
 }

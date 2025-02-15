@@ -2070,7 +2070,7 @@ GameObject:
   - component: {fileID: 8244542442326837774}
   - component: {fileID: 8923248035867697440}
   m_Layer: 5
-  m_Name: WhetStoneMed
+  m_Name: InjuredAnimal
   m_TagString: Mediation
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

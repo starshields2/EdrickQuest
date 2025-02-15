@@ -9,21 +9,21 @@ VAR collabSP = 0
 VAR comproSP = 0
 
 #Yael
-Look, in the bushes. A shrine. I should send a prayer to Elunia immediately.
+What is that limping thing in the shadows?
 +[Continue.]
 #Jasper
-A solar whetstone! Once I remove it from this rock, my tools will be sharp for weeks.
+It's just some dying animal. Let's keep moving. I'm hungry.
 ++[Continue]
 #Yael
-You can't possibly want to use this for sharpening tools. This is a sacred place.
+Are you insane? We have to get this creature back on its feet.
 +++[Contine]
 #Jasper
-You see the gleaning whetstone, yes? Dead gods can't help us, steel can. 
+I'm not stopping for that mutt unless we're eating it.
 ++++[Step In]  ->MEDIATIONSTART
 
 =MEDIATIONSTART
 #Edrick
-What should I do?
+Another meaningless squabble.
 +[Talk to Yael] ->YAEL
 +[Talk to Jasper] ->JASPER
 +[Regroup] ->COMP
@@ -31,9 +31,9 @@ What should I do?
 
 =YAEL
 #Yael
-And what do you want, ghost?
+You'd think that brute at least has compassion for animals.
  +[Nevermind.] ->MEDIATIONSTART
- *[This shrine seems very important to you.]
+ *[]
    ~increaseYMorale(2)
  Of course it is. I just don't know when the next chance I'll get to pray will be. 
  **[I'm sure it's not the only shrine on this path.]
