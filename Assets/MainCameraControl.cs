@@ -16,7 +16,7 @@ public class MainCameraControl : MonoBehaviour
 
     
 
-    void Start()
+    void Awake()
     {
         if (Instance != null)
         {
