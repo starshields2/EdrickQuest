@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class RoomManager : MonoBehaviour
 {
-    public static RoomManager Instance { get; private set; }
+ //   public static RoomManager Instance { get; private set; }
 
     [SerializeField] private GameObject roomPrefab;
     [SerializeField] private int maxRooms = 15;
@@ -33,17 +33,17 @@ public class RoomManager : MonoBehaviour
 
     private void Awake()
     {
-        // Ensure that only one instance of RoomManager exists
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);  // Destroy duplicate RoomManager instances
-        }
-        else
-        {
-            Instance = this; // Set the static instance to this instance
-            DontDestroyOnLoad(gameObject); // Ensure it persists across scenes
-            Debug.Log("RoomManager Instance Init");
-        }
+        //// Ensure that only one instance of RoomManager exists
+        //if (Instance != null && Instance != this)
+        //{
+        //    Destroy(gameObject);  // Destroy duplicate RoomManager instances
+        //}
+        //else
+        //{
+        //    Instance = this; // Set the static instance to this instance
+        //    DontDestroyOnLoad(gameObject); // Ensure it persists across scenes
+        //    Debug.Log("RoomManager Instance Init");
+        //}
     }
 
     private void Start()

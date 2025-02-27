@@ -2,9 +2,21 @@
 using Ink.Runtime;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using TMPro;
+
 
 public class CampDialogue : MonoBehaviour
 {
+    
+    private List<string> dialogueHistory = new List<string>();
+    [SerializeField]
+    private GameObject _DialogueHistoryTextPF = null; // Reference to your existing dialogue history prefab
+    [SerializeField]
+    private GameObject _HistoryContainer = null; // Reference to your existing dialogue history prefab
+    public Transform _dHistoryParent;
+   
+
     public static event Action<Story> OnCreateStory;
     public UnityEngine.UI.Slider YSlider;
     public UnityEngine.UI.Slider JSlider;
@@ -23,6 +35,7 @@ public class CampDialogue : MonoBehaviour
     [SerializeField]
     private Text narratorTextPrefab = null;
 
+    private 
     void Awake()
     {
         // Remove the default message
@@ -146,6 +159,7 @@ public class CampDialogue : MonoBehaviour
             {
                 Choice choice = story.currentChoices[i];
                 CreateChoiceView(choice.text.Trim(), choicesContainer);
+                TrackChoiceHistory(choice.text);
             }
         }
         // If we've read all the content and there are no choices, the story is finished!
@@ -170,8 +184,8 @@ public class CampDialogue : MonoBehaviour
             story.ChooseChoiceIndex(choice.index);
 
             // Debug log to check values
-            Debug.Log("Can continue: " + story.canContinue);
-            Debug.Log("Number of choices: " + story.currentChoices.Count);
+            //Debug.Log("Can continue: " + story.canContinue);
+            //Debug.Log("Number of choices: " + story.currentChoices.Count);
 
             // Check if the story is complete, and if so, restart it
             if (!story.canContinue && story.currentChoices.Count <= 0)
@@ -207,6 +221,9 @@ public class CampDialogue : MonoBehaviour
         DisplayTags();
         Text storyText = Instantiate(textPrefab, container.transform);
         storyText.text = text;
+
+        //dialogeTRACKING
+      
 
         // Check for character tag.
         if (story.currentTags.Contains("Edrick"))
@@ -251,8 +268,40 @@ public class CampDialogue : MonoBehaviour
             }
         }
 
-
+        TrackDialogueHistory(text);
     }
+
+    private void TrackDialogueHistory(string line)
+    {
+        string currentSpeaker = speakerName != null ? speakerName.text : "Unknown";
+        dialogueHistory.Add(currentSpeaker + ": " + line);
+    }
+
+    private void TrackChoiceHistory(string line)
+    {
+        dialogueHistory.Add(line);
+    }
+
+    [ContextMenu("DisplayHistory")]
+    public void DisplayDialogueHistory()
+    {
+        GameObject historyContainer = GameObject.Find("Content");
+
+        // Ensure correct parent
+        historyContainer.transform.SetParent(_dHistoryParent, false);
+
+        // Display each stored dialogue entry
+        foreach (string entry in dialogueHistory)
+        {
+            GameObject historyTextObject = Instantiate(_DialogueHistoryTextPF, historyContainer.transform);
+            TextMeshProUGUI historyText = historyTextObject.GetComponent<TextMeshProUGUI>();
+
+            // Set the text to the preformatted speaker + dialogue
+            historyText.text = entry;
+        }
+    }
+
+
 
 
 
@@ -261,7 +310,7 @@ public class CampDialogue : MonoBehaviour
     {
         if (string.IsNullOrEmpty(text))
         {
-            return null; // Skip creating a button for empty choices
+            return null; // Skip empty choices
         }
 
         Button choice = Instantiate(buttonPrefab, container.transform);
@@ -270,7 +319,6 @@ public class CampDialogue : MonoBehaviour
 
         if (text == "Back")
         {
-            // Handle the "Back" button to close the dialogue
             choice.onClick.AddListener(() => Deactivate());
             RestartStory();
         }
@@ -281,13 +329,21 @@ public class CampDialogue : MonoBehaviour
                 Choice choiceToSelect = story.currentChoices.Find(c => c.text.Trim() == text);
                 if (choiceToSelect != null)
                 {
-                    choice.onClick.AddListener(() => OnClickChoiceButton(choiceToSelect));
+                    choice.onClick.AddListener(() =>
+                    {
+                        // Track the choice in dialogue history
+                        TrackDialogueHistory("[You said]: " + text);
+
+                        // Continue with the selected choice
+                        OnClickChoiceButton(choiceToSelect);
+                    });
                 }
             }
         }
 
         return choice;
     }
+
 
     // Destroys all the children of this game object (all the UI)
     void RemoveChildren()
