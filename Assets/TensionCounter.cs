@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class TensionCounter : MonoBehaviour
 {
-    public static int _tension;
-    public static int _newTension;
+
+    [SerializeField] public int _tension;
+    [SerializeField] public int _newTension;
     public int _influence = 50;
     public int _newInfluence;
     public Slider _tensionSlider;

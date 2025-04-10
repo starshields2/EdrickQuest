@@ -14,11 +14,14 @@ TagManager:
   - Ladder
   - Room
   - Mediation
+  - Aya
+  - Ura
+  - Oga
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Outline
   - Water
   - UI
   - 

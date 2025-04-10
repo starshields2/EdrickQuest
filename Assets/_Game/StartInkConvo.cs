@@ -6,25 +6,19 @@ public class StartInkConvo : MonoBehaviour
 {
     public GameObject inkConvo;
     public AudioSource startAud;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject prompt;
+    public Dialogue _dialogue;
 
-    // Update is called once per frame
+    private bool playerInRange = false;
+
     void Update()
     {
         if (!inkConvo.activeSelf)
         {
             Time.timeScale = 1f;
         }
-    }
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if(other.tag == "Player")
+        if (playerInRange && Input.GetKeyDown(KeyCode.E))
         {
             Time.timeScale = 0f;
             inkConvo.SetActive(true);
@@ -32,5 +26,22 @@ public class StartInkConvo : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = true;
+            prompt.SetActive(true);
+            _dialogue.StartDialogue();
+        }
+    }
 
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = false;
+            prompt.SetActive(false);
+        }
+    }
 }

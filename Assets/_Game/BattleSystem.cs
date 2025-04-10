@@ -3,30 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 public class BattleSystem : MonoBehaviour
 {
-    public GameObject winCanvas;
-    public GameObject HUD;
-    
-    public bool isTurn;
-    public bool isEdTurn;
-    //public TextMeshProUGUI enemyText;
-    public bool isTiming;
+    public BattleState state;
+
+    [Header("Communications")]
+    public EnemyBattleManager manager;
+    public Companion[] companions;
+
+    [Header("TurnOrder")]
+    public List<Unit> Order = new List<Unit>();
+    [Header("TurnOrderIcons")]
+    public GameObject[] Icons;
 
     [Header("Units")]
+    public GameObject[] BattleUnits;
+
     public Unit playerUnit;
     public Unit enemyUnit;
-    public EnemyBattleManager manager;
+    public Unit YaelUnit;
+    public Unit JasperUnit;
 
     [Header("Prefabs")]
     public GameObject playerPrefab;
     public GameObject enemyPrefab;
     public GameObject jasperPrefab;
     public GameObject yaelPrefab;
-    public bool isRise;
-    public Animator riseAttack;
-    public AudioSource riseAttacksource;
 
     [Header("Transforms")]
     public Transform playerBS;
@@ -35,194 +39,203 @@ public class BattleSystem : MonoBehaviour
     public Transform YaelBS;
 
     [Header("HUD Stuff")]
-    public GameObject UICANVAS;
-    //public BattleHUD playerHUD;
-    //public BattleHUD enemyHUD;
-    public Slider turnTime;
-    public Image slider1Fill;
+    public GameObject BattleCanvas;
+    public GameObject PauseMenu;
+    public GameObject winCanvas;
+    public GameObject loseCanvas;
 
-    [Header("Ink Components")]
-    public List<GameObject> JasperInk;
-    public List<GameObject> YaelInk;
-    public GameObject EdrickDoneConvo;
+    [Header("OPTIONS")]
+    public GameObject playerBattleOptions;
+    public GameObject jasperBattleOptions;
+    public GameObject yaelBattleOptions;
 
-
+    [Header("BOOLS")]
+    public bool roundStarted;
+    public bool isPlayerTurn;
+    public bool isJasperTurn;
+    public bool isYaelTurn;
+    public bool isEnemyTurn;
 
     public enum BattleState
     {
         Idle,
         Start,
+        GetParticipants,
+        RoundStart,
         PlayerTurn,
         JasperTurn,
         YaelTurn,
         EnemyTurn,
+        RoundEnd,
+        RoundBuffer,
         Won,
         Lost
     }
 
-    public BattleState state;
-    private float originalTimeScale; // Store the original time scale
-    public float playerTurnTimer = 15f; // Timer for player's turn
-    public GameObject playerBattleOptions;
-    public GameObject jasperBattleOptions;
-    public GameObject yaelBattleOptions;
-    
-
-    // Start is called before the first frame update
     void Start()
     {
-        isTiming = true;
         state = BattleState.Start;
-        originalTimeScale = Time.timeScale; // Store the original time scale
     }
 
-    // Update is called once per frame
     void Update()
     {
         switch (state)
         {
             case BattleState.Start:
-                UICANVAS.SetActive(true);
-                
-                //state = BattleState.PlayerTurn;
+                BattleCanvas.SetActive(true);
+                state = BattleState.GetParticipants;
                 break;
 
+            case BattleState.GetParticipants:
+                roundStarted = false;
+                foreach (GameObject active in BattleUnits)
+                {
+                    active.SetActive(true);
+                }
 
-                // -------------- EDRICK'S TURN --------------------------
+
+                Order = GameObject.FindObjectsOfType<Unit>().ToList();
+                state = BattleState.RoundStart;
+                Debug.Log("Filling Turn Roster...");
+                break;
+
+            case BattleState.RoundStart:
+                if (!roundStarted)
+                {
+                    roundStarted = true;
+                    Debug.Log("Round Starting!");
+                    Order = Order.OrderByDescending(unit => unit.speed).ToList();
+                    Debug.Log("Sorted Roster by Speed.");
+
+                    PickNextTurn();
+                }
+                break;
+
             case BattleState.PlayerTurn:
-                UICANVAS.SetActive(false);
-                isTurn = true;
-                isEdTurn = true;
-                if (isTiming)
+                if (!isPlayerTurn)
                 {
-                    playerBattleOptions.SetActive(true);
-                slider1Fill.color = Color.red;
-                turnTime.value = playerTurnTimer;
-               // Time.timeScale = originalTimeScale;
-                // Reduce the player turn timer
-                playerTurnTimer -= Time.deltaTime;
-                
-
-                if (playerTurnTimer <= 0f)
-                {
-                    playerBattleOptions.SetActive(false);
-                     state = BattleState.JasperTurn;
-                    playerTurnTimer = 15f; 
+                    isPlayerTurn = true;
+                    isJasperTurn = false;
+                    isEnemyTurn = false;
+                    isYaelTurn = false;
+                    StartPlayerTurn();
                 }
-
-                }
-
-                if (!isTiming)
-                {
-                    playerTurnTimer = 15f;
-                }
-               
-               
-
                 break;
 
-                /////------------------ JASPER'S TURN -----------------------
-                ///
             case BattleState.JasperTurn:
-                isTurn = true;
-                isEdTurn = false;
-                isTiming = true;
-                if (isTiming)
+                if (!isJasperTurn)
                 {
-                jasperBattleOptions.SetActive(true);
-                //SLIDER STUFF.
-                slider1Fill.color = Color.yellow;
-                turnTime.value = playerTurnTimer;
-                playerTurnTimer -= Time.deltaTime; 
+                    isPlayerTurn = false;
+                    isJasperTurn = true;
+                    isEnemyTurn = false;
+                    isYaelTurn = false;
+                    StartJasperTurn();
                 }
-               
-
-
-                if (playerTurnTimer <= 0f)
-                {
-                    jasperBattleOptions.SetActive(false);
-                    state = BattleState.YaelTurn;
-                    playerTurnTimer = 15f;
-                }
-                if (!isTiming)
-                {
-                    playerTurnTimer = 15f;
-                }
-
                 break;
-                //-------- YAEL'S TURN-----------------
+
             case BattleState.YaelTurn:
-                isTurn = true;
-                isEdTurn = false;
-                if (isTiming)
+                if (!isYaelTurn)
                 {
-                yaelBattleOptions.SetActive(true);
-              
-                turnTime.value = playerTurnTimer;
-                playerTurnTimer -= Time.deltaTime;
-                slider1Fill.color = Color.blue;
-                }
-                
-                
-                if (playerTurnTimer <= 0f)
-                {
-                   yaelBattleOptions.SetActive(false);
-                    state = BattleState.EnemyTurn;
-                    playerTurnTimer = 15f;
-                }
-
-                if (!isTiming)
-                {
-                    playerTurnTimer = 15f;
+                    isPlayerTurn = false;
+                    isJasperTurn = false;
+                    isEnemyTurn = false;
+                    isYaelTurn = true;
+                    StartYaelTurn();
                 }
                 break;
-                /////----------- ENEMY TURN ---------------
+
             case BattleState.EnemyTurn:
-                isTurn = false;
-                isEdTurn = false;
-                Debug.Log("ENEMY TURN");
-                Time.timeScale = originalTimeScale;
+                if (!isEnemyTurn)
+                {
+                    isPlayerTurn = false;
+                    isJasperTurn = false;
+                    isEnemyTurn = true;
+                    isYaelTurn = false;
+                    StartEnemyTurn();
+                    RemovePreviousTurn();
+                    PickNextTurn();
+                }
+                break;
+            case BattleState.RoundBuffer:
+                StartCoroutine(RoundBuffer());
+                break;
 
-                EnemyAttack();
+            case BattleState.RoundEnd:
+                Order.Clear();
+                roundStarted = false;
+                state = BattleState.RoundBuffer;
+                break;
 
-
-
-                state = BattleState.PlayerTurn; // After enemy's turn, switch back to player's turn
+            case BattleState.Lost:
                 break;
 
             case BattleState.Won:
-                Debug.Log("You win");
-                winCanvas.SetActive(true);
-                HUD.SetActive(false);
-            break;
-
+                break;
         }
     }
-    [ContextMenu("SetUp")]
+
     IEnumerator SetupBattle()
     {
         GameObject playerGO = Instantiate(playerPrefab, playerBS);
         playerUnit = playerGO.GetComponent<Unit>();
-        
+
         GameObject JasperGO = Instantiate(jasperPrefab, JasperBS);
-        playerUnit = JasperGO.GetComponent<Unit>();
-        
+        JasperUnit = JasperGO.GetComponent<Unit>();
+
         GameObject YaelGO = Instantiate(yaelPrefab, YaelBS);
-        playerUnit = YaelGO.GetComponent<Unit>();
+        YaelUnit = YaelGO.GetComponent<Unit>();
 
         GameObject enemyGO = Instantiate(enemyPrefab, enemyBS);
         enemyUnit = enemyGO.GetComponent<Unit>();
 
-      //  playerHUD.SetHUD(playerUnit);
-      //  enemyHUD.SetHUD(enemyUnit);
-
         yield return new WaitForSeconds(2f);
 
-        state = BattleState.PlayerTurn;
-        StartPlayerTurn();
+       // state = BattleState.PlayerTurn;
     }
 
-    // Call this method to start the player's turn
+    IEnumerator RoundBuffer()
+    {
+        yield return new WaitForSeconds(2);
+        state = BattleState.GetParticipants;
+    }
+
+    public void PickNextTurn()
+    {
+        if (Order.Count == 0)
+        {
+            Debug.Log("No more units in turn order.");
+            state = BattleState.RoundEnd;
+            return;
+        }
+
+        Unit currentUnit = Order[0];
+        string unitName = currentUnit.unitName;
+
+        switch (unitName)
+        {
+            case "Player":
+                state = BattleState.PlayerTurn;
+                break;
+            case "Jasper":
+                state = BattleState.JasperTurn;
+                break;
+            case "Yael":
+                state = BattleState.YaelTurn;
+                break;
+            case "RAT":
+                state = BattleState.EnemyTurn;
+                break;
+            default:
+                Debug.LogWarning("Unknown unit turn: " + unitName);
+                break;
+        }
+        print(unitName + "'s Turn");      
+    }
+
+    public void RemovePreviousTurn()
+    {
+        Order.RemoveAt(0);
+    }
     public void StartBattle()
     {
         state = BattleState.Start;
@@ -231,138 +244,71 @@ public class BattleSystem : MonoBehaviour
     public void StartPlayerTurn()
     {
         state = BattleState.PlayerTurn;
-        //feedback
 
+        Vector3 scale = playerBS.localScale;
+        scale.x += 0.5f;
+        scale.y += 0.5f;
+        playerBS.localScale = scale;
 
+        Vector3 position = playerBS.position;
+        position.x -= 0.3f;
+        playerBS.position = position;
+
+        jasperPrefab.SetActive(false);
+        yaelPrefab.SetActive(false);
+        playerBattleOptions.SetActive(true);
     }
-    // Call this method to start the enemy's turn
+
     public void StartEnemyTurn()
     {
-      
         state = BattleState.EnemyTurn;
-        isTiming = true;
+       
     }
 
     public void StartJasperTurn()
     {
         state = BattleState.JasperTurn;
 
+        jasperPrefab.SetActive(true);
+        Vector3 scale = JasperBS.localScale;
+        scale.x += 0.5f;
+        scale.y += 0.5f;
+        JasperBS.localScale = scale;
+
+        Vector3 position = JasperBS.position;
+        position.x = 1f;
+        JasperBS.position = position;
+
+        playerPrefab.SetActive(false);
+        yaelPrefab.SetActive(false);
+        playerBattleOptions.SetActive(false);
+        jasperBattleOptions.SetActive(true);
     }
 
     public void StartYaelTurn()
     {
         state = BattleState.YaelTurn;
+        yaelBattleOptions.SetActive(true);
+
+
+        Vector3 position = playerBS.position;
+        position.x -= 0.3f;
+        YaelBS.position = position;
+
+        jasperPrefab.SetActive(false);
+        yaelPrefab.SetActive(true);
+        playerPrefab.SetActive(false);
+        playerBattleOptions.SetActive(false);
+        
     }
 
-    // Call this method to reset the time scale and state when the battle ends
     public void EndBattle()
     {
-        
-        state = BattleState.Start;
+      //  state = BattleState.Start;
     }
 
-    public void PauseTimer()
+    public void Pause()
     {
-        isTiming = false;
+        PauseMenu.SetActive(true);
     }
-
-    //------ATTACKS.
-    public void JasperAttack()
-    {
-        EnemyBattleManager manager = GetComponent<EnemyBattleManager>();
-
-            Unit chosenEnemy = manager.enemies[manager.currentEnemyIndex].GetComponent<Unit>();
-            Debug.Log("Jas attack");
-            chosenEnemy.TakeDamage(1);
-            Debug.Log("1 damage to " + chosenEnemy.name);
-        
-      
-          //Debug.LogError("Invalid currentEnemyIndex: " + manager.currentEnemyIndex);
-        
-    }
-
-    public void JasperSpecial()
-    {
-        EnemyBattleManager manager = GetComponent<EnemyBattleManager>();
-        Unit Yael = manager.allies[0].GetComponent<Unit>();
-        Yael.Protected();
-    }
-
-    public void EdrickTalk()
-    {
-        EnemyBattleManager manager = GetComponent<EnemyBattleManager>();
-        Unit chosenAlly = manager.allies[manager.currentAllyIndex].GetComponent<Unit>();
-        Debug.Log("Edrick has started negotiation");
-
-        if (manager.currentAllyIndex == 0)
-        {
-            int randomIndex = Random.Range(0, YaelInk.Count);
-            GameObject selectedInk = YaelInk[randomIndex];
-            selectedInk.SetActive(true);
-            YaelInk.RemoveAt(randomIndex);
-
-          
-        }
-
-        if (manager.currentAllyIndex == 1)
-        {
-            int randomIndex = Random.Range(0, JasperInk.Count);
-            GameObject selectedInk = JasperInk[randomIndex];
-            selectedInk.SetActive(true);
-            JasperInk.RemoveAt(randomIndex);
-        }
-        if (JasperInk.Count == 0)
-        {
-            EdrickDoneConvo.SetActive(true);
-        }
-        if (YaelInk.Count == 0)
-        {
-            EdrickDoneConvo.SetActive(true);
-        }
-    }
-
-    public void YaelHeal()
-    {
-        EnemyBattleManager manager = GetComponent<EnemyBattleManager>();
-        Unit Jasper = manager.allies[0].GetComponent<Unit>();
-        Jasper.Heal();
-    }
-    public void YaelDefend()
-    {
-        GameObject Yael = GameObject.Find("Yael_BASE");
-        Unit YaelUN = Yael.GetComponent<Unit>();
-        riseAttack.SetBool("isRise", true);
-        riseAttack.SetBool("isStay", true);
-        riseAttacksource.Play();
-        YaelUN.Defend();
-    }
-
-    public void YaelAttack()
-    {
-        Debug.Log("Debuffing...");
-        EnemyBattleManager manager = GetComponent<EnemyBattleManager>();
-        Unit chosenEnemy = manager.enemies[manager.currentEnemyIndex].GetComponent<Unit>();
-
-        // Provide a specific damage value when calling DamageDebuff
-        chosenEnemy.DamageDebuff(1); // Replace 10 with the desired damage value
-        Debug.Log("Damage debuf");
-    }
-
-
-    IEnumerator Berate()
-    {
-        yield return new WaitForSeconds(1f);
-        state = BattleState.EnemyTurn;
-    }
- 
-    public void EnemyAttack()
-    {
-        manager.SelectAlly();
-        Unit selectedUnit = manager.selectedAlly.GetComponent<Unit>();
-        selectedUnit.TakeDamage(1); // Replace 10 with the appropriate damage value
-
-    }
-
-
-
 }

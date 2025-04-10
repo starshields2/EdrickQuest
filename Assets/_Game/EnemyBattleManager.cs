@@ -28,39 +28,17 @@ public class EnemyBattleManager : MonoBehaviour
         allies = GameObject.FindGameObjectsWithTag("Ally");
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-        if (bSystem.isTurn)
-        {
-            if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                SelectNextEnemy();
-            }
-            if (Input.GetMouseButtonDown(0) || (Input.GetKeyDown(KeyCode.Space)))
-            {
-                SelectHoveredEnemy();
-            }
-        }
-        if (bSystem.isEdTurn)
-        {
-
-            if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                PlayerSelectNextAlly();
-            }
-            if (Input.GetMouseButtonDown(0) || (Input.GetKeyDown(KeyCode.Space)))
-            {
-                //SelectHoveredEnemy();
-            }
-        }
+ 
         if(allies.Length == 0)
         {
-            Debug.Log("Failure");
-            bSystem.state = BattleSystem.BattleState.Lost;
+          
+           // bSystem.state = BattleSystem.BattleState.Lost;
         }
 
         if (enemies.Length == 0)
         {
-            Debug.Log("Victory!");
-            bSystem.state = BattleSystem.BattleState.Won;
+           
+         //   bSystem.state = BattleSystem.BattleState.Won;
 
 
         }

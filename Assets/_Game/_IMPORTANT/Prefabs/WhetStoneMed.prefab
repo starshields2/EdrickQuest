@@ -198,6 +198,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 8923248035867697440}
+        m_TargetAssemblyTypeName: CampDialogue, Assembly-CSharp
+        m_MethodName: DisplayDialogueHistory
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6704885014534725274
 GameObject:
   m_ObjectHideFlags: 0
@@ -1919,7 +1931,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 644c529a6f894ec4e9a79a512b402a26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueHistory: []
   _DialogueHistoryTextPF: {fileID: 8161239119773859609, guid: 67819a4e8b9ea4241b363697e4ce1cd6,
     type: 3}
   _HistoryContainer: {fileID: 2387983956515149025, guid: da5350e9f26d4064e81c452df9f5fae9,
@@ -2261,12 +2272,12 @@ PrefabInstance:
     - target: {fileID: 722020903418400113, guid: 82fce27b553b0d2459d8c0b0532f7519,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 722020903418400113, guid: 82fce27b553b0d2459d8c0b0532f7519,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 0.9999999
       objectReference: {fileID: 0}
     - target: {fileID: 722020903418400113, guid: 82fce27b553b0d2459d8c0b0532f7519,
         type: 3}
@@ -2423,6 +2434,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogueHistoryPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 2219543949184156873, guid: 82fce27b553b0d2459d8c0b0532f7519,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3171474628957628579, guid: 82fce27b553b0d2459d8c0b0532f7519,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -2467,6 +2483,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Size
       value: 0.9999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136599350564761389, guid: 82fce27b553b0d2459d8c0b0532f7519,
+        type: 3}
+      propertyPath: m_Value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5000731355860031598, guid: 82fce27b553b0d2459d8c0b0532f7519,
         type: 3}

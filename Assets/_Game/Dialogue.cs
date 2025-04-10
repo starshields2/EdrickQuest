@@ -23,6 +23,7 @@ public class Dialogue : MonoBehaviour
     {
         speakerName.text = unitName;
         NextLine();
+       
     }
 
     // Update is called once per frame
@@ -41,7 +42,7 @@ public class Dialogue : MonoBehaviour
             }
         }
     }
-
+    [ContextMenu("Dialogue")]
     public void StartDialogue()
     {
         index = 0;
