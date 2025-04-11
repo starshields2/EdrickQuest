@@ -1,8 +1,89 @@
 fileFormatVersion: 2
 guid: ac851a201e824894a8be76103dd683e3
 ModelImporter:
-  serializedVersion: 22200
-  internalIDToNameTable: []
+  serializedVersion: 21202
+  internalIDToNameTable:
+  - first:
+      74: 687470621588751736
+    second: Oga|Aya|Aya|Aya|Aya|AyaAction
+  - first:
+      74: 5501934868260592922
+    second: Oga|Aya|Aya|Aya|Aya|OgaAction
+  - first:
+      74: 6941728494763450654
+    second: Oga|Aya|Aya|Aya|Aya|UraAction
+  - first:
+      74: 2954237776409551940
+    second: Oga|Aya|Aya|Oga|Oga|AyaAction
+  - first:
+      74: -8034911494445798629
+    second: Oga|Aya|Aya|Oga|Oga|OgaAction
+  - first:
+      74: 6470815851698580449
+    second: Oga|Aya|Aya|Oga|Oga|UraAction
+  - first:
+      74: -3694419472881693455
+    second: Oga|Aya|Aya|Ura|Ura|AyaAction
+  - first:
+      74: -1740837904985440117
+    second: Oga|Aya|Aya|Ura|Ura|OgaAction
+  - first:
+      74: 4541545447360933854
+    second: Oga|Aya|Aya|Ura|Ura|UraAction
+  - first:
+      74: -1273366054215180372
+    second: Oga|Oga|Oga|Aya|Aya|AyaAction
+  - first:
+      74: 2368785799977290485
+    second: Oga|Oga|Oga|Aya|Aya|OgaAction
+  - first:
+      74: -4294057469820967302
+    second: Oga|Oga|Oga|Aya|Aya|UraAction
+  - first:
+      74: -5456099112298898201
+    second: Oga|Oga|Oga|Oga|Oga|AyaAction
+  - first:
+      74: 7567057487485719252
+    second: Oga|Oga|Oga|Oga|Oga|OgaAction
+  - first:
+      74: 449377578910556889
+    second: Oga|Oga|Oga|Oga|Oga|UraAction
+  - first:
+      74: -4448912344243014265
+    second: Oga|Oga|Oga|Ura|Ura|AyaAction
+  - first:
+      74: 7137777975523406073
+    second: Oga|Oga|Oga|Ura|Ura|OgaAction
+  - first:
+      74: 2033972470183449570
+    second: Oga|Oga|Oga|Ura|Ura|UraAction
+  - first:
+      74: -4155865005033500847
+    second: Oga|Ura|Ura|Aya|Aya|AyaAction
+  - first:
+      74: 1160353847210724126
+    second: Oga|Ura|Ura|Aya|Aya|OgaAction
+  - first:
+      74: 3186570369429036188
+    second: Oga|Ura|Ura|Aya|Aya|UraAction
+  - first:
+      74: 1580978302494972611
+    second: Oga|Ura|Ura|Oga|Oga|AyaAction
+  - first:
+      74: 5425395230544755008
+    second: Oga|Ura|Ura|Oga|Oga|OgaAction
+  - first:
+      74: 1928618878829567316
+    second: Oga|Ura|Ura|Oga|Oga|UraAction
+  - first:
+      74: 5881568383933866404
+    second: Oga|Ura|Ura|Ura|Ura|AyaAction
+  - first:
+      74: -3355594675025586348
+    second: Oga|Ura|Ura|Ura|Ura|OgaAction
+  - first:
+      74: -981792564476934499
+    second: Oga|Ura|Ura|Ura|Ura|UraAction
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -16,6 +97,8 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -38,7 +121,6 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
-    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -66,7 +148,6 @@ ModelImporter:
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -99,8 +180,6 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
-  importBlendShapeDeformPercent: 1
-  remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 
   assetBundleName: 
