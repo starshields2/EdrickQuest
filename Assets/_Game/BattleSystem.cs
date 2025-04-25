@@ -20,6 +20,7 @@ public class BattleSystem : MonoBehaviour
 
     [Header("Units")]
     public GameObject[] BattleUnits;
+    public TextMeshProUGUI _playerName;
 
     public Unit playerUnit;
     public Unit enemyUnit;
@@ -48,6 +49,7 @@ public class BattleSystem : MonoBehaviour
     public GameObject playerBattleOptions;
     public GameObject jasperBattleOptions;
     public GameObject yaelBattleOptions;
+    public Transform _selectionArrow;
 
     [Header("BOOLS")]
     public bool roundStarted;
@@ -244,18 +246,13 @@ public class BattleSystem : MonoBehaviour
     public void StartPlayerTurn()
     {
         state = BattleState.PlayerTurn;
-
-        Vector3 scale = playerBS.localScale;
-        scale.x += 0.5f;
-        scale.y += 0.5f;
-        playerBS.localScale = scale;
+        _playerName.text = "PLAYER";
 
         Vector3 position = playerBS.position;
         position.x -= 0.3f;
         playerBS.position = position;
 
-        jasperPrefab.SetActive(false);
-        yaelPrefab.SetActive(false);
+      
         playerBattleOptions.SetActive(true);
     }
 
@@ -268,19 +265,10 @@ public class BattleSystem : MonoBehaviour
     public void StartJasperTurn()
     {
         state = BattleState.JasperTurn;
+        _playerName.text = "JASPER";
 
-        jasperPrefab.SetActive(true);
-        Vector3 scale = JasperBS.localScale;
-        scale.x += 0.5f;
-        scale.y += 0.5f;
-        JasperBS.localScale = scale;
 
-        Vector3 position = JasperBS.position;
-        position.x = 1f;
-        JasperBS.position = position;
 
-        playerPrefab.SetActive(false);
-        yaelPrefab.SetActive(false);
         playerBattleOptions.SetActive(false);
         jasperBattleOptions.SetActive(true);
     }
@@ -288,18 +276,11 @@ public class BattleSystem : MonoBehaviour
     public void StartYaelTurn()
     {
         state = BattleState.YaelTurn;
+        _playerName.text = "YAEL";
         yaelBattleOptions.SetActive(true);
-
-
-        Vector3 position = playerBS.position;
-        position.x -= 0.3f;
-        YaelBS.position = position;
-
-        jasperPrefab.SetActive(false);
-        yaelPrefab.SetActive(true);
-        playerPrefab.SetActive(false);
         playerBattleOptions.SetActive(false);
-        
+        jasperBattleOptions.SetActive(false);
+
     }
 
     public void EndBattle()
