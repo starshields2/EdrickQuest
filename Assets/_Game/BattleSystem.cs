@@ -12,6 +12,8 @@ public class BattleSystem : MonoBehaviour
     [Header("Communications")]
     public EnemyBattleManager manager;
     public Companion[] companions;
+    public RectTransform _pointer;
+    public float _hoverHeight = 2.0f;
 
     [Header("TurnOrder")]
     public List<Unit> Order = new List<Unit>();
@@ -90,15 +92,11 @@ public class BattleSystem : MonoBehaviour
 
             case BattleState.GetParticipants:
                 roundStarted = false;
-                foreach (GameObject active in BattleUnits)
-                {
-                    active.SetActive(true);
-                }
 
+                FillTurnRoster();
 
-                Order = GameObject.FindObjectsOfType<Unit>().ToList();
                 state = BattleState.RoundStart;
-                Debug.Log("Filling Turn Roster...");
+                
                 break;
 
             case BattleState.RoundStart:
@@ -120,7 +118,10 @@ public class BattleSystem : MonoBehaviour
                     isJasperTurn = false;
                     isEnemyTurn = false;
                     isYaelTurn = false;
+                   
                     StartPlayerTurn();
+
+                    
                 }
                 break;
 
@@ -131,7 +132,9 @@ public class BattleSystem : MonoBehaviour
                     isJasperTurn = true;
                     isEnemyTurn = false;
                     isYaelTurn = false;
+                    
                     StartJasperTurn();
+
                 }
                 break;
 
@@ -142,7 +145,9 @@ public class BattleSystem : MonoBehaviour
                     isJasperTurn = false;
                     isEnemyTurn = false;
                     isYaelTurn = true;
+                    
                     StartYaelTurn();
+
                 }
                 break;
 
@@ -153,9 +158,7 @@ public class BattleSystem : MonoBehaviour
                     isJasperTurn = false;
                     isEnemyTurn = true;
                     isYaelTurn = false;
-                    StartEnemyTurn();
-                    RemovePreviousTurn();
-                    PickNextTurn();
+                    
                 }
                 break;
             case BattleState.RoundBuffer:
@@ -174,6 +177,12 @@ public class BattleSystem : MonoBehaviour
             case BattleState.Won:
                 break;
         }
+    }
+
+    public void FillTurnRoster()
+    {
+        Debug.Log("Filling Turn Roster...");
+        Order = GameObject.FindObjectsOfType<Unit>().ToList();
     }
 
     IEnumerator SetupBattle()
@@ -231,7 +240,14 @@ public class BattleSystem : MonoBehaviour
                 Debug.LogWarning("Unknown unit turn: " + unitName);
                 break;
         }
-        print(unitName + "'s Turn");      
+        Debug.Log(unitName + "'s Turn");
+    }
+
+
+    public void EndTurn()
+    {
+        RemovePreviousTurn();
+        PickNextTurn();
     }
 
     public void RemovePreviousTurn()
@@ -247,19 +263,23 @@ public class BattleSystem : MonoBehaviour
     {
         state = BattleState.PlayerTurn;
         _playerName.text = "PLAYER";
-
-        Vector3 position = playerBS.position;
-        position.x -= 0.3f;
-        playerBS.position = position;
-
-      
         playerBattleOptions.SetActive(true);
     }
 
     public void StartEnemyTurn()
     {
         state = BattleState.EnemyTurn;
-       
+        _playerName.text = "RAT";
+        StartCoroutine(EnemyLogic());
+    }
+
+    IEnumerator EnemyLogic()
+    {
+        Debug.Log("Enemy attacks!");
+        yield return new WaitForSeconds(1f);
+
+        // After enemy attack animation / logic
+        EndTurn(); // <-- Enemy ends turn cleanly after action
     }
 
     public void StartJasperTurn()
@@ -268,7 +288,7 @@ public class BattleSystem : MonoBehaviour
         _playerName.text = "JASPER";
 
 
-
+        yaelBattleOptions.SetActive(false);
         playerBattleOptions.SetActive(false);
         jasperBattleOptions.SetActive(true);
     }
@@ -292,4 +312,16 @@ public class BattleSystem : MonoBehaviour
     {
         PauseMenu.SetActive(true);
     }
+
+    //void ChangePointer()
+    //{
+    //    Vector3 targetPosition = enemies[currentEnemyIndex].transform.position;
+
+    //    // Add the Y offset to position the pointer above the enemy
+    //    targetPosition.y += _hoverHeight;
+
+    //    // Move the pointer to the position with Y offset
+    //    Vector3 screenPosition = Camera.main.WorldToScreenPoint(targetPosition);
+    //    pointer.position = screenPosition;
+    //}
 }
