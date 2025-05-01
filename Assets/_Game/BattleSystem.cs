@@ -158,7 +158,7 @@ public class BattleSystem : MonoBehaviour
                     isJasperTurn = false;
                     isEnemyTurn = true;
                     isYaelTurn = false;
-                    
+                    StartEnemyTurn();
                 }
                 break;
             case BattleState.RoundBuffer:
