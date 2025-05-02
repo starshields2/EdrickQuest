@@ -12,6 +12,8 @@ Material:
   m_ValidKeywords:
   - _DISABLE_SSR_TRANSPARENT
   - _DISPLACEMENT_LOCK_TILING_SCALE
+  - _EMISSIVE_COLOR_MAP
+  - _EMISSIVE_MAPPING_TRIPLANAR
   - _MAPPING_TRIPLANAR
   - _MATERIAL_FEATURE_ANISOTROPY
   - _NORMALMAP
@@ -58,8 +60,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissiveColorMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 240ec89fe7a3d7942a38d862dee99798, type: 3}
+        m_Scale: {x: 0.2, y: 0.2}
         m_Offset: {x: 0, y: 0}
     - _HeightMap:
         m_Texture: {fileID: 0}
@@ -162,7 +164,7 @@ Material:
     - _DstBlend: 0
     - _EmissiveColorMode: 1
     - _EmissiveExposureWeight: 1
-    - _EmissiveIntensity: 0.14161049
+    - _EmissiveIntensity: 1.5475651
     - _EmissiveIntensityUnit: 1
     - _EnableBlendModePreserveSpecularLighting: 1
     - _EnableFogOnTransparent: 1
@@ -229,7 +231,7 @@ Material:
     - _TransparentZWrite: 0
     - _UVBase: 5
     - _UVDetail: 0
-    - _UVEmissive: 0
+    - _UVEmissive: 5
     - _UseEmissiveIntensity: 1
     - _UseShadowThreshold: 0
     - _ZTestDepthEqualForOpaque: 3
@@ -243,8 +245,8 @@ Material:
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissiveColor: {r: 0.029088615, g: 0.007965958, b: 0.0014084078, a: 0.14161049}
-    - _EmissiveColorLDR: {r: 0.49056602, g: 0.26303765, b: 0.0995016, a: 1}
+    - _EmissiveColor: {r: 1.1591566, g: 0.5886815, b: 0.30951297, a: 1.5475651}
+    - _EmissiveColorLDR: {r: 0.88031507, g: 0.65025944, b: 0.48452914, a: 1}
     - _InvPrimScale: {r: 1, g: 1, b: 0, a: 0}
     - _IridescenceThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
@@ -252,7 +254,7 @@ Material:
     - _TransmittanceColor: {r: 1, g: 1, b: 1, a: 1}
     - _UVDetailsMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMask: {r: 0, g: 0, b: 0, a: 0}
-    - _UVMappingMaskEmissive: {r: 1, g: 0, b: 0, a: 0}
+    - _UVMappingMaskEmissive: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &5840720019402730765
 MonoBehaviour:

@@ -12,6 +12,7 @@ public class PlayerActions : MonoBehaviour
     public int _speedModifier;
     public int _healModifier;
     public GameObject _diffuseParticle;
+    public GameObject _healParticle;
     public RectTransform _pointer;
     public float _hoverHeight = 2.0f;
     public GameObject[] _allies;
@@ -124,13 +125,15 @@ public class PlayerActions : MonoBehaviour
         // Example: Apply an effect to the selected unit
         if (selectedUnit != null)
         {
+            _tensCounter._currentTetherPoints -= 3;
             Debug.Log("Healing: " + selectedUnit.unitName);
-            // Example: Heal the unit
+            _healParticle.SetActive(true);
             selectedUnit.currentHP += _healModifier;
 
         }
 
         yield return new WaitForSeconds(2);
+        _healParticle.SetActive(false);
         bSystem.EndTurn();
     }
 
