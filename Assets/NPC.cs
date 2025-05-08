@@ -5,6 +5,9 @@ using UnityEngine;
 public class NPC : MonoBehaviour
 {
     public bool canTrade = false;
+    public GameObject shopCanvas;
+    public bool outOfItems = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +31,7 @@ public class NPC : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     Debug.Log("begin trade");
+                  
                 }
             }
 

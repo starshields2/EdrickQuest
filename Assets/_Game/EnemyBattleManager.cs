@@ -44,6 +44,26 @@ public class EnemyBattleManager : MonoBehaviour
         }
     }
 
+    public void EnemyAttack()
+    {
+        StartCoroutine(EnemyAttackSequence());
+    }
+
+    public IEnumerator EnemyAttackSequence()
+    {
+        GameObject _allyToAttack = allies[Random.Range(0, allies.Length)];
+        Unit _attackedUnit = _allyToAttack.GetComponent<Unit>();
+
+        _attackedUnit.currentHP -= Random.Range(0, 5);
+
+        if(_attackedUnit.currentHP <= 0)
+        {
+            _allyToAttack.SetActive(false);
+        }
+        yield return new WaitForSeconds(1);
+        bSystem.EndTurn();
+    }
+
     void SelectNextEnemy()
     {
         // Increment the index to select the next enemy

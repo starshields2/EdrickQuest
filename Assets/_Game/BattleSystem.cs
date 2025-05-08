@@ -10,7 +10,7 @@ public class BattleSystem : MonoBehaviour
     public BattleState state;
 
     [Header("Communications")]
-    public EnemyBattleManager manager;
+    public EnemyBattleManager _enemyManager;
     public TensionCounter _tensMeter;
     public Companion[] companions;
     public RectTransform _pointer;
@@ -278,7 +278,7 @@ public class BattleSystem : MonoBehaviour
     {
         Debug.Log("Enemy attacks!");
         yield return new WaitForSeconds(1f);
-        _tensMeter._tension += 5;
+        _enemyManager.EnemyAttack();
         // After enemy attack animation / logic
         EndTurn(); // <-- Enemy ends turn cleanly after action
     }

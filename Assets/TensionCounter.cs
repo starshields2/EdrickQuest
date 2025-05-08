@@ -60,6 +60,14 @@ public class TensionCounter : MonoBehaviour
             tensionBreak = true;
             StartCoroutine(TensionBreakStart());
         }
+
+        if (_tension <= 0)
+        {
+            tensionBreak = true;
+            StartCoroutine(TensionBreakStart());
+        }
+
+
     }
 
     public void UpdateTension()
