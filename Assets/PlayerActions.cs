@@ -11,6 +11,7 @@ public class PlayerActions : MonoBehaviour
     public int _diffuseModifier;
     public int _speedModifier;
     public int _healModifier;
+    public int _damageModifier;
     public GameObject _diffuseParticle;
     public GameObject _healParticle;
     public RectTransform _pointer;
@@ -140,6 +141,7 @@ public class PlayerActions : MonoBehaviour
 
     public IEnumerator BasicAttacker()
     {
+        
         isSelectingEnemy = true;
 
         // Wait until the player confirms an ally
@@ -153,7 +155,7 @@ public class PlayerActions : MonoBehaviour
         {
             Debug.Log("Attacking: " + selectedUnit.unitName);
             // Example: Heal the unit
-            selectedUnit.currentHP += _healModifier;
+            selectedUnit.currentHP -= _damageModifier;
 
         }
 

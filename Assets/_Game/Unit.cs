@@ -11,16 +11,27 @@ public class Unit : MonoBehaviour
     [Header("Status")]
     public bool isDefending;
     public bool isProtected;
+    public bool protecting;
+    public bool dangerZone;
+
+
     public GameObject Shield;
     public GameObject ProtectedIcon;
     public TextMeshProUGUI damageString;
 
     [Header("Stats")]
-    public int attack;
+
+    public float attack;
     public float speed;
+    public float protect;
+    public float crit;
     public float defense;
+    public float dangerZoneHP;
+
+
     public int damageRange;
     public int ogDamage;
+    public int critDamage;
 
     [Header("HP Settings")]
     public float maxHP;
@@ -31,6 +42,14 @@ public class Unit : MonoBehaviour
     void Update()
     {
         health.value = currentHP;
+        if(currentHP <= dangerZoneHP)
+        {
+            dangerZone = true;
+        }
+        else
+        {
+            dangerZone = false;
+        }
     }
 
     public void TakeDamage(int damage)
@@ -44,7 +63,7 @@ public class Unit : MonoBehaviour
 
         if (isDefending)
         {
-            currentHP -= damage / 2; // Reduce the damage by half
+            currentHP -= (damage - defense); // Reduce the damage by defense stat
         }
         else
         {

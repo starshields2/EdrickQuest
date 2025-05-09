@@ -1610,12 +1610,12 @@ PrefabInstance:
     - target: {fileID: 676644950041496069, guid: 52a5d9504364eee4c8bd6ea2c9a6da2a,
         type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 0.32
+      value: 0.64
       objectReference: {fileID: 0}
     - target: {fileID: 676644950041496069, guid: 52a5d9504364eee4c8bd6ea2c9a6da2a,
         type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 0.32
+      value: 0.64
       objectReference: {fileID: 0}
     - target: {fileID: 696460382200692275, guid: 52a5d9504364eee4c8bd6ea2c9a6da2a,
         type: 3}
@@ -13945,7 +13945,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 922552707}
   m_LocalRotation: {x: -0.017016308, y: 0.7363233, z: -0.676162, w: 0.01853033}
-  m_LocalPosition: {x: 86.2, y: 21.4, z: 89.5}
+  m_LocalPosition: {x: 168.5, y: 28, z: 172.7}
   m_LocalScale: {x: 5.8000007, y: 5.8000007, z: 5.8000007}
   m_ConstrainProportionsScale: 1
   m_Children: []
