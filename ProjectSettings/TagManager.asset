@@ -19,6 +19,7 @@ TagManager:
   - Oga
   - Jasper
   - Yael
+  - TurnIcon
   layers:
   - Default
   - TransparentFX

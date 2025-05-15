@@ -25,7 +25,7 @@ public class EnemyBattleManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        allies = GameObject.FindGameObjectsWithTag("Ally");
+        //allies = GameObject.FindGameObjectsWithTag("Ally");
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
  

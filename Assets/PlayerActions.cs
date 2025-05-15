@@ -51,35 +51,6 @@ public class PlayerActions : MonoBehaviour
         StartCoroutine(DiffuseCoroutine());
     }
 
-    public void Encourage()
-    {
-        StartCoroutine(EncourageModifier());
-    }
-
-    public void Taunt()
-    {
-        //StartCoroutine(EncourageModifier());
-    }
-
-    public void Pass()
-    {
-        //StartCoroutine(EncourageModifier());
-    }
-
-    //Yael Special Options: 
-
-    public void BasicHeal()
-    {
-        StartCoroutine(BasicHealer());
-    }
-
-    //Jasper Special Options: 
-
-    public void BasicAttack()
-    {
-        StartCoroutine(BasicAttacker());
-    }
-
     public IEnumerator DiffuseCoroutine()
     {
         _tensCounter._tension -= _diffuseModifier;
@@ -87,6 +58,11 @@ public class PlayerActions : MonoBehaviour
         yield return new WaitForSeconds(2);
         _diffuseParticle.SetActive(false);
         bSystem.EndTurn();
+    }
+
+    public void Encourage()
+    {
+        StartCoroutine(EncourageModifier());
     }
 
     public IEnumerator EncourageModifier()
@@ -105,11 +81,53 @@ public class PlayerActions : MonoBehaviour
             Debug.Log("Encouraging: " + selectedUnit.unitName);
             // Example: Heal the unit
             selectedUnit.speed += _speedModifier;
-          
+
         }
 
         yield return new WaitForSeconds(2);
         bSystem.EndTurn();
+    }
+
+    public void Taunt()
+    {
+        StartCoroutine(TauntEnemy());
+    }
+
+    IEnumerator TauntEnemy()
+    {
+        Debug.Log("Taunting Start...");
+        //animations and shit
+        //Get the selected enemy and add a bool to it so it can only focus player rn
+        yield return new WaitForSeconds(2f);
+        bSystem.EndTurn();
+    }
+
+    public void Pass()
+    {
+        StartCoroutine(PassTurn());
+    }
+
+    IEnumerator PassTurn()
+    {
+        _tensCounter._tension += 2; //(replace with a percentage modifier)
+        Debug.Log("Passing...");
+        //animations and shit
+        yield return new WaitForSeconds(2f);
+        bSystem.EndTurn();
+    }
+
+    //Yael Special Options: 
+
+    public void BasicHeal()
+    {
+        StartCoroutine(BasicHealer());
+    }
+
+    //Jasper Special Options: 
+
+    public void BasicAttack()
+    {
+        StartCoroutine(BasicAttacker());
     }
 
     public IEnumerator BasicHealer()

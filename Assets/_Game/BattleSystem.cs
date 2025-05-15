@@ -20,6 +20,12 @@ public class BattleSystem : MonoBehaviour
     public List<Unit> Order = new List<Unit>();
     [Header("TurnOrderIcons")]
     public GameObject[] Icons;
+    public List<GameObject> IconsList = new List<GameObject>();
+    public Transform TurnOrderHolder;
+    public int RoundNum;
+    public string roundString;
+    public TextMeshProUGUI roundText;
+    public bool hasFilledRoster;
 
     [Header("Units")]
     public GameObject[] BattleUnits;
@@ -84,33 +90,62 @@ public class BattleSystem : MonoBehaviour
 
     void Update()
     {
+       
+
         switch (state)
         {
             case BattleState.Start:
-                BattleCanvas.SetActive(true);
-                state = BattleState.GetParticipants;
-                break;
+                BattleCanvas.SetActive(true); //Open Battle Canvas
 
-            case BattleState.GetParticipants:
-                roundStarted = false;
+                 Icons = GameObject.FindGameObjectsWithTag("TurnIcon"); // get turn icons and add them to the list
+                 IconsList.AddRange(Icons);
 
-                FillTurnRoster();
-
-                state = BattleState.RoundStart;
-                
-                break;
-
-            case BattleState.RoundStart:
-                if (!roundStarted)
+                foreach (GameObject _icon in Icons)
                 {
-                    roundStarted = true;
-                    Debug.Log("Round Starting!");
-                    Order = Order.OrderByDescending(unit => unit.speed).ToList();
-                    Debug.Log("Sorted Roster by Speed.");
+                    _icon.transform.SetParent(TurnOrderHolder, false); //for each turn icon, make it a child of the holder
+                }
 
-                    PickNextTurn();
+                state = BattleState.GetParticipants; //then, move on to get participants
+                break;
+
+            case BattleState.GetParticipants: //get all active participants
+
+                if (!hasFilledRoster) //but only if the roster isn't already filled: 
+                {
+
+                    FillTurnRoster(); //see roster logic 
+
+                  
+                }
+                
+                if(hasFilledRoster = true)
+                {
+                    state = BattleState.RoundStart; //start the next round
                 }
                 break;
+
+
+            case BattleState.RoundStart: //sets up each round
+                roundStarted = false;
+                if (!roundStarted) //but only if the round hasn't already started.
+                {
+                    hasFilledRoster = false;
+                    roundStarted = true;
+                    RoundNum = RoundNum + 1; //start the round and update the round number card
+                    roundString = "ROUND: " + RoundNum.ToString();
+                    roundText.text = roundString;
+
+                    Debug.Log("Round " + RoundNum + " Starting!");
+
+
+                    Order = Order.OrderByDescending(unit => unit.speed).ToList(); // set the order of participants by speed
+
+                    ReorderTurnIcons(); // <-- Reorder icons in UI hierarchy
+
+                    PickNextTurn(); //based on speed, pick the next turn. 
+                }
+                break;
+
 
             case BattleState.PlayerTurn:
                 if (!isPlayerTurn)
@@ -119,10 +154,7 @@ public class BattleSystem : MonoBehaviour
                     isJasperTurn = false;
                     isEnemyTurn = false;
                     isYaelTurn = false;
-                   
                     StartPlayerTurn();
-
-                    
                 }
                 break;
 
@@ -167,9 +199,7 @@ public class BattleSystem : MonoBehaviour
                 break;
 
             case BattleState.RoundEnd:
-                Order.Clear();
-                roundStarted = false;
-                state = BattleState.RoundBuffer;
+                StartCoroutine(RoundEndLogic());
                 break;
 
             case BattleState.Lost:
@@ -184,6 +214,22 @@ public class BattleSystem : MonoBehaviour
     {
         Debug.Log("Filling Turn Roster...");
         Order = GameObject.FindObjectsOfType<Unit>().ToList();
+        hasFilledRoster = true; // when that's done, set roster filled to true.
+
+        
+
+        
+    }
+
+    IEnumerator RoundEndLogic()
+    {
+        roundStarted = false;
+        SetAllTurnsFalse();
+        Order.Clear();
+       
+        hasFilledRoster = false;
+        yield return new WaitForSeconds(0.5f);
+        state = BattleState.RoundBuffer;
     }
 
     IEnumerator SetupBattle()
@@ -204,6 +250,40 @@ public class BattleSystem : MonoBehaviour
 
        // state = BattleState.PlayerTurn;
     }
+
+    public void SetAllTurnsFalse()
+    {
+        isPlayerTurn = false;
+        isEnemyTurn = false;
+        isYaelTurn = false;
+        isJasperTurn = false;
+    }
+
+    public void ReorderTurnIcons()
+    {
+        for (int i = 0; i < Order.Count; i++)
+        {
+            Unit unit = Order[i];
+
+            // Find the icon that matches this unit
+            GameObject matchingIcon = IconsList.Find(icon =>
+            {
+                TurnIcon iconComponent = icon.GetComponent<TurnIcon>();
+                return iconComponent != null && iconComponent.unit == unit;
+            });
+
+            if (matchingIcon != null)
+            {
+                // Set sibling index to match the turn order
+                matchingIcon.transform.SetSiblingIndex(i);
+            }
+            else
+            {
+                Debug.LogWarning("No matching icon found for unit: " + unit.unitName);
+            }
+        }
+    }
+
 
     IEnumerator RoundBuffer()
     {
@@ -247,17 +327,29 @@ public class BattleSystem : MonoBehaviour
 
     public void EndTurn()
     {
-        RemovePreviousTurn();
-        PickNextTurn();
+        if (Order.Count >= 0)
+        {
+            RemovePreviousTurn();
+            PickNextTurn();
+        }
+        else
+        {
+            Debug.Log("EndTurn called, but Order list is empty. Ending round.");
+            RoundEndLogic();
+        }
     }
+
 
     public void RemovePreviousTurn()
     {
-        Order.RemoveAt(0);
-    }
-    public void StartBattle()
-    {
-        state = BattleState.Start;
+        if (Order.Count > 0)
+        {
+            Order.RemoveAt(0);
+        }
+        else
+        {
+            Debug.LogWarning("Attempted to remove unit from empty Order list.");
+        }
     }
 
     public void StartPlayerTurn()

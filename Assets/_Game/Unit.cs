@@ -7,6 +7,7 @@ using TMPro;
 public class Unit : MonoBehaviour
 {
     public string unitName;
+    public GameObject unitIcon;
 
     [Header("Status")]
     public bool isDefending;
