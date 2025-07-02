@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Game/_IMPORTANT/Scenes/RoomTest.unity
     guid: 8b588c09dc6e959429c550b951611b34
-  - enabled: 0
+  - enabled: 1
     path: Assets/_Game/_IMPORTANT/Scenes/TESTBATTLE.unity
     guid: 66b82a56ef3ff9447a65c3890fe4f984
   m_configObjects: {}

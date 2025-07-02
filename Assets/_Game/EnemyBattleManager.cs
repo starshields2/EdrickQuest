@@ -53,13 +53,14 @@ public class EnemyBattleManager : MonoBehaviour
     {
         GameObject _allyToAttack = allies[Random.Range(0, allies.Length)];
         Unit _attackedUnit = _allyToAttack.GetComponent<Unit>();
-
-        _attackedUnit.currentHP -= Random.Range(0, 5);
+        float newDamage = 0f;
+        _attackedUnit.TakeDamage();
 
         if(_attackedUnit.currentHP <= 0)
         {
             _allyToAttack.SetActive(false);
         }
+
         yield return new WaitForSeconds(1);
         bSystem.EndTurn();
     }

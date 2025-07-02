@@ -20,13 +20,18 @@ public class Unit : MonoBehaviour
     public int attack;
     public float speed;
     public float defense;
+    public float protect;
+
     public int damageRange;
-    public int ogDamage;
+    public float ogDamage;
 
     [Header("HP Settings")]
     public float maxHP;
+    public float DZThreshold;
+
     public float currentHP;
     public Slider health;
+    public bool DZTon;
 
 
     void Update()
@@ -34,37 +39,38 @@ public class Unit : MonoBehaviour
         health.value = currentHP;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage()
     {
-        damage = Random.Range(0,7);
-        print(damage);
+        EnemyBattleManager _enemyManager = GameObject.Find("BATTLE SYSTEM").GetComponent<EnemyBattleManager>();
+        Unit attackingEnemy = _enemyManager.enemies[0].GetComponent<Unit>();
+
+        float damage = attackingEnemy.ogDamage;
+        float finalDamage = damage;
+
+        // Apply defense and protect
+        if (isProtected || isDefending)
+        {
+            finalDamage = (damage * defense) - protect;
+            if (finalDamage < 0) finalDamage = 0;
+
+            Debug.Log($"PROTECTED! DAMAGE TO {unitName} REDUCED FROM: {damage} TO {finalDamage}");
+        }
+
+        // Apply damage only once
+        currentHP -= finalDamage;
+
+        // Show damage
+        StartCoroutine(ShowDamage(finalDamage));
+
+        // Check for death
         if (currentHP <= 0)
         {
             StartCoroutine(Die());
         }
-
-        if (isDefending)
-        {
-            currentHP -= damage / 2; // Reduce the damage by half
-        }
-        else
-        {
-            currentHP -= damage; // Full damage when not defending
-        }
-
-        if (isProtected)
-        {
-            damage = 0;
-            Debug.Log("PROTECTED!");
-        }
-
-        StartCoroutine(ShowDamage(damage));
-
-
-        
     }
 
-    private IEnumerator ShowDamage(int damage)
+
+    private IEnumerator ShowDamage(float damage)
     {
         damageString.text = damage.ToString();
         damageString.gameObject.SetActive(true);
@@ -73,19 +79,19 @@ public class Unit : MonoBehaviour
     }
     private IEnumerator Die()
     {
-        Debug.Log("died " + gameObject.name);
+        Debug.Log("DEATH " + gameObject.name);
         //die stuff.
         yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
     }
 
-    public void DamageDebuff(int damage)
+    public void DamageDebuff(float damage)
     {
         int dmgLost = Random.Range(1, 3);
         damage = damage - dmgLost;
     }
 
-    public void DamageBuff(int damage)
+    public void DamageBuff(float damage)
     {
         int dmgMod = Random.Range(0, 3);
         damage = damage + dmgMod;

@@ -66,6 +66,9 @@ public class BattleSystem : MonoBehaviour
     public bool isJasperTurn;
     public bool isYaelTurn;
     public bool isEnemyTurn;
+    public bool enemyTurnStarted;
+    public bool PlayersWon;
+    public bool PlayersLost;
 
     public enum BattleState
     {
@@ -86,10 +89,17 @@ public class BattleSystem : MonoBehaviour
     void Start()
     {
         state = BattleState.Start;
+        _tensMeter = GameObject.Find("BATTLE SYSTEM").GetComponent<TensionCounter>();
     }
 
     void Update()
     {
+
+        if(_enemyManager.enemies.Length <= 0)
+        {
+            PlayersWon = true;
+            state = BattleState.Won;
+        }
        
 
         switch (state)
@@ -115,10 +125,9 @@ public class BattleSystem : MonoBehaviour
 
                     FillTurnRoster(); //see roster logic 
 
-                  
                 }
                 
-                if(hasFilledRoster = true)
+                if(hasFilledRoster == true)
                 {
                     state = BattleState.RoundStart; //start the next round
                 }
@@ -126,23 +135,10 @@ public class BattleSystem : MonoBehaviour
 
 
             case BattleState.RoundStart: //sets up each round
-                roundStarted = false;
+              // roundStarted = false;
                 if (!roundStarted) //but only if the round hasn't already started.
                 {
-                    hasFilledRoster = false;
-                    roundStarted = true;
-                    RoundNum = RoundNum + 1; //start the round and update the round number card
-                    roundString = "ROUND: " + RoundNum.ToString();
-                    roundText.text = roundString;
-
-                    Debug.Log("Round " + RoundNum + " Starting!");
-
-
-                    Order = Order.OrderByDescending(unit => unit.speed).ToList(); // set the order of participants by speed
-
-                    ReorderTurnIcons(); // <-- Reorder icons in UI hierarchy
-
-                    PickNextTurn(); //based on speed, pick the next turn. 
+                    StartCoroutine(StartRoundNow());
                 }
                 break;
 
@@ -154,6 +150,7 @@ public class BattleSystem : MonoBehaviour
                     isJasperTurn = false;
                     isEnemyTurn = false;
                     isYaelTurn = false;
+                    enemyTurnStarted = false;
                     StartPlayerTurn();
                 }
                 break;
@@ -164,6 +161,7 @@ public class BattleSystem : MonoBehaviour
                     isPlayerTurn = false;
                     isJasperTurn = true;
                     isEnemyTurn = false;
+                    enemyTurnStarted = false;
                     isYaelTurn = false;
                     
                     StartJasperTurn();
@@ -177,6 +175,7 @@ public class BattleSystem : MonoBehaviour
                     isPlayerTurn = false;
                     isJasperTurn = false;
                     isEnemyTurn = false;
+                    enemyTurnStarted = false;
                     isYaelTurn = true;
                     
                     StartYaelTurn();
@@ -191,7 +190,12 @@ public class BattleSystem : MonoBehaviour
                     isJasperTurn = false;
                     isEnemyTurn = true;
                     isYaelTurn = false;
-                    StartEnemyTurn();
+                    if (!enemyTurnStarted)
+                    {
+                        enemyTurnStarted = true;
+                        StartEnemyTurn();
+                    }
+                    
                 }
                 break;
             case BattleState.RoundBuffer:
@@ -203,9 +207,19 @@ public class BattleSystem : MonoBehaviour
                 break;
 
             case BattleState.Lost:
+                if (PlayersLost)
+                {
+                    SetAllTurnsFalse();
+                    loseCanvas.SetActive(true);
+                }
                 break;
 
             case BattleState.Won:
+                if (PlayersWon)
+                {
+                    SetAllTurnsFalse();
+                    winCanvas.SetActive(true);
+                }
                 break;
         }
     }
@@ -214,19 +228,38 @@ public class BattleSystem : MonoBehaviour
     {
         Debug.Log("Filling Turn Roster...");
         Order = GameObject.FindObjectsOfType<Unit>().ToList();
-        hasFilledRoster = true; // when that's done, set roster filled to true.
+        hasFilledRoster = true; // when that's done, set roster filled to true.     
+    }
 
-        
+    public void StartRound()
+    {
+        hasFilledRoster = false;
+        roundStarted = true; // This is the only place it's set true
+        RoundNum+= 1;
+        roundString = "ROUND: " + RoundNum.ToString();
+        roundText.text = roundString;
+        Debug.Log("Round " + RoundNum + " Starting!");
+        Order = Order.OrderByDescending(unit => unit.speed).ToList();
+       // roundStarted = false;
+    }
 
-        
+    IEnumerator StartRoundNow()
+    {
+
+        StartRound();
+        yield return new WaitForSeconds(2);
+        Debug.Log("Round started. reorder icons and pick next turn.");
+        ReorderTurnIcons(); // <-- Reorder icons in UI hierarchy
+
+        PickNextTurn(); //based on speed, pick the next turn. 
     }
 
     IEnumerator RoundEndLogic()
     {
-        roundStarted = false;
+        //roundStarted = false;
         SetAllTurnsFalse();
         Order.Clear();
-       
+        roundStarted = false;
         hasFilledRoster = false;
         yield return new WaitForSeconds(0.5f);
         state = BattleState.RoundBuffer;
@@ -357,6 +390,8 @@ public class BattleSystem : MonoBehaviour
         state = BattleState.PlayerTurn;
         _playerName.text = "PLAYER";
         playerBattleOptions.SetActive(true);
+        yaelBattleOptions.SetActive(false);
+        jasperBattleOptions.SetActive(false);
     }
 
     public void StartEnemyTurn()
@@ -372,7 +407,7 @@ public class BattleSystem : MonoBehaviour
         yield return new WaitForSeconds(1f);
         _enemyManager.EnemyAttack();
         // After enemy attack animation / logic
-        EndTurn(); // <-- Enemy ends turn cleanly after action
+        //EndTurn(); // <-- Enemy ends turn cleanly after action
     }
 
     public void StartJasperTurn()

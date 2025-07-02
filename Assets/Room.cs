@@ -5,6 +5,8 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {
     // Existing variables
+    public RoomManager _manager;
+    public Transform _managerTransform;
     [SerializeField] GameObject topDoor;
     [SerializeField] GameObject bottomDoor;
     [SerializeField] GameObject leftDoor;
@@ -63,6 +65,7 @@ public class Room : MonoBehaviour
                 print("no room.");
                 break;
         }
+        this.gameObject.transform.parent = _managerTransform;
     }
 
     public Vector2Int RoomIndex { get; set; }

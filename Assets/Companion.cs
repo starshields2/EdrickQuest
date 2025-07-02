@@ -7,8 +7,11 @@ public class Companion : MonoBehaviour
     public TensionCounter _tensionCounter;
     public Unit _thisUnit;
     public Unit _otherUnit;
+
     public bool defendBlocked;
     public bool specialBlocked;
+
+    public bool canTakeDeathblow;
 
     [System.Serializable] public enum Attribute
     {
@@ -70,33 +73,30 @@ public class Companion : MonoBehaviour
                 break;
             case Attribute.Avoidant:
                 _thisUnit.speed = _thisUnit.speed - 3;
-                    defendBlocked = true;
-                specialBlocked = true;
+                    //defendBlocked = true;s
+                    //specialBlocked = true;
                 break;
 
             case Attribute.Competitive:
                 _thisUnit.speed = _otherUnit.speed + 3;
                 break;
             case Attribute.Collaborative:
-                _thisUnit.speed = _thisUnit.speed - 3;
-                    defendBlocked = true;
-                specialBlocked = true;
+               
+
                 break;
             case Attribute.Codependent:
                 _thisUnit.speed = _otherUnit.speed;
-
+                _thisUnit.health = _otherUnit.health;
                 break;
 
             case Attribute.Respectful:
-                _thisUnit.speed = _thisUnit.speed - 3;
-                    defendBlocked = true;
-                specialBlocked = true;
+               //whatever this was supposed to be
                 break;
 
             case Attribute.Amorous:
-                _thisUnit.speed = _thisUnit.speed - 3;
-                    defendBlocked = true;
-                specialBlocked = true;
+                //can take deathblows
+                //health up
+
                 break;
             default:
                 Debug.LogWarning("Unknown attribute:" + attribute);

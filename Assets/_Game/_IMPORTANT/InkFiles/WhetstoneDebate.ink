@@ -1,12 +1,10 @@
-VAR YMorale = 5
-VAR JPoints = 5
-VAR medPoints = 24
-                                 
-VAR avoidanceSP = 0
-VAR competSP = 0
-VAR acommoSP = 0
-VAR collabSP = 0
-VAR comproSP = 0
+VAR YMorale = 0
+VAR JPoints = 0
+
+VAR medPoints = 0
+
+VAR violations = 0
+VAR commonalities = 0
 
 #Yael
 Look, in the bushes. A shrine. I should send a prayer to Elunia immediately.
@@ -23,7 +21,7 @@ You see the gleaning whetstone, yes? Dead gods can't help us, steel can.
 
 =MEDIATIONSTART
 #Edrick
-What should I do?
+{~What should I do?|How do I make them see eye to eye? | Another squabble.}
 +[Talk to Yael] ->YAEL
 +[Talk to Jasper] ->JASPER
 +[Regroup] ->COMP
@@ -31,23 +29,25 @@ What should I do?
 
 =YAEL
 #Yael
-And what do you want, ghost?
+{~And what do you want, ghost?|Coming to bother me again? |Let's hope Jasper's ears are as sharp as her skull is thick.}
  +[Nevermind.] ->MEDIATIONSTART
  *[This shrine seems very important to you.]
-   ~increaseYMorale(2)
  Of course it is. I just don't know when the next chance I'll get to pray will be. 
- **[I'm sure it's not the only shrine on this path.]
-~decreaseYMorale(1)
-    You say that so that Jasper can take the whetstone and destroy the shrine. 
+ **[Perhaps you should tell that to Jasper.]
+~flagValue(1)
+    She would never understand. The Sunblades have no desire to pray. 
     +++[Continue] -> MEDIATIONSTART
   **[I'm assuming that's why it has to be this shrine?]
-  Exactly. 
-  ~increaseYMorale(2)
+  Exactly. If only the brute could see it that way.
   +++[Continue] -> MEDIATIONSTART
- *[We'll die without those whetstones.]
- ~decreaseYMorale(3)
-  Who knows when I'll get another chance to pray? The gods will forsake me. 
-  ++[Continue] -> MEDIATIONSTART
+ *[Jasper is only worried that we could die without those whetstones.]
+ ~flagValue(1)
+  Who knows when I'll get another chance to pray?! The gods will forsake me. 
+  **[Maybe Jasper is worried about the same thing.]
+  ~flagCommon(2)
+  ...Perhaps you are right.
+  +++[Continue] ->MEDIATIONSTART
+  ++[Alright, whatever.] -> MEDIATIONSTART
 
  
 ->DONE
@@ -58,11 +58,11 @@ If you're here to talk sense into me, I have plenty to spare.
  +[Nevermind.] ->MEDIATIONSTART
  *[You should respect the holy site. This is Yael's culture.]
  #Jasper
- ~decreaseJPoints(1)
+ ~flagValue(1)
  Who cares about culture right now? Can the gods reach you in this hellhole?
  ++[Continue] -> MEDIATIONSTART
  *[Can't Yael pray at the stone before you remove it?]
- ~increaseJPoints(1)
+
  {JPoints < 3: We don't have time for that. #Jasper}
 
 {JPoints >= 3: ...fine. Make it quick. #Jasper}
@@ -79,31 +79,28 @@ If you're here to talk sense into me, I have plenty to spare.
  {YMorale < 3: You were going to destroy it anyway. #Yael}
 {YMorale >= 3:Let's just talk this out. #Yael}
 ++[How about Yael just prays before the shrine is destroyed?]
-~decreasemedPoints(10)
-(You have {medPoints} points).
+~flagCommon(3)
 ->DONE
 ++[Jasper, why don't we look for more whetstones somewhere else?]
-~increasemedPoints(20)
+~flagValue(1)
 #Jasper
 When we die in this maze, it will not be my fault. You'll have the Moonwalker to thank for that.
-(You have {medPoints} points).
 ->DONE
 ++[You two figure it out on your own, this is stupid.]
 #Yael
 I will pray wherever I please. Do see to it that you don't interrupt me again, Jasper.
-
-(You have {medPoints} points).
+~flagValue(6)
+You ended with {violations} flagged values.
 ->DONE
 
 ->END
 
-==function increaseYMorale(amount)
-~YMorale = YMorale + amount
-==function decreaseYMorale(amount)
-~YMorale = YMorale - amount
+==function flagValue(amount)
+~violations = violations + amount
 
-==function increaseJPoints(amount)
-~JPoints = JPoints + amount
+==function flagCommon(amount)
+~commonalities = commonalities + amount
+
 ==function decreaseJPoints(amount)
 ~JPoints = JPoints - amount
 

@@ -6,49 +6,86 @@ using TMPro;
 
 public class PlayerActions : MonoBehaviour
 {
-    public BattleSystem bSystem;
-    public TensionCounter _tensCounter;
-    public int _diffuseModifier;
-    public int _speedModifier;
-    public int _healModifier;
+    public BattleSystem bSystem; //overall battle manager
+    public TensionCounter _tensCounter; //tension counter
+
+    public int _diffuseModifier; //how much to reduce tension by
+    public int _speedModifier; // how much to increase speed by
+    public int _healModifier; // how much to heal
+    public int _damageModifier; // how much to hurt
+
+    [Header("EFFECTS")]
     public GameObject _diffuseParticle;
     public GameObject _healParticle;
+
     public RectTransform _pointer;
     public float _hoverHeight = 2.0f;
+
     public GameObject[] _allies;
     public GameObject[] _enemies;
+
     public int currentAllyIndex = 0;
     public int currentEnemyIndex = 0;
+
     public GameObject selectedAlly;
     public GameObject selectedEnemy;
-    public Unit selectedUnit; // Store the Unit component of selectedAlly
+    public Unit selectedUnit; 
 
     private bool isSelectingAlly = false;
-    private bool isSelectingEnemy = false;
+    public bool isSelectingEnemy = false;
 
     void Update()
     {
-        if (!isSelectingAlly) return;
-
-        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+        // Ally selection input
+        if (isSelectingAlly)
         {
-            PlayerSelectNextAlly();
+            if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+            {
+                Debug.Log("selecting next ally");
+                PlayerSelectNextAlly();
+            }
+
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+            {
+                PlayerSelectPreviousAlly();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+            {
+                ConfirmAllySelection();
+            }
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+        // Enemy selection input
+        if (isSelectingEnemy)
         {
-            PlayerSelectPreviousAlly();
-        }
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                Debug.Log("selecting next enemy");
+                PlayerSelectNextEnemy();
+            }
 
-        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
-        {
-            ConfirmAllySelection();
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                PlayerSelectPreviousEnemy();
+            }
+
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                ConfirmEnemySelection();
+            }
         }
     }
-    //Player Options:
+
+    //Gen Options:
     public void Diffuse()
     {
         StartCoroutine(DiffuseCoroutine());
+    }
+
+    public void Defend()
+    {
+        StartCoroutine(DefendCoroutine());
     }
 
     public IEnumerator DiffuseCoroutine()
@@ -60,9 +97,66 @@ public class PlayerActions : MonoBehaviour
         bSystem.EndTurn();
     }
 
+    public IEnumerator DefendCoroutine()
+    {
+       //function: choose an ally to defend. They should take -PROT% damage next time they are targeted. remove one tension for helping a friend :) 
+
+        isSelectingAlly = true;
+
+        // Wait until the player confirms an ally
+        while (isSelectingAlly)
+        {
+            yield return null;
+        }
+
+        // Example: Apply protection bonus the selected unit
+        if (selectedUnit != null)
+        {
+            
+            Debug.Log("Defending: " + selectedUnit.unitName);
+
+            _tensCounter._tension -= 1; 
+
+            Companion _thisCompanion = selectedUnit.GetComponent<Companion>();
+
+            if (_thisCompanion.specialBlocked)
+            {
+                Debug.Log("ERROR: " + selectedUnit + "IS ATTRIBUTE BLOCKED!");
+            }
+            if(_thisCompanion.specialBlocked == false)
+            {
+                selectedUnit.protect += 3f;
+                selectedUnit.isProtected = true;
+            }
+            else
+            {
+                Debug.Log(selectedUnit + "ERROR");
+            }
+
+
+
+        }
+
+        yield return new WaitForSeconds(2);
+        bSystem.EndTurn();
+    }
+
+
     public void Encourage()
     {
         StartCoroutine(EncourageModifier());
+    }
+
+    public void Assess()
+    {
+        StartCoroutine(AssessStart());
+    }
+
+    public IEnumerator AssessStart()
+    {
+        yield return new WaitForSeconds(2f);
+        Debug.Log("Assessing -");
+        bSystem.EndTurn();
     }
 
     public IEnumerator EncourageModifier()
@@ -127,8 +221,12 @@ public class PlayerActions : MonoBehaviour
 
     public void BasicAttack()
     {
-        StartCoroutine(BasicAttacker());
+        Debug.Log("BasicAttack() called");
+
+            StartCoroutine(BasicAttacker());
+              
     }
+
 
     public IEnumerator BasicHealer()
     {
@@ -145,8 +243,21 @@ public class PlayerActions : MonoBehaviour
         {
             _tensCounter._currentTetherPoints -= 3;
             Debug.Log("Healing: " + selectedUnit.unitName);
-            _healParticle.SetActive(true);
-            selectedUnit.currentHP += _healModifier;
+            
+
+            Companion _thisCompanion = selectedUnit.GetComponent<Companion>();
+
+            if(_thisCompanion.specialBlocked)
+            {
+                Debug.Log("ERROR:" + selectedUnit + "IS ATTRIBUTE BLOCKED!");
+            }
+            else
+            {
+                selectedUnit.currentHP += _healModifier;
+                _healParticle.SetActive(true);
+            }
+
+            
 
         }
 
@@ -158,6 +269,8 @@ public class PlayerActions : MonoBehaviour
 
     public IEnumerator BasicAttacker()
     {
+        Debug.Log("BasicAttack");
+
         isSelectingEnemy = true;
 
         // Wait until the player confirms an ally
@@ -170,9 +283,8 @@ public class PlayerActions : MonoBehaviour
         if (selectedUnit != null)
         {
             Debug.Log("Attacking: " + selectedUnit.unitName);
-            // Example: Heal the unit
-            selectedUnit.currentHP += _healModifier;
-
+           
+            selectedUnit.TakeDamage();
         }
 
         yield return new WaitForSeconds(2);
@@ -187,7 +299,7 @@ public class PlayerActions : MonoBehaviour
             currentAllyIndex = 0;
         }
 
-        SetPointerPosition();
+        SetPointerPositionAlly();
     }
 
     public void PlayerSelectPreviousAlly()
@@ -198,7 +310,7 @@ public class PlayerActions : MonoBehaviour
             currentAllyIndex = _allies.Length - 1;
         }
 
-        SetPointerPosition();
+        SetPointerPositionAlly();
     }
 
     public void PlayerSelectNextEnemy()
@@ -209,7 +321,7 @@ public class PlayerActions : MonoBehaviour
             currentEnemyIndex   = 0;
         }
 
-        SetPointerPosition();
+        SetPointerPositionEnemy();
     }
 
     public void PlayerSelectPreviousEnemy()
@@ -218,12 +330,13 @@ public class PlayerActions : MonoBehaviour
         if (currentEnemyIndex < 0)
         {
             currentEnemyIndex = _enemies.Length - 1;
+            Debug.Log(currentEnemyIndex);
         }
 
-        SetPointerPosition();
+        SetPointerPositionEnemy();
     }
 
-    private void SetPointerPosition()
+    private void SetPointerPositionAlly()
     {
         selectedAlly = _allies[currentAllyIndex];
         Vector3 targetPosition = selectedAlly.transform.position;
@@ -232,6 +345,17 @@ public class PlayerActions : MonoBehaviour
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(targetPosition);
         _pointer.position = screenPosition;
     }
+
+    private void SetPointerPositionEnemy()
+    {
+        selectedEnemy = _enemies[currentEnemyIndex];
+        Vector3 targetPosition = selectedEnemy.transform.position;
+        targetPosition.y += _hoverHeight;
+
+        Vector3 screenPosition = Camera.main.WorldToScreenPoint(targetPosition);
+        _pointer.position = screenPosition;
+    }
+
 
     private void ConfirmAllySelection()
     {
@@ -242,7 +366,7 @@ public class PlayerActions : MonoBehaviour
 
         if (selectedUnit != null)
         {
-            Debug.Log("Selected Unit: " + selectedUnit.unitName + " | speed : " + selectedUnit.speed);
+            Debug.Log("Selected Unit: " + selectedUnit.unitName);
         }
         else
         {

@@ -8,7 +8,9 @@ using TMPro;
 
 public class CampDialogue : MonoBehaviour
 {
-    
+    public static event Action<Story> OnCreateStory;
+
+    [Header("Dialogue History")]
     private List<string> dialogueHistory = new List<string>();
     [SerializeField]
     private GameObject _DialogueHistoryTextPF = null; // Reference to your existing dialogue history prefab
@@ -16,8 +18,8 @@ public class CampDialogue : MonoBehaviour
     private GameObject _HistoryContainer = null; // Reference to your existing dialogue history prefab
     public Transform _dHistoryParent;
    
-
-    public static event Action<Story> OnCreateStory;
+    [Header("Story Items")]
+    
     public UnityEngine.UI.Slider YSlider;
     public UnityEngine.UI.Slider JSlider;
     public GameObject backgroundCanvas;
@@ -26,24 +28,57 @@ public class CampDialogue : MonoBehaviour
     public string[] currentInktags;
     public GameObject[] speakerID;
     public int YML;
-    public SkillMenu skillMenu;
+    //public SkillMenu skillMenu;
+
+    [Header("Tension")]
     public TensionCounter _tensMeter;
+    public Slider _tensionSlider;
+    public Slider _TPSlider;
+    public float _newTensionValue;
+    public float _oldTensionValue;
+
     public int _medPoints;
 
+    public int _flaggedValues;
+    public int _flaggedCommons;
 
+    public float _valuesMult;
+    public float _commonsMult;
+
+    public bool _strongValueFlagged;
+    public bool _strongCommonsFlagged;
+
+    public UIBinder _UIBinder;
     // Define the UI prefab for narrator text (set in Unity editor)
     [SerializeField]
     private Text narratorTextPrefab = null;
 
-    private 
+    private
+
+ void Start()
+    {
+        
+    }
     void Awake()
     {
+        _UIBinder = GameObject.Find("DataManager").GetComponent<UIBinder>();
+        _UIBinder.GetDialogueInfo();
         // Remove the default message
         RemoveChildren();
         StartStory();
-        skillMenu = GameObject.Find("SkillManager").GetComponent<SkillMenu>();
-        _tensMeter = GameObject.Find("TensionHolder").GetComponent<TensionCounter>();
+        //skillMenu = GameObject.Find("SkillManager").GetComponent<SkillMenu>();
+       // _tensMeter = GameObject.Find("BATTLE SYSTEM").GetComponent<TensionCounter>();
+        _oldTensionValue = _tensMeter._tension;
       //  Debug.Log(story.currentTags.Length);
+
+
+    }
+
+    public void BindSliders(Slider tension, Slider tp, Companion[] comps = null)
+    {
+        _tensionSlider = tension;
+        _TPSlider = tp;
+       
     }
 
     // Creates a new Story object with the compiled story which we can then play!
@@ -52,8 +87,8 @@ public class CampDialogue : MonoBehaviour
         story = new Story(inkJSONAsset.text);
        
         if (OnCreateStory != null) OnCreateStory(story);
-        YSlider.value = (int)story.variablesState["YMorale"];
-        JSlider.value = (int)story.variablesState["JPoints"];
+        YSlider.value = (int)story.variablesState["violations"];
+        JSlider.value = (int)story.variablesState["commonalities"];
         RefreshView();
         DisplayTags();
     }
@@ -74,32 +109,26 @@ public class CampDialogue : MonoBehaviour
 
     void Update()
     {
-        skillMenu._skillPoints = Convert.ToInt32(YSlider.value);
-        skillMenu._skillPointsAVO = (int)story.variablesState["avoidanceSP"];
-        skillMenu._skillPointsAC = (int)story.variablesState["acommoSP"];
-        skillMenu._skillPointsCOMPET = (int)story.variablesState["comproSP"];
-        skillMenu._skillPointsAC = (int)story.variablesState["acommoSP"];
-        YSlider.value = Convert.ToInt32(story.variablesState["YMorale"]);
-        JSlider.value = (int)story.variablesState["JPoints"];
-        YML = (int)story.variablesState["YMorale"];
+        //skillMenu._skillPoints = Convert.ToInt32(YSlider.value);
+        ////YSlider.value = Convert.ToInt32(story.variablesState["YMorale"]);
+        //JSlider.value = (int)story.variablesState["JPoints"];
+        //YML = (int)story.variablesState["YMorale"];
         _medPoints = (int)story.variablesState["medPoints"];
+        _flaggedValues = (int)story.variablesState["violations"];
+        _flaggedCommons = (int)story.variablesState["commonalities"];
 
 
     }
-    [ContextMenu("Collect SK")]
-    public void CollectPoints()
+
+//on closing the mediation window, calculate tension with this:
+    public void CheckNewTensionValue()
     {
-        skillMenu._skillPoints = Convert.ToInt32(YSlider.value);
-        skillMenu._skillPointsAVO = (int)story.variablesState["avoidanceSP"];
-        skillMenu._skillPointsAC = (int)story.variablesState["acommoSP"];
-        skillMenu._skillPointsCOMPET = (int)story.variablesState["comproSP"];
-    }
+        _newTensionValue = _oldTensionValue + ((_flaggedValues * _valuesMult) + (_flaggedCommons * _commonsMult));
+        print(_newTensionValue);
+        _oldTensionValue = _newTensionValue;
+        _tensMeter._tension = _newTensionValue;
+}
 
-    public void CollectMedPoints()
-    {
-        _tensMeter._newInfluence = _medPoints;
-        _tensMeter.UpdateInfluence();
-    }
 
     void RefreshView()
     {
@@ -176,8 +205,8 @@ public class CampDialogue : MonoBehaviour
     {
         if (choice.text.Trim() == "Back")
         {
-            RestartStory();
-           // Deactivate();
+           //RestartStory();
+            Deactivate();
         }
         else
         {
@@ -192,8 +221,8 @@ public class CampDialogue : MonoBehaviour
             {
                 reverseAud.Play();
                 Debug.Log("Restarting the story.");
-                RestartStory();
-              //  Deactivate();
+                //RestartStory();
+                Deactivate();
 
             }
             else
@@ -206,8 +235,7 @@ public class CampDialogue : MonoBehaviour
 
     void Deactivate()
     {
-        CollectPoints();
-        CollectMedPoints();
+        CheckNewTensionValue();
         Debug.Log("deactivating...");
         this.gameObject.SetActive(false);
         backgroundCanvas.SetActive(false);
@@ -320,7 +348,7 @@ public class CampDialogue : MonoBehaviour
         if (text == "Back")
         {
             choice.onClick.AddListener(() => Deactivate());
-            RestartStory();
+           // RestartStory();
         }
         else
         {

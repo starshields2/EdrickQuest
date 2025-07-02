@@ -5,6 +5,7 @@ VAR experience = 0
 VAR hound = 0
 VAR prep = 0
 VAR overhear = 0
+VAR misconception = 0
                                  
 VAR avoidanceSP = 0
 VAR competSP = 0
@@ -87,11 +88,11 @@ If we spend time and resources on this mutt, we'll never make it. We should just
 #Yael
  {YMorale < 3: You were going to destroy it anyway. #Yael}
 {YMorale >= 3:Let's just talk this out. #Yael}
-++[How about Yael just prays before the shrine is destroyed?]
+ ++{misconception > 0} [Jasper does respect these animals. She is concerned for our own safety in this moment.] 
 ~decreasemedPoints(10)
 (You have {medPoints} points).
 ->DONE
-++[Jasper, why don't we look for more whetstones somewhere else?]
+++[I'm making an executive decision. We leave the animal.]
 ~increasemedPoints(20)
 #Jasper
 When we die in this maze, it will not be my fault. You'll have the Moonwalker to thank for that.
@@ -101,7 +102,6 @@ When we die in this maze, it will not be my fault. You'll have the Moonwalker to
 #Yael
 I will pray wherever I please. Do see to it that you don't interrupt me again, Jasper.
 
-(You have {medPoints} points).
 ->DONE
 
 ->END
@@ -127,3 +127,6 @@ I will pray wherever I please. Do see to it that you don't interrupt me again, J
 
 ==function overheard(amount)
 ~overhear = overhear + amount
+
+==function misconception(amount)
+~misconception = misconception + amount
