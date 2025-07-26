@@ -18,8 +18,10 @@ public class Room : MonoBehaviour
     public GameObject shop;
     public GameObject item;
     public GameObject rope;
+    public GameObject finalRoomObject;
 
     public RoomType roomType;
+    public bool isFinalRoom;
 
     public enum RoomType
     {
@@ -28,7 +30,8 @@ public class Room : MonoBehaviour
         Encounter,
         Campsite,
         Settlement,
-        Narrative
+        Narrative,
+        Final
     }
 
     void Start()
@@ -60,6 +63,9 @@ public class Room : MonoBehaviour
                 break;
             case RoomType.Narrative:
                 mediationMedallion.SetActive(true);
+                break;
+            case RoomType.Final:
+                finalRoomObject.SetActive(true);
                 break;
             default:
                 print("no room.");

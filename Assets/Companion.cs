@@ -7,12 +7,9 @@ public class Companion : MonoBehaviour
     public TensionCounter _tensionCounter;
     public Unit _thisUnit;
     public Unit _otherUnit;
-
-    public Companion otherCompanion;
-
+    public bool comboReady;
     public bool defendBlocked;
     public bool specialBlocked;
-    public bool comboReady;
     public bool canTakeDeathblow;
 
     [System.Serializable] public enum Attribute
