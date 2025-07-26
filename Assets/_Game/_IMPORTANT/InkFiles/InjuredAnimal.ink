@@ -40,10 +40,8 @@ Another meaningless squabble...
 You'd think that brute at least has compassion for animals.
  +[Nevermind.] ->MEDIATIONSTART
  *[Maybe she's never had a pet.]
-   ~increaseYMorale(2)
  The Sunblades are too busy bonking each other over the head with the blunt end of their greatswords to care for animals they don't have a use for. They don't even name their sled dogs.
  **[You're very passionate about this.]
-~decreaseYMorale(1)
     Of course I am! If I leave this silverpaw to die, we may as well throw ourselves into the nearest ditch. There is no coming back from turning the other cheek to Elunia's sacred pack. 
     ***[Turn the other cheek?]
     One of our own, Barley, left a silverpaw to die out in the cold. His right hand became hard and frozen the next day, and never recovered. I refuse to suffer a similar curse.
@@ -59,7 +57,6 @@ You'd think that brute at least has compassion for animals.
  ~enablePrep(1)
  ++[Continue] ->MEDIATIONSTART
  * {JPoints > 3} [Jasper is extremely nervous.]
- ~decreaseYMorale(3)
   She should have said that... 
   ++[Continue] -> MEDIATIONSTART
 
@@ -89,11 +86,11 @@ If we spend time and resources on this mutt, we'll never make it. We should just
  {YMorale < 3: You were going to destroy it anyway. #Yael}
 {YMorale >= 3:Let's just talk this out. #Yael}
  ++{misconception > 0} [Jasper does respect these animals. She is concerned for our own safety in this moment.] 
-~decreasemedPoints(10)
+
 (You have {medPoints} points).
 ->DONE
 ++[I'm making an executive decision. We leave the animal.]
-~increasemedPoints(20)
+
 #Jasper
 When we die in this maze, it will not be my fault. You'll have the Moonwalker to thank for that.
 (You have {medPoints} points).
@@ -106,21 +103,7 @@ I will pray wherever I please. Do see to it that you don't interrupt me again, J
 
 ->END
 
-==function increaseYMorale(amount)
-~YMorale = YMorale + amount
-==function decreaseYMorale(amount)
-~YMorale = YMorale - amount
 
-==function increaseJPoints(amount)
-~JPoints = JPoints + amount
-==function decreaseJPoints(amount)
-~JPoints = JPoints - amount
-
-==function increasemedPoints(amount)
-~medPoints = medPoints + amount
-
-==function decreasemedPoints(amount)
-~medPoints = medPoints - amount
 
 ==function enablePrep(amount)
 ~prep = prep + amount
@@ -128,5 +111,5 @@ I will pray wherever I please. Do see to it that you don't interrupt me again, J
 ==function overheard(amount)
 ~overhear = overhear + amount
 
-==function misconception(amount)
+==function misconceptionIncrease(amount)
 ~misconception = misconception + amount

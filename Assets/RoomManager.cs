@@ -7,15 +7,13 @@ public class RoomManager : MonoBehaviour
 {
  // public static RoomManager Instance { get; private set; }
 
-    [SerializeField] private GameObject roomPrefab;
+    [SerializeField] private GameObject roomPrefab; //THE basic room prefab
 
     [SerializeField] private int maxRooms = 15;
-    [SerializeField] private int minRooms = 10;
+    [SerializeField] private int minRooms = 15;
     [SerializeField] public GameObject[] rooms;
-
     private int roomWidth = 17;
     private int roomHeight = 9;
-
     [SerializeField] int gridSizeX = 10;
     [SerializeField] int gridSizeY = 10;
 
@@ -161,10 +159,17 @@ public class RoomManager : MonoBehaviour
         roomGrid[x, y] = 1;
         roomCount++;
 
-        var newRoom = Instantiate(roomPrefab, GetPositionFromGridIndex(roomIndex), Quaternion.identity);
+        var newRoom = Instantiate(roomPrefab, GetPositionFromGridIndex(roomIndex), Quaternion.identity); //new room is a game object
+
         newRoom.GetComponent<Room>().RoomIndex = roomIndex;
-        newRoom.name = $"Room-{roomCount}";
+        newRoom.name = $"Room-{roomCount}"; 
         newRoom.transform.SetParent(transform);
+
+        if (newRoom.name.Contains("15"))
+        {
+            Room tempRoomScript = newRoom.GetComponent<Room>();
+            tempRoomScript.isFinalRoom = true;
+        }
         // Assign room type (Shop, Campsite, etc.)
         AssignRoomType(newRoom.GetComponent<Room>());
 
@@ -180,7 +185,7 @@ public class RoomManager : MonoBehaviour
     {
  
             roomScript.roomType = (Room.RoomType)Random.Range(1, System.Enum.GetValues(typeof(Room.RoomType)).Length);
-      
+            
 
         // Set up the room's features (like activating items, combat, etc.)
         roomScript.SetRooms();

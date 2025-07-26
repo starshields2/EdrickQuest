@@ -141,7 +141,54 @@ public class PlayerActions : MonoBehaviour
         bSystem.EndTurn();
     }
 
+    public void AddComboToRoster()
+    {
+        //adds combo partner to roster. 
+        Debug.Log("Adding player to roster");
+        StartCoroutine(AddCombo());
 
+    }
+
+    public IEnumerator AddCombo()
+    {
+        isSelectingAlly = true;
+
+        // Wait until the player confirms an ally
+        while (isSelectingAlly)
+        {
+            yield return null;
+        }
+
+        // Example: Apply an effect to the selected unit
+        if (selectedUnit != null)
+        {
+            _tensCounter._currentTetherPoints -= 3;
+            Debug.Log("selected: " + selectedUnit.unitName);
+
+
+            Companion _thisCompanion = selectedUnit.GetComponent<Companion>();
+            Debug.Log(_thisCompanion);
+            if (_thisCompanion.specialBlocked)
+            {
+                Debug.Log("ERROR:" + selectedUnit + "IS ATTRIBUTE BLOCKED!");
+            }
+            else
+            {
+                if (_thisCompanion.comboReady)
+                {
+                    Debug.Log("ADDING " + selectedUnit + "TO ROSTER!");
+                    bSystem.Order.Insert(1, selectedUnit);
+                }
+            }
+
+
+
+        }
+
+        yield return new WaitForSeconds(2);
+       
+        bSystem.EndTurn();
+    }
     public void Encourage()
     {
         StartCoroutine(EncourageModifier());

@@ -231,6 +231,8 @@ public class BattleSystem : MonoBehaviour
         hasFilledRoster = true; // when that's done, set roster filled to true.     
     }
 
+   
+
     public void StartRound()
     {
         hasFilledRoster = false;
