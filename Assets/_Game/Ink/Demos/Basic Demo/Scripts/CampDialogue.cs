@@ -61,14 +61,11 @@ public class CampDialogue : MonoBehaviour
     }
     void Awake()
     {
-        _UIBinder = GameObject.Find("DataManager").GetComponent<UIBinder>();
-        _UIBinder.GetDialogueInfo();
-        // Remove the default message
+        //_UIBinder = GameObject.Find("DataManager").GetComponent<UIBinder>();
+       // _UIBinder.GetDialogueInfo();
         RemoveChildren();
-        StartStory();
-        //skillMenu = GameObject.Find("SkillManager").GetComponent<SkillMenu>();
-       // _tensMeter = GameObject.Find("BATTLE SYSTEM").GetComponent<TensionCounter>();
-        _oldTensionValue = _tensMeter._tension;
+       StartStory();
+       // _oldTensionValue = _tensMeter._tension;
       //  Debug.Log(story.currentTags.Length);
 
 

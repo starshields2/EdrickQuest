@@ -8,8 +8,17 @@ public class StartInkConvo : MonoBehaviour
     public AudioSource startAud;
     public GameObject prompt;
     public Dialogue _dialogue;
+    public MediationBank _medBank;
 
     private bool playerInRange = false;
+
+    void Awake()
+    {
+        _medBank = GameObject.Find("MediationsBank").GetComponent<MediationBank>();
+        _medBank.GetRandomMediation();
+        int chosenMediation = _medBank.chosenDialogue;
+        inkConvo = _medBank.dialogues[chosenMediation];
+    }
 
     void Update()
     {
@@ -20,9 +29,8 @@ public class StartInkConvo : MonoBehaviour
 
         if (playerInRange && Input.GetKeyDown(KeyCode.E))
         {
-            Time.timeScale = 0f;
-            inkConvo.SetActive(true);
             startAud.Play();
+            inkConvo.SetActive(true);
         }
     }
 

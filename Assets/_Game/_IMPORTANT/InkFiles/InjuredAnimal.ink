@@ -1,5 +1,5 @@
-VAR YMorale = 5
-VAR JPoints = 1
+VAR violations = 0
+VAR commonalities = 0
 VAR medPoints = 70
 VAR experience = 0
 VAR hound = 0
@@ -43,7 +43,7 @@ You'd think that brute at least has compassion for animals.
  The Sunblades are too busy bonking each other over the head with the blunt end of their greatswords to care for animals they don't have a use for. They don't even name their sled dogs.
  **[You're very passionate about this.]
     Of course I am! If I leave this silverpaw to die, we may as well throw ourselves into the nearest ditch. There is no coming back from turning the other cheek to Elunia's sacred pack. 
-    ***[Turn the other cheek?]
+    ***[Sacred pack?]
     One of our own, Barley, left a silverpaw to die out in the cold. His right hand became hard and frozen the next day, and never recovered. I refuse to suffer a similar curse.
     ++++[Continue] -> MEDIATIONSTART
   **[Would Jasper like to overhear that?]
@@ -56,7 +56,7 @@ You'd think that brute at least has compassion for animals.
  A ritual like this should only take about an hour, give or take.
  ~enablePrep(1)
  ++[Continue] ->MEDIATIONSTART
- * {JPoints > 3} [Jasper is extremely nervous.]
+// * {JPoints > 3} [Jasper is extremely nervous.]
   She should have said that... 
   ++[Continue] -> MEDIATIONSTART
 
@@ -79,12 +79,12 @@ If we spend time and resources on this mutt, we'll never make it. We should just
 ->DONE  
 
 =COMP
- {JPoints < 3: I don't see why this needed to be a conversation. #Jasper}
-{JPoints >= 3: Well, as long as it's over with quickly. #Jasper}
+ {violations < 3: I don't see why this needed to be a conversation. #Jasper}
+{violations >= 3: Well, as long as it's over with quickly. #Jasper}
 +[Continue]
 #Yael
- {YMorale < 3: You were going to destroy it anyway. #Yael}
-{YMorale >= 3:Let's just talk this out. #Yael}
+ {commonalities < 3: You were going to destroy it anyway. #Yael}
+{commonalities >= 3:Let's just talk this out. #Yael}
  ++{misconception > 0} [Jasper does respect these animals. She is concerned for our own safety in this moment.] 
 
 (You have {medPoints} points).

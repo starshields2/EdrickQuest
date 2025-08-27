@@ -72,6 +72,12 @@ public class Room : MonoBehaviour
                 break;
         }
         this.gameObject.transform.parent = _managerTransform;
+
+        if (this.gameObject.name.Contains("15"))
+        {
+            isFinalRoom = true;
+            finalRoomObject.SetActive(true);
+        }
     }
 
     public Vector2Int RoomIndex { get; set; }

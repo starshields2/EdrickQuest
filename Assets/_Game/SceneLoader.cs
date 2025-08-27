@@ -11,6 +11,11 @@ public class SceneLoader : MonoBehaviour
 
     [SerializeField] private RoomManager roomManager;
 
+    void Awake()
+    {
+        roomManager = GameObject.Find("RoomManager").GetComponent<RoomManager>();
+    }
+
     public void LoadScene(string sceneToLoad)
     {
         SceneManager.LoadScene(sceneToLoad);

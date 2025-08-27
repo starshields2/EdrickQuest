@@ -165,11 +165,6 @@ public class RoomManager : MonoBehaviour
         newRoom.name = $"Room-{roomCount}"; 
         newRoom.transform.SetParent(transform);
 
-        if (newRoom.name.Contains("15"))
-        {
-            Room tempRoomScript = newRoom.GetComponent<Room>();
-            tempRoomScript.isFinalRoom = true;
-        }
         // Assign room type (Shop, Campsite, etc.)
         AssignRoomType(newRoom.GetComponent<Room>());
 
@@ -185,7 +180,7 @@ public class RoomManager : MonoBehaviour
     {
  
             roomScript.roomType = (Room.RoomType)Random.Range(1, System.Enum.GetValues(typeof(Room.RoomType)).Length);
-            
+          
 
         // Set up the room's features (like activating items, combat, etc.)
         roomScript.SetRooms();
