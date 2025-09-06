@@ -33,7 +33,7 @@ public class HeroKnight : MonoBehaviour {
         Jasper
     }
  public CurCharacter _curCharacter;
-    private int charaIndex;
+    public int charaIndex;
     private int minchara = 0;
     private int maxchara = 2;
     public Sprite[] _charaSprite;
@@ -41,8 +41,10 @@ public class HeroKnight : MonoBehaviour {
     public bool yaelAvailable;
     public Transform yaelCheck;
     public Transform japserCheck;
-    public Vector2 dist; 
+    public float dist; 
     public GameObject[] Party;
+    public GameObject instantiatedChara;
+    
 
 
     // Use this for initialization
@@ -74,6 +76,10 @@ public class HeroKnight : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
+        Vector2 yaelDis = yaelCheck.position;
+        Vector2 jasDis = japserCheck.position;
+        dist = Vector2.Distance(yaelDis, jasDis);
+        
         if(charaIndex > maxchara)
         {
             charaIndex = minchara;
@@ -172,7 +178,7 @@ public class HeroKnight : MonoBehaviour {
             SwapLeft();
 
         }
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             Debug.Log("Placing Companion");
             
@@ -185,6 +191,11 @@ public class HeroKnight : MonoBehaviour {
                 instantiatedChara = Party[1];
             }
             PlaceCompanion();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Recall();
         }
        
         //Attack
@@ -271,10 +282,33 @@ public class HeroKnight : MonoBehaviour {
         {
             Debug.Log("Placing Companion: " + _curCharacter);
         }
-        Party[charaIndex].SetActive(true);
+        
         Party[charaIndex].transform.parent = null;
+        Party[charaIndex].SetActive(true);
+        
+        if(charaIndex == 1)
+        {
+            yaelAvailable = false;
+        }
+        if (charaIndex == 2)
+        {
+            jasperAvailable = false;
+        }
 
     }
+
+    public void Recall()
+    {
+        Debug.Log("Recall!");
+        foreach (GameObject partyMember in Party)
+        {
+            partyMember.SetActive(false);
+            partyMember.transform.parent = this.gameObject.transform;
+            yaelAvailable = true;
+            jasperAvailable = false;
+        }
+    }
+   
     void AE_SlideDust()
     {
         Vector3 spawnPosition;
@@ -292,6 +326,7 @@ public class HeroKnight : MonoBehaviour {
             dust.transform.localScale = new Vector3(m_facingDirection, 1, 1);
         }
     }
+
     [ContextMenu("SavePOS")]
     public void SavePlayerPosition()
     {
