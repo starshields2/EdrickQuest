@@ -305,7 +305,7 @@ public class HeroKnight : MonoBehaviour {
             partyMember.SetActive(false);
             partyMember.transform.parent = this.gameObject.transform;
             yaelAvailable = true;
-            jasperAvailable = false;
+            jasperAvailable = true;
         }
     }
    

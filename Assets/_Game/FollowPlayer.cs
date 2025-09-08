@@ -1,39 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FollowPlayer : MonoBehaviour
 {
-    public Transform playerTransform; // Reference to the player's Transform component
-    public float followSpeed = 5.0f; // Adjust this value to control the follow speed
-    public float stopDistance = 1.0f; // The distance at which the following stops
+    public Transform playerTransform;
+    public float followSpeed = 5.0f;
+    public float stopDistance = 0.1f;
 
-    private Rigidbody2D rb;
-
-    void Start()
+    void LateUpdate()
     {
-        rb = GetComponent<Rigidbody2D>();
-    }
+        float distanceX = Mathf.Abs(playerTransform.position.x - transform.position.x);
 
-    void FixedUpdate()
-    {
-        float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
-
-        if (distanceToPlayer > stopDistance)
+        if (distanceX > stopDistance)
         {
-            Vector3 scale = transform.localScale;
-
-            if (playerTransform.position.x > transform.position.x)
-            {
-                scale.x = Mathf.Abs(scale.x) * -1;
-                transform.Translate(followSpeed * Time.deltaTime, 0, 0);
-            }
-            else
-            {
-                scale.x = Mathf.Abs(scale.x);
-            }
-
-            transform.localScale = scale;
+            Vector3 newPosition = transform.position;
+            newPosition.x = Mathf.Lerp(transform.position.x, playerTransform.position.x, followSpeed * Time.deltaTime);
+            transform.position = newPosition;
         }
     }
 }
