@@ -67,6 +67,11 @@ public class TensionCounter : MonoBehaviour
             highTension = false;
             _currentMaxTetherPoints = _maxTetherPoints;
         }
+        if(7 < _tension && _tension > 15)
+        {
+            highTension = false;
+            lowTension = false;
+        }
         if(_tension >= 15)
         {
             //HIGH TENSION

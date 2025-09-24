@@ -7,6 +7,7 @@ public class Dialogue : MonoBehaviour
 {
     public TextMeshProUGUI textComponent;
     public TextMeshProUGUI speakerName;
+    public bool textStart;
     public string unitName;
     public string[] lines;
     public float textSpeed;
@@ -51,11 +52,16 @@ public class Dialogue : MonoBehaviour
 
     IEnumerator TypeLine()
     {
-        foreach (char c in lines[index].ToCharArray())
+        if (!textStart)
         {
-            textComponent.text += c;
+            textStart = true;
+    foreach (char c in lines[index].ToCharArray())
+        {
             yield return new WaitForSeconds(textSpeed);
+            textComponent.text += c;  
         }
+        }
+    
     }
 
     void NextLine()
@@ -63,6 +69,7 @@ public class Dialogue : MonoBehaviour
         if(index < lines.Length - 1)
         {
             index++;
+            StopAllCoroutines();
             textComponent.text = string.Empty;
             StartCoroutine(TypeLine());
         }

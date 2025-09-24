@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class StartDialogue : MonoBehaviour
 {
-    public ShufflePartyDialogue manager;
+    public Dialogue dialogue;
+    public GameObject _dialogueHolder;
 
     // Start is called before the first frame update
     void Start()
@@ -20,9 +21,35 @@ public class StartDialogue : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log("passing");
         if(other.tag == "Player")
         {
-            manager.ShuffleDialogue();
+            Debug.Log("IT'S THE PLAYE RIT'S THE PLAYER COME ON1");
+            StartCoroutine(StartDialogueNow());
         }
+    }
+
+    void StartDia()
+    {
+       
+        dialogue.StartDialogue();
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        Debug.Log("pass");
+        if (other.tag == "Player")
+        {
+            Debug.Log("isplayer");
+            _dialogueHolder.SetActive(false);
+        }
+    }
+
+    IEnumerator StartDialogueNow()
+    {
+        _dialogueHolder.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        StartDia();
+
     }
 }

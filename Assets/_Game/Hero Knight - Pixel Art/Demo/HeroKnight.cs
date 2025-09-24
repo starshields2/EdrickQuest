@@ -25,6 +25,13 @@ public class HeroKnight : MonoBehaviour {
 
     public SpriteRenderer spriteRenderer;
 
+    public GameObject JaspTrigger;
+    public float attackRange;
+    public LayerMask enemyLayers;
+
+    public Transform YaelTrig;
+    public GameObject YaelBlock;
+
     [System.Serializable] public enum CurCharacter
     {
         None,
@@ -143,13 +150,15 @@ public class HeroKnight : MonoBehaviour {
         // Swap direction of sprite depending on walk direction
         if (inputX > 0)
         {
-            GetComponent<SpriteRenderer>().flipX = false;
+            Vector3 rotator = new Vector3(transform.rotation.x, 0, transform.rotation.z);
+            transform.rotation = Quaternion.Euler(rotator);
             m_facingDirection = 1;
         }
             
         else if (inputX < 0)
         {
-            GetComponent<SpriteRenderer>().flipX = true;
+            Vector3 rotator = new Vector3(transform.rotation.x, 180, transform.rotation.z);
+            transform.rotation = Quaternion.Euler(rotator);
             m_facingDirection = -1;
         }
 
@@ -201,21 +210,21 @@ public class HeroKnight : MonoBehaviour {
         //Attack
         else if(Input.GetMouseButtonDown(0))
         {
-            m_currentAttack++;
-
-            // Loop back to one after third attack
-            if (m_currentAttack > 3)
-                m_currentAttack = 1;
-
-            // Reset Attack combo if time since last attack is too large
-      
-                m_currentAttack = 1;
-
-            // Call one of three attack animations "Attack1", "Attack2", "Attack3"
-            m_animator.SetTrigger("Attack" + m_currentAttack);
-
-            // Reset timer
-          
+            if(_curCharacter == CurCharacter.Jasper)
+            {
+      Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(JaspTrigger.transform.position, attackRange, enemyLayers);
+            foreach(Collider2D enemy in hitEnemies)
+            {
+                Debug.Log("hit");
+                DestructibleBox box = enemy.GetComponent<DestructibleBox>();
+                box.Break();
+            }
+            }
+     
+          if(_curCharacter == CurCharacter.Yael)
+            {
+                Instantiate(YaelBlock, YaelTrig.position, Quaternion.identity);
+            }
         }
 
         // Block
