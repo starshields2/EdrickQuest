@@ -22,7 +22,7 @@ public class TutorialPopup : MonoBehaviour
         
     }
 
-    public void DisplayTutText(int tutNumb)
+    public void DisplayTutText()
     {
         tutorialText.text = TutorialText[tutNumb];
     }
