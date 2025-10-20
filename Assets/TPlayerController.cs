@@ -12,7 +12,8 @@ public class TPlayerController : MonoBehaviour
     [SerializeField] private float groundCheckY = 0.2f;
     [SerializeField] private float groundCheckX = 0.5f;
     [SerializeField] private LayerMask whatIsGround;
-    private bool isFacingRight;
+    public bool isFacingRight;
+    public CameraFollowObject camFollow;
 
     // Start is called before the first frame update
     void Start()
@@ -37,21 +38,26 @@ public class TPlayerController : MonoBehaviour
 
     void Flip()
     {
-        if(xAxis < 0)
+
+        if(xAxis == -1)
         {
+            Debug.Log(xAxis);
             if (isFacingRight)
             {
-Vector3 rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
+            Vector3 rotator = new Vector3(transform.rotation.x,-180f, transform.rotation.z);
             transform.rotation = Quaternion.Euler(rotator);
                 isFacingRight = !isFacingRight;
+                camFollow.CallTurn();
             }
             
         }
-        else if(xAxis> 0)
+        else if(xAxis == 1)
         {
+            Debug.Log(xAxis);
             Vector3 rotator = new Vector3(transform.rotation.x, 0, transform.rotation.z);
             transform.rotation = Quaternion.Euler(rotator);
             isFacingRight = !isFacingRight;
+            camFollow.CallTurn();
         }
     }
 
@@ -62,6 +68,7 @@ Vector3 rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
         Move();
         Jump();
         Flip();
+        
     }
 
     void GetInputs()
