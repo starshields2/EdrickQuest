@@ -3,34 +3,10 @@ using System.Collections;
 
 public class HeroKnight : MonoBehaviour {
 
-
+    [Header("Essential")]
     public static HeroKnight Instance;
-    [SerializeField] float      m_speed = 4.0f;
-    [SerializeField] float      m_jumpForce = 7.5f;
-    [SerializeField] float      m_rollForce = 6.0f;
-    [SerializeField] bool       m_noBlood = false;
-    [SerializeField] GameObject m_slideDust;
-
-    private Animator            m_animator;
-    private Rigidbody2D         m_body2d;
-    private Sensor_HeroKnight   m_groundSensor;
-    private Sensor_HeroKnight   m_wallSensorR1;
-    private Sensor_HeroKnight   m_wallSensorR2;
-    private Sensor_HeroKnight   m_wallSensorL1;
-    private Sensor_HeroKnight   m_wallSensorL2;
-    private bool                m_isWallSliding = false;
-    private bool                m_grounded = false;
-    private int                 m_facingDirection = 1;
-    private int                 m_currentAttack = 0;
-
     public SpriteRenderer spriteRenderer;
 
-    public GameObject JaspTrigger;
-    public float attackRange;
-    public LayerMask enemyLayers;
-
-    public Transform YaelTrig;
-    public GameObject YaelBlock;
 
     [System.Serializable] public enum CurCharacter
     {
@@ -38,16 +14,25 @@ public class HeroKnight : MonoBehaviour {
         Edrick,
         Yael,
         Jasper
-    }
- public CurCharacter _curCharacter;
+    } 
+    public CurCharacter _curCharacter;
     public int charaIndex;
-    private int minchara = 0;
-    private int maxchara = 2;
+   
     public Sprite[] _charaSprite;
     public bool jasperAvailable;
     public bool yaelAvailable;
     public Transform yaelCheck;
     public Transform japserCheck;
+    public GameObject JaspTrigger;
+    public float attackRange;
+    public LayerMask enemyLayers;
+
+    public Transform YaelTrig;
+    public GameObject YaelBlock;
+
+     private int minchara = 0;
+    private int maxchara = 2;
+
     public float dist; 
     public GameObject[] Party;
     public GameObject instantiatedChara;
@@ -59,14 +44,7 @@ public class HeroKnight : MonoBehaviour {
     {
        
         _curCharacter = CurCharacter.Edrick;
-        m_animator = GetComponent<Animator>();
-        m_body2d = GetComponent<Rigidbody2D>();
-        m_groundSensor = transform.Find("GroundSensor").GetComponent<Sensor_HeroKnight>();
-        m_wallSensorR1 = transform.Find("WallSensor_R1").GetComponent<Sensor_HeroKnight>();
-        m_wallSensorR2 = transform.Find("WallSensor_R2").GetComponent<Sensor_HeroKnight>();
-        m_wallSensorL1 = transform.Find("WallSensor_L1").GetComponent<Sensor_HeroKnight>();
-        m_wallSensorL2 = transform.Find("WallSensor_L2").GetComponent<Sensor_HeroKnight>();
-    
+         
     }
 
     private void Awake()
@@ -81,29 +59,29 @@ public class HeroKnight : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
         Vector2 yaelDis = yaelCheck.position;
         Vector2 jasDis = japserCheck.position;
         dist = Vector2.Distance(yaelDis, jasDis);
-        
-        if(charaIndex > maxchara)
+
+        if (charaIndex > maxchara)
         {
             charaIndex = minchara;
         }
-        if(charaIndex < minchara)
+        if (charaIndex < minchara)
         {
             charaIndex = maxchara;
         }
-        if(charaIndex == 0)
+        if (charaIndex == 0)
         {
             _curCharacter = CurCharacter.Edrick;
         }
-        if(charaIndex == 1 && yaelAvailable)
+        if (charaIndex == 1 && yaelAvailable)
         {
             _curCharacter = CurCharacter.Yael;
         }
-        if(charaIndex == 2 && jasperAvailable)
+        if (charaIndex == 2 && jasperAvailable)
         {
             _curCharacter = CurCharacter.Jasper;
         }
@@ -125,77 +103,26 @@ public class HeroKnight : MonoBehaviour {
                 break;
         }
 
-
-
-        // Increase timer that checks roll duration
-      
-
-        //Check if character just landed on the ground
-        if (!m_grounded && m_groundSensor.State())
-        {
-            m_grounded = true;
-            m_animator.SetBool("Grounded", m_grounded);
-        }
-
-        //Check if character just started falling
-        if (m_grounded && !m_groundSensor.State())
-        {
-            m_grounded = false;
-            m_animator.SetBool("Grounded", m_grounded);
-        }
-
-        // -- Handle input and movement --
-        float inputX = Input.GetAxis("Horizontal");
-
-        // Swap direction of sprite depending on walk direction
-        if (inputX > 0)
-        {
-            Vector3 rotator = new Vector3(transform.rotation.x, 0, transform.rotation.z);
-            transform.rotation = Quaternion.Euler(rotator);
-            m_facingDirection = 1;
-        }
-            
-        else if (inputX < 0)
-        {
-            Vector3 rotator = new Vector3(transform.rotation.x, 180, transform.rotation.z);
-            transform.rotation = Quaternion.Euler(rotator);
-            m_facingDirection = -1;
-        }
-
-        // Move
-            m_body2d.velocity = new Vector2(inputX * m_speed, m_body2d.velocity.y);
-
-        //Set AirSpeed in animator
-        m_animator.SetFloat("AirSpeedY", m_body2d.velocity.y);
-
-        // -- Handle Animations --
-        //Wall Slide
-        m_isWallSliding = (m_wallSensorR1.State() && m_wallSensorR2.State()) || (m_wallSensorL1.State() && m_wallSensorL2.State());
-        m_animator.SetBool("WallSlide", m_isWallSliding);
-
-        //Death
         if (Input.GetKeyDown("e"))
         {
             Debug.Log("SwapRight");
             SwapRight();
         }
-            
-        //Hurt
         else if (Input.GetKeyDown("q"))
         {
-     Debug.Log("SwapLeft");
+            Debug.Log("SwapLeft");
             SwapLeft();
 
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
             Debug.Log("Placing Companion");
-            
-            if(charaIndex == 1)
+
+            if (charaIndex == 1)
             {
                 instantiatedChara = Party[0];
             }
-            if(charaIndex == 2)
+            if (charaIndex == 2)
             {
                 instantiatedChara = Party[1];
             }
@@ -206,69 +133,27 @@ public class HeroKnight : MonoBehaviour {
         {
             Recall();
         }
-       
+
         //Attack
-        else if(Input.GetMouseButtonDown(0))
+        else if (Input.GetMouseButtonDown(0))
         {
-            if(_curCharacter == CurCharacter.Jasper)
+            if (_curCharacter == CurCharacter.Jasper)
             {
-      Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(JaspTrigger.transform.position, attackRange, enemyLayers);
-            foreach(Collider2D enemy in hitEnemies)
-            {
-                Debug.Log("hit");
-                DestructibleBox box = enemy.GetComponent<DestructibleBox>();
-                box.Break();
+                Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(JaspTrigger.transform.position, attackRange, enemyLayers);
+                foreach (Collider2D enemy in hitEnemies)
+                {
+                    Debug.Log("hit");
+                    DestructibleBox box = enemy.GetComponent<DestructibleBox>();
+                    box.Break();
+                }
             }
-            }
-     
-          if(_curCharacter == CurCharacter.Yael)
+
+            if (_curCharacter == CurCharacter.Yael)
             {
                 Instantiate(YaelBlock, YaelTrig.position, Quaternion.identity);
             }
         }
 
-        // Block
-        else if (Input.GetMouseButtonDown(1))
-        {
-            m_animator.SetTrigger("Block");
-            m_animator.SetBool("IdleBlock", true);
-        }
-
-        else if (Input.GetMouseButtonUp(1))
-            m_animator.SetBool("IdleBlock", false);
-
-        // Roll
-        else if (Input.GetKeyDown("left shift") && !m_isWallSliding)
-        {
-          
-            m_animator.SetTrigger("Roll");
-            m_body2d.velocity = new Vector2(m_facingDirection * m_rollForce, m_body2d.velocity.y);
-        }
-            
-
-        //Jump
-        else if (Input.GetKeyDown("space") && m_grounded)
-        {
-            m_animator.SetTrigger("Jump");
-            m_grounded = false;
-            m_animator.SetBool("Grounded", m_grounded);
-            m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
-            m_groundSensor.Disable(0.2f);
-        }
-
-        //Run
-        else if (Mathf.Abs(inputX) > Mathf.Epsilon)
-        {
-            // Reset timer
-         
-           // m_animator.SetInteger("AnimState", 1);
-        }
-
-        //Idle
-        else
-        {
-           
-        }
     }
 
     // Animation Events
@@ -318,23 +203,7 @@ public class HeroKnight : MonoBehaviour {
         }
     }
    
-    void AE_SlideDust()
-    {
-        Vector3 spawnPosition;
-
-        if (m_facingDirection == 1)
-            spawnPosition = m_wallSensorR2.transform.position;
-        else
-            spawnPosition = m_wallSensorL2.transform.position;
-
-        if (m_slideDust != null)
-        {
-            // Set correct arrow spawn position
-            GameObject dust = Instantiate(m_slideDust, spawnPosition, gameObject.transform.localRotation) as GameObject;
-            // Turn arrow in correct direction
-            dust.transform.localScale = new Vector3(m_facingDirection, 1, 1);
-        }
-    }
+    
 
     [ContextMenu("SavePOS")]
     public void SavePlayerPosition()
