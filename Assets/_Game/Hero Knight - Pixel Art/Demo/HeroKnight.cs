@@ -36,7 +36,9 @@ public class HeroKnight : MonoBehaviour {
     public float dist; 
     public GameObject[] Party;
     public GameObject instantiatedChara;
-    
+
+   public Transform yaelLastPos;
+    public Transform jasLastPos;
 
 
     // Use this for initialization
@@ -80,6 +82,7 @@ public class HeroKnight : MonoBehaviour {
         if (charaIndex == 1 && yaelAvailable)
         {
             _curCharacter = CurCharacter.Yael;
+            
         }
         if (charaIndex == 2 && jasperAvailable)
         {
@@ -163,12 +166,14 @@ public class HeroKnight : MonoBehaviour {
     {
         Debug.Log("Swapping CH Right");
         charaIndex += 1;
-        
+        SwapCharaPositions();
+
     }
     void SwapLeft()
     {
         Debug.Log("Swapping CH Left");
         charaIndex -= 1;
+        SwapCharaPositions();
     }
     void PlaceCompanion()
     {
@@ -202,7 +207,40 @@ public class HeroKnight : MonoBehaviour {
             jasperAvailable = true;
         }
     }
+
+    public void SwapCharaPositions()
+    {
+        Debug.Log("Swapping Positions: Start");
+       
+
+        yaelLastPos = Party[0].transform;
+        jasLastPos = Party[1].transform;
+
+        StartCoroutine(SwapCoroutine());
+    }
    
+    public IEnumerator SwapCoroutine()
+    {
+        Debug.Log("Swapping Positions: End");
+
+
+        yield return new WaitForSeconds(0.5f);
+        GameObject Yael;
+        GameObject Jasper;
+
+        Yael = Party[0];
+        Jasper = Party[1];
+
+        Collider2D YaelCo = Yael.GetComponent<BoxCollider2D>();
+        Collider2D JasCo = Jasper.GetComponent<BoxCollider2D>();
+        YaelCo.enabled = false;
+        JasCo.enabled = false;
+        yield return new WaitForSeconds(0.1f);
+        Yael.transform.position = jasLastPos.position;
+        Jasper.transform.position = yaelLastPos.position;
+        YaelCo.enabled = true;
+        JasCo.enabled = true;
+    }
     
 
     [ContextMenu("SavePOS")]
