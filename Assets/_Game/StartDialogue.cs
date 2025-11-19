@@ -8,6 +8,7 @@ public class StartDialogue : MonoBehaviour
     public GameObject _dialogueHolder;
     public GameObject _cutSceneHolder;
     public int ID;
+    public bool started;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +29,11 @@ public class StartDialogue : MonoBehaviour
         {
             if(_dialogueHolder != null && dialogue != null)
             {
-                StartCoroutine(StartDialogueNow());
+                if (!started)
+                {
+                    StartCoroutine(StartDialogueNow());
+                }
+                
             }
             
 
@@ -52,21 +57,29 @@ public class StartDialogue : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-        Debug.Log("pass");
+        
         if (other.tag == "Player")
         {
 
             Debug.Log("isplayer");
             if(_dialogueHolder != null)
             {
-            _dialogueHolder.SetActive(false);
+                StartCoroutine(BufferDialogue());
             }
             
         }
     }
 
+    public IEnumerator BufferDialogue()
+    {
+        yield return new WaitForSeconds(1f);
+        started = false;
+        _dialogueHolder.SetActive(false);
+    }
+
     IEnumerator StartDialogueNow()
     {
+        started = true;
         _dialogueHolder.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         StartDia();

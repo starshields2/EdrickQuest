@@ -4,26 +4,47 @@ using UnityEngine;
 
 public class FollowTheLeader : MonoBehaviour
 {
-    public float actionDelay = 0.5f;
-    private float xAxis;
-    public float walkSpeed;
+    [Header("Essentials")]
     public TPlayerController leader;
-    [SerializeField] private Rigidbody2D rb;
-    public float jumpForce = 7f;
+    public Transform otherMember;
+    public Transform thisMember;
+    public Transform Edrick;
 
-    [SerializeField] private Transform groundCheck;
+    [SerializeField] private Rigidbody2D rb;
+     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckY = 0.2f;
     [SerializeField] private float groundCheckX = 0.5f;
     [SerializeField] private LayerMask whatIsGround;
+
+    [Header("Follow Edrick")]
+    public float maxFromEdrick;
+    public float minFromEdrick;
+    public float curFromEdrick;
+    public bool tooFarFromEdrick;
+
+    [Header("Follow Party")]
+    public float maxDistance;
+    public float minDistance;
+    public float curDistance;
+    public bool tooFarFromMember;
+
+    [Header("ActionDelay")]
+    public float actionDelay = 0.5f;
+    public float walkSpeed;
+    public float jumpForce = 7f;
+
+   
     public bool isFacingRight;
     public bool flipping;
     public bool lastPlayerFacingRight;
 
 
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        thisMember = this.gameObject.transform;
+        tooFarFromMember = false;
     }
 
     // Update is called once per frame
@@ -31,6 +52,10 @@ public class FollowTheLeader : MonoBehaviour
 
         void Update()
         {
+        CalculateDistanceFromEdrick();
+        CalculateDistanceBetweenParty();
+        
+
         GetInputs();
   
             if (leader.isFacingRight != lastPlayerFacingRight)
@@ -55,10 +80,57 @@ public class FollowTheLeader : MonoBehaviour
         }
         }
 
+    private void CalculateDistanceBetweenParty()
+    {
+        curDistance = Vector2.Distance(thisMember.position, otherMember.position);
+        if(curDistance > maxDistance)
+        {
+            CatchUp();
+            tooFarFromMember = true;
+        }
+    }
+    private void CalculateDistanceFromEdrick()
+    {
+        curDistance = Vector2.Distance(thisMember.position, Edrick.position);
+        if (curFromEdrick > maxFromEdrick)
+        {
+            CatchUpEdrick();
+            tooFarFromEdrick = true;
+        }
+    }
 
+    private void CatchUp()
+    {
+        float speed;
+        speed = 3f;
+        if (tooFarFromMember)
+        {
+            thisMember.position = Vector2.MoveTowards(thisMember.position, otherMember.position, speed);
+        if(curDistance <= minDistance)
+        {
+                tooFarFromMember = false;
+        }
+        }
+        
+    }
+
+    private void CatchUpEdrick()
+    {
+        float speed;
+        speed = 3f;
+        if (tooFarFromEdrick)
+        {
+            thisMember.position = Vector2.MoveTowards(thisMember.position, Edrick.position, speed);
+            if (curFromEdrick <= minFromEdrick)
+            {
+                tooFarFromEdrick = false;
+            }
+        }
+
+    }
     void GetInputs()
     {
-        xAxis = Input.GetAxisRaw("Horizontal");
+        //xAxis = Input.GetAxisRaw("Horizontal");
     }
     public bool Grounded()
     {

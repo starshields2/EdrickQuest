@@ -5,8 +5,9 @@ public class HeroKnight : MonoBehaviour {
 
     [Header("Essential")]
     public static HeroKnight Instance;
+    public TPlayerController playerController;
     public SpriteRenderer spriteRenderer;
-
+    public Animator anim;
 
     [System.Serializable] public enum CurCharacter
     {
@@ -39,6 +40,8 @@ public class HeroKnight : MonoBehaviour {
 
    public Transform yaelLastPos;
     public Transform jasLastPos;
+
+ 
 
 
     // Use this for initialization
@@ -142,23 +145,39 @@ public class HeroKnight : MonoBehaviour {
         {
             if (_curCharacter == CurCharacter.Jasper)
             {
-                Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(JaspTrigger.transform.position, attackRange, enemyLayers);
-                foreach (Collider2D enemy in hitEnemies)
-                {
-                    Debug.Log("hit");
-                    DestructibleBox box = enemy.GetComponent<DestructibleBox>();
-                    box.Break();
-                }
+                JasperAbility();
             }
 
             if (_curCharacter == CurCharacter.Yael)
             {
-                Instantiate(YaelBlock, YaelTrig.position, Quaternion.identity);
+                YaelAbility();
             }
         }
 
     }
 
+    void JasperAbility()
+    {
+        GameObject Jasper;
+        Jasper = Party[1];
+        Animator jaspAnim;
+        jaspAnim = Jasper.GetComponent<Animator>();
+        Debug.Log(jaspAnim);
+        anim.SetBool("isAttack", true);
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(JaspTrigger.transform.position, attackRange, enemyLayers);
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            Debug.Log("hit");
+            DestructibleBox box = enemy.GetComponent<DestructibleBox>();
+            box.Break();
+        }
+        anim.SetBool("isAttack", false);
+    }
+
+    void YaelAbility()
+    {
+        Instantiate(YaelBlock, YaelTrig.position, Quaternion.identity);
+    }
     // Animation Events
     // Called in slide animation.
 
@@ -211,37 +230,82 @@ public class HeroKnight : MonoBehaviour {
     public void SwapCharaPositions()
     {
         Debug.Log("Swapping Positions: Start");
-       
-
-        yaelLastPos = Party[0].transform;
-        jasLastPos = Party[1].transform;
-
         StartCoroutine(SwapCoroutine());
     }
-   
+
     public IEnumerator SwapCoroutine()
     {
         Debug.Log("Swapping Positions: End");
 
+        GameObject yael = Party[0];
+        GameObject jasper = Party[1];
 
-        yield return new WaitForSeconds(0.5f);
-        GameObject Yael;
-        GameObject Jasper;
+        if (yael == null || jasper == null)
+        {
+            Debug.LogWarning("Missing party member reference.");
+            yield break;
+        }
 
-        Yael = Party[0];
-        Jasper = Party[1];
+        // Cache their positions before moving
+        Vector3 yaelPos = yael.transform.position;
+        Vector3 jasperPos = jasper.transform.position;
 
-        Collider2D YaelCo = Yael.GetComponent<BoxCollider2D>();
-        Collider2D JasCo = Jasper.GetComponent<BoxCollider2D>();
-        YaelCo.enabled = false;
-        JasCo.enabled = false;
+        Collider2D yaelCo = yael.GetComponent<Collider2D>();
+        Collider2D jasCo = jasper.GetComponent<Collider2D>();
+
+        
+        //yield return new WaitForSeconds(0.5f);
+
+        // Disable colliders to avoid overlap
+        if (yaelCo) yaelCo.enabled = false;
+        if (jasCo) jasCo.enabled = false;
+
         yield return new WaitForSeconds(0.1f);
-        Yael.transform.position = jasLastPos.position;
-        Jasper.transform.position = yaelLastPos.position;
-        YaelCo.enabled = true;
-        JasCo.enabled = true;
+
+        // Swap positions
+
+        if (playerController.moving) // if player is moving
+        {
+            if (playerController.isFacingRight) //and if player is facing right
+            {
+                yael.transform.position = jasperPos + new Vector3(0.5f, 0, 0);
+                jasper.transform.position = yaelPos + new Vector3(0.5f, 0, 0);
+                // Re-enable colliders
+                yield return new WaitForSeconds(0.1f);
+                if (yaelCo) yaelCo.enabled = true;
+                if (jasCo) jasCo.enabled = true;
+            }
+            else if (!playerController.isFacingRight) // if they are facing left
+            {
+                yael.transform.position = jasperPos + new Vector3(-0.5f, 0, 0);
+                jasper.transform.position = yaelPos + new Vector3(-0.5f, 0, 0);
+                // Re-enable colliders
+                yield return new WaitForSeconds(0.1f);
+                if (yaelCo) yaelCo.enabled = true;
+                if (jasCo) jasCo.enabled = true;
+            }
+            
+        }
+        else //if they are not moving
+        {
+            yael.transform.position = jasperPos;
+            jasper.transform.position = yaelPos;
+            // Re-enable colliders
+            yield return new WaitForSeconds(0.1f);
+            if (yaelCo) yaelCo.enabled = true;
+            if (jasCo) jasCo.enabled = true;
+        }
+        
+
+        // Re-enable colliders
+        yield return new WaitForSeconds(0.1f);
+        if (yaelCo) yaelCo.enabled = true;
+        if (jasCo) jasCo.enabled = true;
+
+        Debug.Log("Positions swapped successfully.");
     }
-    
+
+
 
     [ContextMenu("SavePOS")]
     public void SavePlayerPosition()
