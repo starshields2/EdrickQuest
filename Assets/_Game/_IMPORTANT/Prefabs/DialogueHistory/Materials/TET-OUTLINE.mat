@@ -57,7 +57,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: -7.83, y: 0}
     - _Base_Texture:
-        m_Texture: {fileID: 2800000, guid: a2372b1aaf899f145b6326fa23098a20, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6a8f59b827af9c44e87b6795aefe90ac, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BentNormalMap:
@@ -275,8 +275,8 @@ Material:
     - _BlendOp: 0
     - _BumpScale: 1
     - _CastShadows: 1
-    - _CellDensity: 4.01
-    - _CircleDensity: 17.87
+    - _CellDensity: -4.4
+    - _CircleDensity: 13.6
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _CoatMask: 0
@@ -324,7 +324,8 @@ Material:
     - _EnableGeometricSpecularAA: 0
     - _EnergyConservingSpecularColor: 1
     - _EnvironmentReflections: 1
-    - _FalloffThreshold: 4.84
+    - _Fade_Distance: 150
+    - _FalloffThreshold: 6.64
     - _Falloff_Threshhold: 4.4
     - _FresnPower: -0.1
     - _FresnelPower: 0.1
@@ -347,7 +348,7 @@ Material:
     - _IridescenceThickness: 1
     - _LinkDetailsWithBase: 1
     - _Lit_Threshhold: 1
-    - _Lit_Threshold: -2.82
+    - _Lit_Threshold: 2.94
     - _MaterialID: 1
     - _Metallic: 0
     - _MetallicRemapMax: 0
@@ -360,12 +361,14 @@ Material:
     - _Outline: 0
     - _OutlineSize: 17.14
     - _OutlineWidth: 0.0004
+    - _Outline_Distance: 0.5
     - _PPDLodThreshold: 5
     - _PPDMaxSamples: 15
     - _PPDMinSamples: 5
     - _PPDPrimitiveLength: 1
     - _PPDPrimitiveWidth: 1
     - _Parallax: 0.005
+    - _Pointilism_Amount: -1.64
     - _QueueControl: 0
     - _QueueOffset: 0
     - _RayTracing: 0
@@ -375,9 +378,9 @@ Material:
     - _RefractionModel: 0
     - _RimStep: 1
     - _RimStepSmooth: 0
-    - _Rotation: 15.11
+    - _Rotation: 5180.98
     - _SampleGI: 0
-    - _ShadingMultiplier: 12.3
+    - _ShadingMultiplier: 0.15
     - _Shading_Mult: 1
     - _ShadowStep: 0.445
     - _ShadowStepSmooth: 0.281
@@ -387,7 +390,7 @@ Material:
     - _SmoothnessRemapMax: 1
     - _SmoothnessRemapMin: 0
     - _SmoothnessTextureChannel: 0
-    - _Softness: 0.043
+    - _Softness: 0
     - _SpecularAAScreenSpaceVariance: 0.1
     - _SpecularAAThreshold: 0.2
     - _SpecularHighlights: 1
@@ -446,7 +449,7 @@ Material:
     - _DiffuseColor: {r: 1, g: 1, b: 1, a: 1}
     - _DiffuseSegment: {r: 0.1, g: 0.3, b: 0.6, a: 1}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
-    - _DotColor: {r: 1, g: 0.16484332, b: 0, a: 0}
+    - _DotColor: {r: 0, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
@@ -455,6 +458,7 @@ Material:
     - _InvPrimScale: {r: 1, g: 1, b: 0, a: 0}
     - _IridescenceThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Outline_Color: {r: 0, g: 0, b: 0, a: 0}
     - _RimColor: {r: 0, g: 0.08239346, b: 0.21698111, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SpecularColor: {r: 0.16037738, g: 0.08842787, b: 0.08245818, a: 1}
