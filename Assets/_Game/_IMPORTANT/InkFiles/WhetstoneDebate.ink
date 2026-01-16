@@ -10,8 +10,9 @@ VAR commonalities = 0
 Look, in the bushes. A shrine. I should send a prayer to Elunia immediately.
 +[Continue.]
 #Jasper
-A solar whetstone! Once I remove it from this rock, my tools will be sharp for weeks.
+A solar whetstone. Once I remove it from this rock, my tools will be sharp for weeks.
 ++[Continue]
+**[Whetstone?]
 #Yael
 You can't possibly want to use this for sharpening tools. This is a sacred place.
 +++[Contine]
