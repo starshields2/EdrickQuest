@@ -1,0 +1,437 @@
+using System;
+using Ink.Runtime;
+using UnityEngine;
+using UnityEngine.UI;
+using System.Collections.Generic;
+using TMPro;
+
+
+public class MediationDialogue : MonoBehaviour
+{
+    public static event Action<Story> OnCreateStory;
+
+    [Header("Dialogue History")]
+
+    private List<string> dialogueHistory = new List<string>(); //all dialogue to be logged in history
+    [SerializeField]
+    private GameObject _DialogueHistoryTextPF = null; // Reference to your existing dialogue history prefab
+    [SerializeField]
+    private GameObject _HistoryContainer = null; // Reference to your existing dialogue history prefab
+    public Transform _dHistoryParent; // parent object where the dialogue should be nested under.
+
+    [Header("Story Items")]
+
+    public UnityEngine.UI.Slider _tensDisplay;
+
+    public GameObject backgroundCanvas; //background
+    public AudioSource reverseAud; //audio that plays when mediation begins
+    public Text speakerName; //speaker name.
+    public string[] currentInktags; //current tags to track
+    public GameObject[] speakerID; 
+
+    //public SkillMenu skillMenu; (depreciated game object ref for skills)
+
+    [Header("Tension")]
+    public TensionCounter _tensMeter; // the tension management script.
+    public Slider _tensionSlider; //public slider where this mediation's tension value will be displayed. 
+
+    //for calculating tension 
+    public float _newTensionValue; 
+    public float _oldTensionValue;
+
+    public int _flaggedNeeds;
+    public int _flaggedBounds;
+    public int _flaggedCoreNeed;
+
+    public float _valuesMult; 
+    public float _commonsMult;
+
+    public UIBinder _UIBinder;
+
+    // Define the UI prefab for narrator text
+    [SerializeField]
+    private Text narratorTextPrefab = null;
+
+    private
+
+ void Start()
+    {
+
+    }
+    void Awake()
+    {
+        //_UIBinder = GameObject.Find("DataManager").GetComponent<UIBinder>();
+        // _UIBinder.GetDialogueInfo();
+        RemoveChildren();
+        StartStory();
+        // _oldTensionValue = _tensMeter._tension;
+        //  Debug.Log(story.currentTags.Length);
+
+
+    }
+
+    public void BindSliders(Slider tension, Slider tp, Companion[] comps = null)
+    {
+        _tensionSlider = tension;
+        //_TPSlider = tp;
+
+    }
+
+    // Creates a new Story object with the compiled story which we can then play!
+    public void StartStory()
+    {
+        story = new Story(inkJSONAsset.text);
+
+        if (OnCreateStory != null) OnCreateStory(story);
+        RefreshView();
+        DisplayTags();
+    }
+
+    // This is the main function called every time the story changes. It does a few things:
+    // Destroys all the old content and choices.
+    // Continues over all the lines of text, then displays all the choices. If there are no choices, the story is finished!
+    void DisplayTags()
+    {
+        foreach (string tag in story.currentTags)
+        {
+            Debug.Log("Tag: " + tag);
+        }
+
+    }
+
+
+
+    void Update()
+    {
+        
+    }
+
+    //on closing the mediation window + clicking on choices, calculate tension with this:
+    public void CheckNewTensionValue()
+    {
+        _newTensionValue = _oldTensionValue + ((_flaggedBounds * _valuesMult) + (_flaggedNeeds * _commonsMult));
+        print(_newTensionValue);
+        _oldTensionValue = _newTensionValue;
+        _tensMeter._tension = _newTensionValue;
+        _tensDisplay.value = _newTensionValue; 
+    }
+
+    //what happens when choices are clicked, but can be called any time?
+    void RefreshView()
+    {
+        // Remove all the UI on screen
+        RemoveChildren();
+
+        // Create a container for text
+        GameObject textContainer = new GameObject("TextContainer");
+        textContainer.transform.SetParent(canvas.transform, false);
+
+        VerticalLayoutGroup textLayoutGroup = textContainer.AddComponent<VerticalLayoutGroup>();
+        textLayoutGroup.childControlHeight = false;
+        textLayoutGroup.childForceExpandWidth = false;
+        textLayoutGroup.childForceExpandHeight = false;
+        textLayoutGroup.childControlWidth = false;
+        textLayoutGroup.childControlHeight = false;
+        textLayoutGroup.childAlignment = TextAnchor.LowerLeft;
+        textLayoutGroup.padding.left = -540;
+        textLayoutGroup.padding.right = 0;
+        textLayoutGroup.padding.top = 112;
+        textLayoutGroup.padding.bottom = 130;
+        textLayoutGroup.spacing = 15;
+
+        // Read all the content until can't continue any more
+        while (story.canContinue)
+        {
+            // Continue gets the next line of the story
+            string text = story.ContinueMaximally();
+
+            // This removes any white space from the text.
+            text = text.Trim();
+            // Display the text on screen within the text container
+            CreateContentView(text, textContainer);
+        }
+
+        // Create a container for choices
+        GameObject choicesContainer = new GameObject("ChoicesContainer");
+        choicesContainer.transform.SetParent(canvas.transform, false);
+
+        VerticalLayoutGroup choicesLayoutGroup = choicesContainer.AddComponent<VerticalLayoutGroup>();
+        choicesLayoutGroup.childControlHeight = false;
+        choicesLayoutGroup.childForceExpandWidth = false;
+        choicesLayoutGroup.childForceExpandHeight = false;
+        choicesLayoutGroup.childControlWidth = false;
+        choicesLayoutGroup.childControlHeight = true;
+        choicesLayoutGroup.childAlignment = TextAnchor.LowerLeft;
+        choicesLayoutGroup.padding.left = 26;
+        choicesLayoutGroup.padding.right = 0;
+        choicesLayoutGroup.padding.top = 57;
+        choicesLayoutGroup.padding.bottom = 0;
+        choicesLayoutGroup.spacing = 50;
+
+        // Display all the choices, if there are any!
+        if (story.currentChoices.Count > 0)
+        {
+            for (int i = 0; i < story.currentChoices.Count; i++)
+            {
+                Choice choice = story.currentChoices[i];
+                CreateChoiceView(choice.text.Trim(), choicesContainer);
+                TrackChoiceHistory(choice.text);
+            }
+        }
+        // If we've read all the content and there are no choices, the story is finished!
+        else
+        {
+            CreateChoiceView("Back", choicesContainer);
+        }
+        //then, check tension
+        CheckNewTensionValue();
+    }
+
+
+
+    // When we click the choice button, tell the story to choose that choice
+    void OnClickChoiceButton(Choice choice)
+    {
+        if (choice.text.Trim() == "Back")
+        {
+            //RestartStory();
+            Deactivate();
+        }
+        else
+        {
+            story.ChooseChoiceIndex(choice.index);
+
+            // Debug log to check values
+            //Debug.Log("Can continue: " + story.canContinue);
+            //Debug.Log("Number of choices: " + story.currentChoices.Count);
+
+            // Check if the story is complete, and if so, restart it
+            if (!story.canContinue && story.currentChoices.Count <= 0)
+            {
+                reverseAud.Play();
+                Debug.Log("Restarting the story.");
+                //RestartStory();
+                Deactivate();
+
+            }
+            else
+            {
+
+                RefreshView();
+            }
+        }
+    }
+
+    void Deactivate()
+    {
+        CheckNewTensionValue();
+        Debug.Log("deactivating...");
+        this.gameObject.SetActive(false);
+        backgroundCanvas.SetActive(false);
+
+    }
+
+    // Creates a textbox showing the line of text
+    void CreateContentView(string text, GameObject container)
+    {
+        //Display Text and debug who is talking.
+        DisplayTags();
+        Text storyText = Instantiate(textPrefab, container.transform);
+        storyText.text = text;
+
+        //dialogeTRACKING
+
+
+        // Check for character tag.
+        if (story.currentTags.Contains("Edrick"))
+        {
+            speakerName.text = "Edrick";
+            speakerID[0].SetActive(true);
+
+            // Disable all other speakerID game objects
+            for (int i = 1; i < speakerID.Length; i++)
+            {
+                speakerID[i].SetActive(false);
+            }
+        }
+
+        if (story.currentTags.Contains("Jasper"))
+        {
+            speakerName.text = "Jasper";
+            speakerID[1].SetActive(true);
+
+            // Disable all other speakerID game objects
+            for (int i = 0; i < speakerID.Length; i++)
+            {
+                if (i != 1) // Skip index 1 (Jasper)
+                {
+                    speakerID[i].SetActive(false);
+                }
+            }
+        }
+
+        if (story.currentTags.Contains("Yael"))
+        {
+            speakerName.text = "Yael";
+            speakerID[2].SetActive(true);
+
+            // Disable all other speakerID game objects
+            for (int i = 0; i < speakerID.Length; i++)
+            {
+                if (i != 2) // Skip index 2 (Yael)
+                {
+                    speakerID[i].SetActive(false);
+                }
+            }
+        }
+
+        if (story.currentTags.Contains("YaelTell"))
+        {
+            speakerName.text = "Yael";
+            speakerID[3].SetActive(true);
+
+            // Disable all other speakerID game objects
+            for (int i = 1; i < speakerID.Length; i++)
+            {
+                if (i != 3) // Skip index 3 (YaelTell)
+                {
+                    speakerID[i].SetActive(false);
+                }
+            }
+        }
+
+        TrackDialogueHistory(text);
+    }
+
+    private void TrackDialogueHistory(string line)
+    {
+        string currentSpeaker = speakerName != null ? speakerName.text : "Unknown";
+        dialogueHistory.Add(currentSpeaker + ": " + line);
+    }
+
+    private void TrackChoiceHistory(string line)
+    {
+        dialogueHistory.Add(line);
+    }
+
+    [ContextMenu("DisplayHistory")]
+    public void DisplayDialogueHistory()
+    {
+        GameObject historyContainer = GameObject.Find("Content");
+
+        // Ensure correct parent
+        historyContainer.transform.SetParent(_dHistoryParent, false);
+
+        // Display each stored dialogue entry
+        foreach (string entry in dialogueHistory)
+        {
+            GameObject historyTextObject = Instantiate(_DialogueHistoryTextPF, historyContainer.transform);
+            TextMeshProUGUI historyText = historyTextObject.GetComponent<TextMeshProUGUI>();
+
+            // Set the text to the preformatted speaker + dialogue
+            historyText.text = entry;
+        }
+    }
+
+    public void CheckTellStrength() //when clicking on a tell, check if tension is low enough to warrant providing new information.
+    {
+        if(_tensMeter.lowTension == true)
+        {
+            Debug.Log("Tension Low, Proceed");
+            //call yaeltell true
+            //swap to pensive sprite
+            var result = story.EvaluateFunction("YaelTellTrue", 2);
+            Debug.Log("Result from Ink: " + result);
+        }
+        else if(_tensMeter.highTension == true)
+        {
+            Debug.Log("Tension too High, Do not Proceed");
+            //call yaeltell false
+            var result = story.EvaluateFunction("YaelTellFalse", 1);
+            Debug.Log("Result from Ink: " + result);  
+
+            //swap to angy sprite
+            //continue story
+
+            
+        }
+    }
+
+
+
+    // Creates a button showing the choice text
+    Button CreateChoiceView(string text, GameObject container)
+    {
+        if (string.IsNullOrEmpty(text))
+        {
+            return null; // Skip empty choices
+        }
+
+        Button choice = Instantiate(buttonPrefab, container.transform);
+        Text choiceText = choice.GetComponentInChildren<Text>();
+        choiceText.text = text;
+
+        if (text == "Back")
+        {
+            choice.onClick.AddListener(() => Deactivate());
+            // RestartStory();
+        }
+        else
+        {
+            if (story != null && story.currentChoices != null)
+            {
+                Choice choiceToSelect = story.currentChoices.Find(c => c.text.Trim() == text);
+                if (choiceToSelect != null)
+                {
+                    choice.onClick.AddListener(() =>
+                    {
+                        // Track the choice in dialogue history
+                        TrackDialogueHistory("[You said]: " + text);
+
+                        // Continue with the selected choice
+                        OnClickChoiceButton(choiceToSelect);
+                    });
+                }
+            }
+        }
+
+        return choice;
+    }
+
+
+    // Destroys all the children of this game object (all the UI)
+    void RemoveChildren()
+    {
+        int childCount = canvas.transform.childCount;
+        for (int i = childCount - 1; i >= 0; i--)
+        {
+            Destroy(canvas.transform.GetChild(i).gameObject);
+        }
+    }
+
+    public void RestartStory()
+    {
+        // Reset the state of the story
+        story.ResetState();
+
+        // Restart the story from the beginning
+        // story.ResetErrors();
+        story.ChoosePathString("START");
+
+        // Call a function to display the first content
+        //DisplayNextLine();
+    }
+
+    [SerializeField]
+    private TextAsset inkJSONAsset = null;
+    public Story story;
+
+    [SerializeField]
+    private Canvas canvas = null;
+
+    // UI Prefabs
+    [SerializeField]
+    private Text textPrefab = null;
+    [SerializeField]
+    private Button buttonPrefab = null;
+}

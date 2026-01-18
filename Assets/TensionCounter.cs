@@ -121,14 +121,15 @@ public class TensionCounter : MonoBehaviour
 
     public IEnumerator TensionBreakStart()
     {
-        tensionBreak = false;
-        _tension = 0f;
-
-        Debug.Log("Influence = " + _influence);
-        foreach (Companion character in companions){
-            character.AcquireAttribute();
-        }
-
         yield return null;
+        //tensionBreak = false;
+        //_tension = 0f;
+
+        //Debug.Log("Influence = " + _influence);
+        //foreach (Companion character in companions){
+        //    character.AcquireAttribute();
+        //}
+
+        //yield return null;
     }
 }
