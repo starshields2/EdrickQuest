@@ -3,44 +3,53 @@ using System.Collections;
 
 public class HeroKnight : MonoBehaviour {
 
+    [Header("Essential")]
     public static HeroKnight Instance;
-    [SerializeField] float      m_speed = 4.0f;
-    [SerializeField] float      m_jumpForce = 7.5f;
-    [SerializeField] float      m_rollForce = 6.0f;
-    [SerializeField] bool       m_noBlood = false;
-    [SerializeField] GameObject m_slideDust;
+    public TPlayerController playerController;
+    public SpriteRenderer spriteRenderer;
+    public Animator anim;
 
-    private Animator            m_animator;
-    private Rigidbody2D         m_body2d;
-    private Sensor_HeroKnight   m_groundSensor;
-    private Sensor_HeroKnight   m_wallSensorR1;
-    private Sensor_HeroKnight   m_wallSensorR2;
-    private Sensor_HeroKnight   m_wallSensorL1;
-    private Sensor_HeroKnight   m_wallSensorL2;
-    private bool                m_isWallSliding = false;
-    private bool                m_grounded = false;
-    private bool                m_rolling = false;
-    private int                 m_facingDirection = 1;
-    private int                 m_currentAttack = 0;
-    private float               m_timeSinceAttack = 0.0f;
-    private float               m_delayToIdle = 0.0f;
-    private float               m_rollDuration = 8.0f / 14.0f;
-    private float               m_rollCurrentTime;
+    [System.Serializable] public enum CurCharacter
+    {
+        None,
+        Edrick,
+        Yael,
+        Jasper
+    } 
+    public CurCharacter _curCharacter;
+    public int charaIndex;
+   
+    public Sprite[] _charaSprite;
+    public bool jasperAvailable;
+    public bool yaelAvailable;
+    public Transform yaelCheck;
+    public Transform japserCheck;
+    public GameObject JaspTrigger;
+    public float attackRange;
+    public LayerMask enemyLayers;
 
-    
+    public Transform YaelTrig;
+    public GameObject YaelBlock;
+
+     private int minchara = 0;
+    private int maxchara = 2;
+
+    public float dist; 
+    public GameObject[] Party;
+    public GameObject instantiatedChara;
+
+   public Transform yaelLastPos;
+    public Transform jasLastPos;
+
+ 
 
 
     // Use this for initialization
     void Start ()
     {
-        m_animator = GetComponent<Animator>();
-        m_body2d = GetComponent<Rigidbody2D>();
-        m_groundSensor = transform.Find("GroundSensor").GetComponent<Sensor_HeroKnight>();
-        m_wallSensorR1 = transform.Find("WallSensor_R1").GetComponent<Sensor_HeroKnight>();
-        m_wallSensorR2 = transform.Find("WallSensor_R2").GetComponent<Sensor_HeroKnight>();
-        m_wallSensorL1 = transform.Find("WallSensor_L1").GetComponent<Sensor_HeroKnight>();
-        m_wallSensorL2 = transform.Find("WallSensor_L2").GetComponent<Sensor_HeroKnight>();
-    
+       
+        _curCharacter = CurCharacter.Edrick;
+         
     }
 
     private void Awake()
@@ -55,158 +64,249 @@ public class HeroKnight : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
-        // Increase timer that controls attack combo
-        m_timeSinceAttack += Time.deltaTime;
+        Vector2 yaelDis = yaelCheck.position;
+        Vector2 jasDis = japserCheck.position;
+        dist = Vector2.Distance(yaelDis, jasDis);
 
-        // Increase timer that checks roll duration
-        if(m_rolling)
-            m_rollCurrentTime += Time.deltaTime;
-
-        // Disable rolling if timer extends duration
-        if(m_rollCurrentTime > m_rollDuration)
-            m_rolling = false;
-
-        //Check if character just landed on the ground
-        if (!m_grounded && m_groundSensor.State())
+        if (charaIndex > maxchara)
         {
-            m_grounded = true;
-            m_animator.SetBool("Grounded", m_grounded);
+            charaIndex = minchara;
         }
-
-        //Check if character just started falling
-        if (m_grounded && !m_groundSensor.State())
+        if (charaIndex < minchara)
         {
-            m_grounded = false;
-            m_animator.SetBool("Grounded", m_grounded);
+            charaIndex = maxchara;
         }
-
-        // -- Handle input and movement --
-        float inputX = Input.GetAxis("Horizontal");
-
-        // Swap direction of sprite depending on walk direction
-        if (inputX > 0)
+        if (charaIndex == 0)
         {
-            GetComponent<SpriteRenderer>().flipX = false;
-            m_facingDirection = 1;
+            _curCharacter = CurCharacter.Edrick;
         }
+        if (charaIndex == 1 && yaelAvailable)
+        {
+            _curCharacter = CurCharacter.Yael;
             
-        else if (inputX < 0)
+        }
+        if (charaIndex == 2 && jasperAvailable)
         {
-            GetComponent<SpriteRenderer>().flipX = true;
-            m_facingDirection = -1;
+            _curCharacter = CurCharacter.Jasper;
+        }
+        switch (_curCharacter)
+        {
+            case CurCharacter.Edrick:
+                spriteRenderer.sprite = _charaSprite[0];
+                break;
+            case CurCharacter.Yael:
+                spriteRenderer.sprite = _charaSprite[1];
+                break;
+            case CurCharacter.Jasper:
+                spriteRenderer.sprite = _charaSprite[2];
+                break;
+            case CurCharacter.None:
+                break;
+            default:
+                Debug.Log("unknown character.");
+                break;
         }
 
-        // Move
-        if (!m_rolling )
-            m_body2d.velocity = new Vector2(inputX * m_speed, m_body2d.velocity.y);
-
-        //Set AirSpeed in animator
-        m_animator.SetFloat("AirSpeedY", m_body2d.velocity.y);
-
-        // -- Handle Animations --
-        //Wall Slide
-        m_isWallSliding = (m_wallSensorR1.State() && m_wallSensorR2.State()) || (m_wallSensorL1.State() && m_wallSensorL2.State());
-        m_animator.SetBool("WallSlide", m_isWallSliding);
-
-        //Death
-        if (Input.GetKeyDown("e") && !m_rolling)
+        if (Input.GetKeyDown("e"))
         {
-            m_animator.SetBool("noBlood", m_noBlood);
-            m_animator.SetTrigger("Death");
+            Debug.Log("SwapRight");
+            SwapRight();
         }
-            
-        //Hurt
-        else if (Input.GetKeyDown("q") && !m_rolling)
-            m_animator.SetTrigger("Hurt");
+        else if (Input.GetKeyDown("q"))
+        {
+            Debug.Log("SwapLeft");
+            SwapLeft();
+
+        }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Debug.Log("Placing Companion");
+
+            if (charaIndex == 1)
+            {
+                instantiatedChara = Party[0];
+            }
+            if (charaIndex == 2)
+            {
+                instantiatedChara = Party[1];
+            }
+            PlaceCompanion();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Recall();
+        }
 
         //Attack
-        else if(Input.GetMouseButtonDown(0) && m_timeSinceAttack > 0.25f && !m_rolling)
+        else if (Input.GetMouseButtonDown(0))
         {
-            m_currentAttack++;
+            if (_curCharacter == CurCharacter.Jasper)
+            {
+                JasperAbility();
+            }
 
-            // Loop back to one after third attack
-            if (m_currentAttack > 3)
-                m_currentAttack = 1;
-
-            // Reset Attack combo if time since last attack is too large
-            if (m_timeSinceAttack > 1.0f)
-                m_currentAttack = 1;
-
-            // Call one of three attack animations "Attack1", "Attack2", "Attack3"
-            m_animator.SetTrigger("Attack" + m_currentAttack);
-
-            // Reset timer
-            m_timeSinceAttack = 0.0f;
+            if (_curCharacter == CurCharacter.Yael)
+            {
+                YaelAbility();
+            }
         }
 
-        // Block
-        else if (Input.GetMouseButtonDown(1) && !m_rolling)
-        {
-            m_animator.SetTrigger("Block");
-            m_animator.SetBool("IdleBlock", true);
-        }
-
-        else if (Input.GetMouseButtonUp(1))
-            m_animator.SetBool("IdleBlock", false);
-
-        // Roll
-        else if (Input.GetKeyDown("left shift") && !m_rolling && !m_isWallSliding)
-        {
-            m_rolling = true;
-            m_animator.SetTrigger("Roll");
-            m_body2d.velocity = new Vector2(m_facingDirection * m_rollForce, m_body2d.velocity.y);
-        }
-            
-
-        //Jump
-        else if (Input.GetKeyDown("space") && m_grounded && !m_rolling)
-        {
-            m_animator.SetTrigger("Jump");
-            m_grounded = false;
-            m_animator.SetBool("Grounded", m_grounded);
-            m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
-            m_groundSensor.Disable(0.2f);
-        }
-
-        //Run
-        else if (Mathf.Abs(inputX) > Mathf.Epsilon)
-        {
-            // Reset timer
-            m_delayToIdle = 0.05f;
-            m_animator.SetInteger("AnimState", 1);
-        }
-
-        //Idle
-        else
-        {
-            // Prevents flickering transitions to idle
-            m_delayToIdle -= Time.deltaTime;
-                if(m_delayToIdle < 0)
-                    m_animator.SetInteger("AnimState", 0);
-        }
     }
 
+    void JasperAbility()
+    {
+        GameObject Jasper;
+        Jasper = Party[1];
+        Animator jaspAnim;
+        jaspAnim = Jasper.GetComponent<Animator>();
+        Debug.Log(jaspAnim);
+        anim.SetBool("isAttack", true);
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(JaspTrigger.transform.position, attackRange, enemyLayers);
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            Debug.Log("hit");
+            DestructibleBox box = enemy.GetComponent<DestructibleBox>();
+            box.Break();
+        }
+        anim.SetBool("isAttack", false);
+    }
+
+    void YaelAbility()
+    {
+        Instantiate(YaelBlock, YaelTrig.position, Quaternion.identity);
+    }
     // Animation Events
     // Called in slide animation.
-    void AE_SlideDust()
+
+    void SwapRight()
     {
-        Vector3 spawnPosition;
+        Debug.Log("Swapping CH Right");
+        charaIndex += 1;
+        SwapCharaPositions();
 
-        if (m_facingDirection == 1)
-            spawnPosition = m_wallSensorR2.transform.position;
-        else
-            spawnPosition = m_wallSensorL2.transform.position;
-
-        if (m_slideDust != null)
+    }
+    void SwapLeft()
+    {
+        Debug.Log("Swapping CH Left");
+        charaIndex -= 1;
+        SwapCharaPositions();
+    }
+    void PlaceCompanion()
+    {
+        if(charaIndex != 0)
         {
-            // Set correct arrow spawn position
-            GameObject dust = Instantiate(m_slideDust, spawnPosition, gameObject.transform.localRotation) as GameObject;
-            // Turn arrow in correct direction
-            dust.transform.localScale = new Vector3(m_facingDirection, 1, 1);
+            Debug.Log("Placing Companion: " + _curCharacter);
+        }
+        
+        Party[charaIndex].transform.parent = null;
+        Party[charaIndex].SetActive(true);
+        
+        if(charaIndex == 1)
+        {
+            yaelAvailable = false;
+        }
+        if (charaIndex == 2)
+        {
+            jasperAvailable = false;
+        }
+
+    }
+
+    public void Recall()
+    {
+        Debug.Log("Recall!");
+        foreach (GameObject partyMember in Party)
+        {
+            partyMember.SetActive(false);
+            partyMember.transform.parent = this.gameObject.transform;
+            yaelAvailable = true;
+            jasperAvailable = true;
         }
     }
+
+    public void SwapCharaPositions()
+    {
+        Debug.Log("Swapping Positions: Start");
+        StartCoroutine(SwapCoroutine());
+    }
+
+    public IEnumerator SwapCoroutine()
+    {
+        Debug.Log("Swapping Positions: End");
+
+        GameObject yael = Party[0];
+        GameObject jasper = Party[1];
+
+        if (yael == null || jasper == null)
+        {
+            Debug.LogWarning("Missing party member reference.");
+            yield break;
+        }
+
+        // Cache their positions before moving
+        Vector3 yaelPos = yael.transform.position;
+        Vector3 jasperPos = jasper.transform.position;
+
+        Collider2D yaelCo = yael.GetComponent<Collider2D>();
+        Collider2D jasCo = jasper.GetComponent<Collider2D>();
+
+        
+        //yield return new WaitForSeconds(0.5f);
+
+        // Disable colliders to avoid overlap
+        if (yaelCo) yaelCo.enabled = false;
+        if (jasCo) jasCo.enabled = false;
+
+        yield return new WaitForSeconds(0.1f);
+
+        // Swap positions
+
+        if (playerController.moving) // if player is moving
+        {
+            if (playerController.isFacingRight) //and if player is facing right
+            {
+                yael.transform.position = jasperPos + new Vector3(0.5f, 0, 0);
+                jasper.transform.position = yaelPos + new Vector3(0.5f, 0, 0);
+                // Re-enable colliders
+                yield return new WaitForSeconds(0.1f);
+                if (yaelCo) yaelCo.enabled = true;
+                if (jasCo) jasCo.enabled = true;
+            }
+            else if (!playerController.isFacingRight) // if they are facing left
+            {
+                yael.transform.position = jasperPos + new Vector3(-0.5f, 0, 0);
+                jasper.transform.position = yaelPos + new Vector3(-0.5f, 0, 0);
+                // Re-enable colliders
+                yield return new WaitForSeconds(0.1f);
+                if (yaelCo) yaelCo.enabled = true;
+                if (jasCo) jasCo.enabled = true;
+            }
+            
+        }
+        else //if they are not moving
+        {
+            yael.transform.position = jasperPos;
+            jasper.transform.position = yaelPos;
+            // Re-enable colliders
+            yield return new WaitForSeconds(0.1f);
+            if (yaelCo) yaelCo.enabled = true;
+            if (jasCo) jasCo.enabled = true;
+        }
+        
+
+        // Re-enable colliders
+        yield return new WaitForSeconds(0.1f);
+        if (yaelCo) yaelCo.enabled = true;
+        if (jasCo) jasCo.enabled = true;
+
+        Debug.Log("Positions swapped successfully.");
+    }
+
+
+
     [ContextMenu("SavePOS")]
     public void SavePlayerPosition()
     {

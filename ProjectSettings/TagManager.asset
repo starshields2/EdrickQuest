@@ -14,15 +14,21 @@ TagManager:
   - Ladder
   - Room
   - Mediation
+  - Aya
+  - Ura
+  - Oga
+  - Jasper
+  - Yael
+  - TurnIcon
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Outline
   - Water
   - UI
-  - 
-  - 
+  - Enemies
+  - Obstacle
   - 
   - 
   - 

@@ -1,0 +1,186 @@
+fileFormatVersion: 2
+guid: ac851a201e824894a8be76103dd683e3
+ModelImporter:
+  serializedVersion: 21202
+  internalIDToNameTable:
+  - first:
+      74: 687470621588751736
+    second: Oga|Aya|Aya|Aya|Aya|AyaAction
+  - first:
+      74: 5501934868260592922
+    second: Oga|Aya|Aya|Aya|Aya|OgaAction
+  - first:
+      74: 6941728494763450654
+    second: Oga|Aya|Aya|Aya|Aya|UraAction
+  - first:
+      74: 2954237776409551940
+    second: Oga|Aya|Aya|Oga|Oga|AyaAction
+  - first:
+      74: -8034911494445798629
+    second: Oga|Aya|Aya|Oga|Oga|OgaAction
+  - first:
+      74: 6470815851698580449
+    second: Oga|Aya|Aya|Oga|Oga|UraAction
+  - first:
+      74: -3694419472881693455
+    second: Oga|Aya|Aya|Ura|Ura|AyaAction
+  - first:
+      74: -1740837904985440117
+    second: Oga|Aya|Aya|Ura|Ura|OgaAction
+  - first:
+      74: 4541545447360933854
+    second: Oga|Aya|Aya|Ura|Ura|UraAction
+  - first:
+      74: -1273366054215180372
+    second: Oga|Oga|Oga|Aya|Aya|AyaAction
+  - first:
+      74: 2368785799977290485
+    second: Oga|Oga|Oga|Aya|Aya|OgaAction
+  - first:
+      74: -4294057469820967302
+    second: Oga|Oga|Oga|Aya|Aya|UraAction
+  - first:
+      74: -5456099112298898201
+    second: Oga|Oga|Oga|Oga|Oga|AyaAction
+  - first:
+      74: 7567057487485719252
+    second: Oga|Oga|Oga|Oga|Oga|OgaAction
+  - first:
+      74: 449377578910556889
+    second: Oga|Oga|Oga|Oga|Oga|UraAction
+  - first:
+      74: -4448912344243014265
+    second: Oga|Oga|Oga|Ura|Ura|AyaAction
+  - first:
+      74: 7137777975523406073
+    second: Oga|Oga|Oga|Ura|Ura|OgaAction
+  - first:
+      74: 2033972470183449570
+    second: Oga|Oga|Oga|Ura|Ura|UraAction
+  - first:
+      74: -4155865005033500847
+    second: Oga|Ura|Ura|Aya|Aya|AyaAction
+  - first:
+      74: 1160353847210724126
+    second: Oga|Ura|Ura|Aya|Aya|OgaAction
+  - first:
+      74: 3186570369429036188
+    second: Oga|Ura|Ura|Aya|Aya|UraAction
+  - first:
+      74: 1580978302494972611
+    second: Oga|Ura|Ura|Oga|Oga|AyaAction
+  - first:
+      74: 5425395230544755008
+    second: Oga|Ura|Ura|Oga|Oga|OgaAction
+  - first:
+      74: 1928618878829567316
+    second: Oga|Ura|Ura|Oga|Oga|UraAction
+  - first:
+      74: 5881568383933866404
+    second: Oga|Ura|Ura|Ura|Ura|AyaAction
+  - first:
+      74: -3355594675025586348
+    second: Oga|Ura|Ura|Ura|Ura|OgaAction
+  - first:
+      74: -981792564476934499
+    second: Oga|Ura|Ura|Ura|Ura|UraAction
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.5
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 0.5
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

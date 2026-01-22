@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 22481992}
   - component: {fileID: 22265584}
-  - component: {fileID: 11456674}
+  - component: {fileID: -6551986770472855962}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -46,7 +46,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 162960}
   m_CullTransparentMesh: 0
---- !u!114 &11456674
+--- !u!114 &-6551986770472855962
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,14 +71,12 @@ MonoBehaviour:
     m_FontSize: 60
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 0
-    m_MaxSize: 300
+    m_MinSize: 6
+    m_MaxSize: 60
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'sample text
-
-    g'
+  m_Text: 

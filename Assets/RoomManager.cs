@@ -5,16 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class RoomManager : MonoBehaviour
 {
-    public static RoomManager Instance { get; private set; }
+ // public static RoomManager Instance { get; private set; }
 
-    [SerializeField] private GameObject roomPrefab;
+    [SerializeField] private GameObject roomPrefab; //THE basic room prefab
+
     [SerializeField] private int maxRooms = 15;
-    [SerializeField] private int minRooms = 10;
+    [SerializeField] private int minRooms = 15;
     [SerializeField] public GameObject[] rooms;
-
     private int roomWidth = 17;
     private int roomHeight = 9;
-
     [SerializeField] int gridSizeX = 10;
     [SerializeField] int gridSizeY = 10;
 
@@ -26,24 +25,24 @@ public class RoomManager : MonoBehaviour
 
     private bool generationComplete = false;
 
-    private bool hasShop = false;
-    private bool hasCampsite = false;
+    public bool hasShop = false;
+    public bool hasCampsite = false;
 
     private int randomSeed;
 
     private void Awake()
     {
-        // Ensure that only one instance of RoomManager exists
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);  // Destroy duplicate RoomManager instances
-        }
-        else
-        {
-            Instance = this; // Set the static instance to this instance
-            DontDestroyOnLoad(gameObject); // Ensure it persists across scenes
-            Debug.Log("RoomManager Instance Init");
-        }
+        //// Ensure that only one instance of RoomManager exists
+       //if (Instance != null && Instance != this)
+       // {
+       // Destroy(gameObject);  // Destroy duplicate RoomManager instances
+       // }
+       // else
+       // {
+       //     Instance = this; // Set the static instance to this instance
+       //     DontDestroyOnLoad(gameObject); // Ensure it persists across scenes
+       //     Debug.Log("RoomManager Instance Init");
+       // }
     }
 
     private void Start()
@@ -51,19 +50,19 @@ public class RoomManager : MonoBehaviour
         roomGrid = new int[gridSizeX, gridSizeY];
         roomQueue = new Queue<Vector2Int>();
 
-        if (RoomGenerationState.Instance != null)
-        {
+       // if (RoomGenerationState.Instance != null)
+       // {
             // Load the previous state if available
-            RoomGenerationState.Instance.LoadGenerationState(this);
-        }
-        else
-        {
+           // RoomGenerationState.Instance.LoadGenerationState(this);
+       // }
+       // else
+       // {
             // Otherwise, start fresh
             Vector2Int initialRoomIndex = new Vector2Int(gridSizeX / 2, gridSizeY / 2);
             StartRoomGenerationFromRoom(initialRoomIndex);
-        }
+       // }
 
-        //RoomGenerationState.Instance.SaveGenerationState(RoomManager.Instance);
+       // RoomGenerationState.Instance.SaveGenerationState(RoomManager.Instance);
 
     }
 
@@ -160,10 +159,12 @@ public class RoomManager : MonoBehaviour
         roomGrid[x, y] = 1;
         roomCount++;
 
-        var newRoom = Instantiate(roomPrefab, GetPositionFromGridIndex(roomIndex), Quaternion.identity);
+        var newRoom = Instantiate(roomPrefab, GetPositionFromGridIndex(roomIndex), Quaternion.identity); //new room is a game object
+
         newRoom.GetComponent<Room>().RoomIndex = roomIndex;
-        newRoom.name = $"Room-{roomCount}";
+        newRoom.name = $"Room-{roomCount}"; 
         newRoom.transform.SetParent(transform);
+
         // Assign room type (Shop, Campsite, etc.)
         AssignRoomType(newRoom.GetComponent<Room>());
 
@@ -177,20 +178,9 @@ public class RoomManager : MonoBehaviour
     // Assign room types (Shop, Campsite, etc.)
     private void AssignRoomType(Room roomScript)
     {
-        if (!hasShop && Random.value < 0.1f) // 10% chance for Shop
-        {
-            roomScript.roomType = Room.RoomType.Settlement; // Assign as Shop
-            hasShop = true;
-        }
-        else if (!hasCampsite && Random.value < 0.1f) // 10% chance for Campsite
-        {
-            roomScript.roomType = Room.RoomType.Campsite; // Assign as Campsite
-            hasCampsite = true;
-        }
-        else
-        {
+ 
             roomScript.roomType = (Room.RoomType)Random.Range(1, System.Enum.GetValues(typeof(Room.RoomType)).Length);
-        }
+          
 
         // Set up the room's features (like activating items, combat, etc.)
         roomScript.SetRooms();

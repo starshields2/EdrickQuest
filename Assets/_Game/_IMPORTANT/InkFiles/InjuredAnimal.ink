@@ -1,6 +1,11 @@
-VAR YMorale = 5
-VAR JPoints = 5
-VAR medPoints = 24
+VAR violations = 0
+VAR commonalities = 0
+VAR medPoints = 70
+VAR experience = 0
+VAR hound = 0
+VAR prep = 0
+VAR overhear = 0
+VAR misconception = 0
                                  
 VAR avoidanceSP = 0
 VAR competSP = 0
@@ -8,6 +13,7 @@ VAR acommoSP = 0
 VAR collabSP = 0
 VAR comproSP = 0
 
+//Exposure
 #Yael
 What is that limping thing in the shadows?
 +[Continue.]
@@ -23,7 +29,7 @@ I'm not stopping for that mutt unless we're eating it.
 
 =MEDIATIONSTART
 #Edrick
-Another meaningless squabble.
+Another meaningless squabble...
 +[Talk to Yael] ->YAEL
 +[Talk to Jasper] ->JASPER
 +[Regroup] ->COMP
@@ -33,20 +39,25 @@ Another meaningless squabble.
 #Yael
 You'd think that brute at least has compassion for animals.
  +[Nevermind.] ->MEDIATIONSTART
- *[]
-   ~increaseYMorale(2)
- Of course it is. I just don't know when the next chance I'll get to pray will be. 
- **[I'm sure it's not the only shrine on this path.]
-~decreaseYMorale(1)
-    You say that so that Jasper can take the whetstone and destroy the shrine. 
-    +++[Continue] -> MEDIATIONSTART
-  **[I'm assuming that's why it has to be this shrine?]
-  Exactly. 
-  ~increaseYMorale(2)
-  +++[Continue] -> MEDIATIONSTART
- *[We'll die without those whetstones.]
- ~decreaseYMorale(3)
-  Who knows when I'll get another chance to pray? The gods will forsake me. 
+ *[Maybe she's never had a pet.]
+ The Sunblades are too busy bonking each other over the head with the blunt end of their greatswords to care for animals they don't have a use for. They don't even name their sled dogs.
+ **[You're very passionate about this.]
+    Of course I am! If I leave this silverpaw to die, we may as well throw ourselves into the nearest ditch. There is no coming back from turning the other cheek to Elunia's sacred pack. 
+    ***[Sacred pack?]
+    One of our own, Barley, left a silverpaw to die out in the cold. His right hand became hard and frozen the next day, and never recovered. I refuse to suffer a similar curse.
+    ++++[Continue] -> MEDIATIONSTART
+  **[Would Jasper like to overhear that?]
+  Maybe hearing it would expose her to some sense. 
+  ~overheard(1)
+  +++[I'll pass the message on.] -> MEDIATIONSTART
+ *[How long will it take to heal the dog?] 
+ //prep 1
+ #Yael
+ A ritual like this should only take about an hour, give or take.
+ ~enablePrep(1)
+ ++[Continue] ->MEDIATIONSTART
+// * {JPoints > 3} [Jasper is extremely nervous.]
+  She should have said that... 
   ++[Continue] -> MEDIATIONSTART
 
  
@@ -54,36 +65,32 @@ You'd think that brute at least has compassion for animals.
 
 =JASPER
 #Jasper
-If you're here to talk sense into me, I have plenty to spare.
+So are we eating that animal or what? ( {overhear} points)
  +[Nevermind.] ->MEDIATIONSTART
- *[You should respect the holy site. This is Yael's culture.]
- #Jasper
- ~decreaseJPoints(1)
- Who cares about culture right now? Can the gods reach you in this hellhole?
- ++[Continue] -> MEDIATIONSTART
- *[Can't Yael pray at the stone before you remove it?]
- ~increaseJPoints(1)
- {JPoints < 3: We don't have time for that. #Jasper}
 
-{JPoints >= 3: ...fine. Make it quick. #Jasper}
+ *{overhear > 0} [Yael said the Sunblades don't even name their sled dogs?] 
+Well that's just false, makes sense coming from a cleric though. All sled dogs share a common name, from which pack they come from. 
+++[Ah. A misconception.] ->MEDIATIONSTART
++[What's bothering you?]
+If we spend time and resources on this mutt, we'll never make it. We should just leave it.
  ++[Continue] -> MEDIATIONSTART
  
  
 ->DONE  
 
 =COMP
- {JPoints < 3: I don't see why this needed to be a conversation. #Jasper}
-{JPoints >= 3: Well, as long as it's over with quickly. #Jasper}
+ {violations < 3: I don't see why this needed to be a conversation. #Jasper}
+{violations >= 3: Well, as long as it's over with quickly. #Jasper}
 +[Continue]
 #Yael
- {YMorale < 3: You were going to destroy it anyway. #Yael}
-{YMorale >= 3:Let's just talk this out. #Yael}
-++[How about Yael just prays before the shrine is destroyed?]
-~decreasemedPoints(10)
+ {commonalities < 3: You were going to destroy it anyway. #Yael}
+{commonalities >= 3:Let's just talk this out. #Yael}
+ ++{misconception > 0} [Jasper does respect these animals. She is concerned for our own safety in this moment.] 
+
 (You have {medPoints} points).
 ->DONE
-++[Jasper, why don't we look for more whetstones somewhere else?]
-~increasemedPoints(20)
+++[I'm making an executive decision. We leave the animal.]
+
 #Jasper
 When we die in this maze, it will not be my fault. You'll have the Moonwalker to thank for that.
 (You have {medPoints} points).
@@ -92,23 +99,17 @@ When we die in this maze, it will not be my fault. You'll have the Moonwalker to
 #Yael
 I will pray wherever I please. Do see to it that you don't interrupt me again, Jasper.
 
-(You have {medPoints} points).
 ->DONE
 
 ->END
 
-==function increaseYMorale(amount)
-~YMorale = YMorale + amount
-==function decreaseYMorale(amount)
-~YMorale = YMorale - amount
 
-==function increaseJPoints(amount)
-~JPoints = JPoints + amount
-==function decreaseJPoints(amount)
-~JPoints = JPoints - amount
 
-==function increasemedPoints(amount)
-~medPoints = medPoints + amount
+==function enablePrep(amount)
+~prep = prep + amount
 
-==function decreasemedPoints(amount)
-~medPoints = medPoints - amount
+==function overheard(amount)
+~overhear = overhear + amount
+
+==function misconceptionIncrease(amount)
+~misconception = misconception + amount

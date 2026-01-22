@@ -5,6 +5,8 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {
     // Existing variables
+    public RoomManager _manager;
+    public Transform _managerTransform;
     [SerializeField] GameObject topDoor;
     [SerializeField] GameObject bottomDoor;
     [SerializeField] GameObject leftDoor;
@@ -16,8 +18,10 @@ public class Room : MonoBehaviour
     public GameObject shop;
     public GameObject item;
     public GameObject rope;
+    public GameObject finalRoomObject;
 
     public RoomType roomType;
+    public bool isFinalRoom;
 
     public enum RoomType
     {
@@ -26,7 +30,8 @@ public class Room : MonoBehaviour
         Encounter,
         Campsite,
         Settlement,
-        Narrative
+        Narrative,
+        Final
     }
 
     void Start()
@@ -59,9 +64,19 @@ public class Room : MonoBehaviour
             case RoomType.Narrative:
                 mediationMedallion.SetActive(true);
                 break;
+            case RoomType.Final:
+                finalRoomObject.SetActive(true);
+                break;
             default:
                 print("no room.");
                 break;
+        }
+        this.gameObject.transform.parent = _managerTransform;
+
+        if (this.gameObject.name.Contains("15"))
+        {
+            isFinalRoom = true;
+            finalRoomObject.SetActive(true);
         }
     }
 

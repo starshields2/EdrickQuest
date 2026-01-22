@@ -1,7 +1,8 @@
 VAR YMorale = 0
 VAR JPoints = 0
 VAR medPoints = 100
-
+VAR violations = 0
+VAR commonalities = 0
 
 ->BEGINNING
 =BEGINNING
