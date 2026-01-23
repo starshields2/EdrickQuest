@@ -162,9 +162,9 @@ public class MediationDialogue : MonoBehaviour
         choicesLayoutGroup.childControlWidth = false;
         choicesLayoutGroup.childControlHeight = true;
         choicesLayoutGroup.childAlignment = TextAnchor.LowerLeft;
-        choicesLayoutGroup.padding.left = 26;
+        choicesLayoutGroup.padding.left = 385;
         choicesLayoutGroup.padding.right = 0;
-        choicesLayoutGroup.padding.top = 57;
+        choicesLayoutGroup.padding.top = 220;
         choicesLayoutGroup.padding.bottom = 0;
         choicesLayoutGroup.spacing = 50;
 

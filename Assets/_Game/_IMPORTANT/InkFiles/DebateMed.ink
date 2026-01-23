@@ -5,6 +5,9 @@ VAR violations = 0
 VAR commonalities = 0
 VAR YaelTell = 0
 VAR medPoints = 0
+LIST AllNotes = Respect, Friendship, GiftEtiquitte, Food
+LIST CurrentNotes = Food
+VAR CorrectNote = Respect 
 
 #Jasper 
 You’re not seriously stopping us for this, are you? We’ve already lost precious time. If we are late for the Ritual, we’ll have set out for nothing. 
@@ -47,8 +50,9 @@ We are not average people. Not anymore. Our decorum around villagers should refl
 	++[Are they handouts, or offerings of goodwill?]
 #Yael
 What’s the difference? We shouldn’t be so eager to show that we are fragile. They may lose faith in us - it’s better to kindly refuse a gift than to show dependence on it.
-	+++[You were chosen for a reason.]
-#Yael
+~CurrentNotes = CurrentNotes + Respect
+	+++[Our gods have chosen us for a reason. Any god fearing person will also have faith in us.]
+#YaelPensive
 Well, that’s certainly true. Though it does little to ease my nerves.
 	++++[It sounds like you’re concerned about giving away our apprehensions about this journey, is that right?] 
 #YaelTell
