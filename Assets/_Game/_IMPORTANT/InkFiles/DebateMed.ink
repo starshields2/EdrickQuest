@@ -63,6 +63,28 @@ That’s right. I mean. Think about it. This kind of thing has never happened be
     #Yael
     Well, don't you think it's weird that the Tether has chosen two people who despise each other?
     ++++++[That is weird.] ->COOLOFF
+    
+    +[Reacting rashly didn’t help our image either.]
+#Yael 
+It was a rash decision, I won’t lie. But I was only trying to help. We can’t invite any bad omens on our journey with unwashed hands.
+++[What motivated you to go so far as to lay hands on her?]
+#Yael
+Well, I told her to put the hotcakes down and clean her hands, and it was as if she had cotton stuck in her ears. So I just. Acted on it.
+	+++[Regardless of how put off you feel, Jasper is your colleague. It would be just as unfair of you to disrespect her space.]
+#Yael
+You do know I despise it when you start making sense, right Edrick?
+++++[I think I can tell.] ->COOLOFF
+	+++[I think you should apologize for making her drop the food.] 
+Yael: And I think you should stop telling me what to do.
+++++[Right, sorry.] -> COOLOFF
+++++[Unfortunately my friend, that is my job.] ->COOLOFF
+++ [I understand Moonwalkers have rituals they must perform before eating. Jasper shouldn’t have to abide by those.]
+#Yael
+Well, I shouldn’t have to witness her sacrilege at every other moment, either.
++++[Maybe you should look away next time?] ->COOLOFF
++[I think Jasper is a little frustrated by your vocabulary.]
+Yael:  It’s certainly not my fault. We do have state of the art education in the city. 
+
    
 ->DONE
 
