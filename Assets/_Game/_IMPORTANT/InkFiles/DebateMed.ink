@@ -83,19 +83,39 @@ Yael: And I think you should stop telling me what to do.
 Well, I shouldn’t have to witness her sacrilege at every other moment, either.
 +++[Maybe you should look away next time?] ->COOLOFF
 +[I think Jasper is a little frustrated by your vocabulary.]
-Yael:  It’s certainly not my fault. We do have state of the art education in the city. 
+#Yael
+It’s certainly not my fault. We do have state of the art education in the city. 
 
    
 ->DONE
 
 =JASPER
 #Jasper
-Don't try and probe me, I don't like being prodded at like a child.
-+[Okay.] 
+Jasper: Why’s Yael so concerned with how prim and proper we look anyway? We’re trudging through dirt. 
++[Can you share a bit more about this argument from your perspective, Jasper?]
+#Jasper: 
+There’s not much to share. I was offered food, I said “thank you,” and I tried to eat it, before Yael decided I should starve.
+++[In Yael’s sect, hand washing is a ritual that cannot be forgone before eating. Doing so could invite chaos and ill-intended spirits from the hands into the body.]
 #Jasper
-Ugh, few people enjoy being roughhoused, Edrick. Did you take me for a barbarian or something?
-++[Why would I take you for a barbarian?] ->END
-++[No, I'm sorry.] ->END
+I don’t really care what Moonwalkers do before eating. We don’t do that. 
++++[ You don’t have to do that. I’m just letting you know.] 
+#Jasper
+Well, why don’t you tell her that I’m not going to abide by her rules. So she can shove it.
+++++[How about we loop back around to this?] ->COOLOFF
++++[Could you at least wipe or wash your hands before eating next time?]
+#Jasper
+Why are you asking me to compromise first? She’s literally insulting me left and right. I deserve some respect! 
+++++[I understand. I'll ask her about this.] ->COOLOFF
+++[You seem quite irritated about this. May I ask why?]
+Jasper: Few people enjoy being roughhoused, Edrick. And besides that. She keeps saying things she knows I’m not going to understand.
++++[Like what? Elaborate?]
+#Jasper
+Can you believe she asked me to have a proper “decorum?” What does decorating anything have to do with this?
+++++[…I see. Did she tell you what that actually means?]
+#Jasper
+No! And she’s been doing that on purpose - using fancy language just to complicate everything. 
++++++[How about we bring that up when we regroup?] ->COOLOFF
+
 ->DONE
 
 =REGROUP
