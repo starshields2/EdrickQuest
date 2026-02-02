@@ -8,7 +8,7 @@ VAR medPoints = 0
 LIST AllNotes = Respect, Friendship, GiftEtiquitte, Food
 LIST CurrentNotes = Food
 VAR CorrectNote = Respect 
-
+VAR tension = 10
 #Jasper 
 You’re not seriously stopping us for this, are you? We’ve already lost precious time. If we are late for the Ritual, we’ll have set out for nothing. 
 +[Continue]
@@ -57,12 +57,21 @@ Well, that’s certainly true. Though it does little to ease my nerves.
 	++++[It sounds like you’re concerned about giving away our apprehensions about this journey, is that right?] 
 #YaelTell
 That’s right. I mean. Think about it. This kind of thing has never happened before. Fate-struck are usually friends, or at least amiable. But her… I can’t stand her. 
-    ***** [Continue]
+    +++++ [Continue]
     {YaelTell == 1: Don't poke at me.} 
     {YaelTell == 2: Maybe there's something more to this?} 
     #Yael
     Well, don't you think it's weird that the Tether has chosen two people who despise each other?
-    ++++++[That is weird.] ->COOLOFF
+    ++++++[That is strange, but the Tether has chosen you both for a reason.] ->COOLOFF
+    ++++++[Why do you care?]
+    #YaelTell
+    I had my entire life planned before this. I was hoping to be tethered to my beloved, but that's a pipe dream now. I don't even know why I bothered falling in love if I was just going to be tied to an oaf.
+    +++++++[I'm sorry, Yael. That must be tough to come to terms with.]
+    #Yael
+    Yes, but it feels good to get it out there.
+    ++++++++[Continue]
+    ~DecreaseTension(3)
+    ->COOLOFF
     
     +[Reacting rashly didn’t help our image either.]
 #Yael 
@@ -74,9 +83,15 @@ Well, I told her to put the hotcakes down and clean her hands, and it was as if 
 #Yael
 You do know I despise it when you start making sense, right Edrick?
 ++++[I think I can tell.] ->COOLOFF
-	+++[I think you should apologize for making her drop the food.] 
-Yael: And I think you should stop telling me what to do.
-++++[Right, sorry.] -> COOLOFF
+	***[I think you should apologize for making her drop the food.] 
+#Yael
+And I think you should stop telling me what to do, Edrick.
+++++[Right, sorry. Maybe that's a sore subject.] 
+#Edrick
+It doesn't seem like Yael wants to make amends this way. Maybe there's something else I can say. 
++++++[Continue] 
+~IncreaseTension(1)
+-> COOLOFF
 ++++[Unfortunately my friend, that is my job.] ->COOLOFF
 ++ [I understand Moonwalkers have rituals they must perform before eating. Jasper shouldn’t have to abide by those.]
 #Yael
@@ -91,7 +106,7 @@ It’s certainly not my fault. We do have state of the art education in the city
 
 =JASPER
 #Jasper
-Jasper: Why’s Yael so concerned with how prim and proper we look anyway? We’re trudging through dirt. 
+Why’s Yael so concerned with how prim and proper we look anyway? We’re trudging through dirt. 
 +[Can you share a bit more about this argument from your perspective, Jasper?]
 #Jasper: 
 There’s not much to share. I was offered food, I said “thank you,” and I tried to eat it, before Yael decided I should starve.
@@ -100,14 +115,21 @@ There’s not much to share. I was offered food, I said “thank you,” and I t
 I don’t really care what Moonwalkers do before eating. We don’t do that. 
 +++[ You don’t have to do that. I’m just letting you know.] 
 #Jasper
-Well, why don’t you tell her that I’m not going to abide by her rules. So she can shove it.
-++++[How about we loop back around to this?] ->COOLOFF
+Well, why don’t you tell her that I’m not going to abide by her rules. So she can shove it wherever she shoves all those books she can't get her nose out of.
+++++[Uhh... how about we loop back around to this?]
+~IncreaseTension(2)
+->COOLOFF
 +++[Could you at least wipe or wash your hands before eating next time?]
 #Jasper
 Why are you asking me to compromise first? She’s literally insulting me left and right. I deserve some respect! 
-++++[I understand. I'll ask her about this.] ->COOLOFF
+++++[I understand. I'll ask her about this.]
+#Edrick
+It seems like Jasper is very hurt by Yael's actions. Maybe I should talk to her.
+~IncreaseTension(2)
++++++[Continue]->COOLOFF
 ++[You seem quite irritated about this. May I ask why?]
-Jasper: Few people enjoy being roughhoused, Edrick. And besides that. She keeps saying things she knows I’m not going to understand.
+#Jasper
+Few people enjoy being roughhoused, Edrick. And besides that. She keeps saying things she knows I’m not going to understand.
 +++[Like what? Elaborate?]
 #Jasper
 Can you believe she asked me to have a proper “decorum?” What does decorating anything have to do with this?
@@ -124,8 +146,22 @@ I think I know what's wrong.
 +[Continue] 
 #Yael
 And what is that, Edrick?
+++[Yael, you should apologize to Jasper.] ->YAELAPOLOGIES
+++[Jasper, you should apologize to Yael.] ->JASPAPOLOGIES
 ++[There is one thing you both value most.] ->CORECHOOSER
 ++[This is something you must figure out for yourselves.] -> COOLOFF
+
+=YAELAPOLOGIES
+//(If you asked Yael to apologize)
+#YaelAnger
+Well Jasper, our Calibrator has asked me to apologize to you, so I must say, I’m sorry for ever trying to teach you any manners. 
++[No, wait, not like that!] 
+#Jasper
+Wow. Never before has anyone tested my patience like this. I need to start praying for more patience. 
+++[Maybe that wasn't the right move...]
+->DONE
+=JASPAPOLOGIES
+->DONE
 
 =CORECHOOSER
 #Edrick
@@ -139,7 +175,22 @@ And what is that, Edrick?
 #Edrick
 You both wish to be respected, both by each other and by those who depend on you during this quest. You just haven't communicated what will earn respect from each other; if you could be clear about that now, I'm sure this will be resolved.
 +[Continue] 
+//(If you pointed out to Yael that she should respect Jasper’s space)
+#YaelTell
+A bit hard to say this, I’ll admit, but I was wrong, Jasper. I should not have gone to such lengths to prevent you from eating. Even if you were doing it in a weird, gross way. 
+++[Continue]
+#Jasper
+You know, that’s all I wanted to hear. 
 
+//(If you asked Jasper to express her frustrations)
+Listen, Moonwalker. You use a lot of words that you’ve learned in a big city. I don’t understand all of them, and I’ve been getting frustrated. Could you slow down a bit or explain what you mean? 
++++[Continue]
+#Yael
+I suppose if it will ease our communications, I could be a bit more cognizant of - I mean. I can slow down. 
+++++[Looks like this is wrapping up nicely.]
+#Edrick
+I'm happy we could find something nice to say to each other! Now let's move on.
+~DecreaseTension(5)
 ->DONE
 =FRIENDS
 #Jasper
@@ -147,9 +198,19 @@ Yael and I don't need to be friends for this to work. And furthermore, I wouldn'
 +[Continue]
 #Yael
 This journey isn't about making friends, Edrick. Did the gods send someone so daft to help us, really?
-++[There must be something they can agree on...] ->COOLOFF
+++[There must be something they can agree on...]
+~IncreaseTension(2) 
+->COOLOFF
 ->DONE
 =MISSIONSTATEMENT
+#Jasper
+It doesn't matter who the Tether chose or how much I can't stand Yael, that's true. But That's not what I'm upset about! Yael is pissing me off! 
++[Oh, sorry, I must have misunderstood.]
+#Yael
+The next time we see a prayer stone, I'm going to pray the Tether is cut so I can die in peace.
+++[There must be something they can agree on...]
+~IncreaseTension(1)
+->COOLOFF
 ->DONE
 
 ==function YaelTellFalse(amount)
@@ -158,3 +219,9 @@ This journey isn't about making friends, Edrick. Did the gods send someone so da
 
 ==function YaelTellTrue(amount)
 ~YaelTell = 2
+
+==function IncreaseTension(amount)
+~tension = tension + amount
+
+==function DecreaseTension(amount)
+~tension = tension - amount

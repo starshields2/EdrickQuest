@@ -66,7 +66,7 @@ public class MediationDialogue : MonoBehaviour
         StartStory();
         // _oldTensionValue = _tensMeter._tension;
         //  Debug.Log(story.currentTags.Length);
-
+        _tensDisplay.value = (int)story.variablesState["tension"];
 
     }
 
@@ -103,10 +103,10 @@ public class MediationDialogue : MonoBehaviour
 
     void Update()
     {
-        
+        _tensDisplay.value = (int)story.variablesState["tension"];
     }
 
-    //on closing the mediation window + clicking on choices, calculate tension with this:
+    //on closing the mediation window + clicking on choices, calculate tension with this: (depreciated lowkey)
     public void CheckNewTensionValue()
     {
         _newTensionValue = _oldTensionValue + ((_flaggedBounds * _valuesMult) + (_flaggedNeeds * _commonsMult));
@@ -181,8 +181,16 @@ public class MediationDialogue : MonoBehaviour
         // If we've read all the content and there are no choices, the story is finished!
         else
         {
+           
+              string  text = "There's nothing else to say here.";
+
+            // Display the narrator line
+            CreateContentView(text, textContainer);
+
+            // Then show the Back button
             CreateChoiceView("Back", choicesContainer);
         }
+
         //then, check tension
         CheckNewTensionValue();
     }
@@ -195,6 +203,7 @@ public class MediationDialogue : MonoBehaviour
         if (choice.text.Trim() == "Back")
         {
             //RestartStory();
+            
             Deactivate();
         }
         else
@@ -285,7 +294,7 @@ public class MediationDialogue : MonoBehaviour
             }
         }
 
-        if (story.currentTags.Contains("YaelTell"))
+        if (story.currentTags.Contains("YaelPensive"))
         {
             speakerName.text = "Yael";
             speakerID[3].SetActive(true);
@@ -294,6 +303,21 @@ public class MediationDialogue : MonoBehaviour
             for (int i = 1; i < speakerID.Length; i++)
             {
                 if (i != 3) // Skip index 3 (YaelTell)
+                {
+                    speakerID[i].SetActive(false);
+                }
+            }
+        }
+
+        if (story.currentTags.Contains("YaelAngry"))
+        {
+            speakerName.text = "Yael";
+            speakerID[4].SetActive(true);
+
+            // Disable all other speakerID game objects
+            for (int i = 1; i < speakerID.Length; i++)
+            {
+                if (i != 4) // Skip index 3 (YaelTell)
                 {
                     speakerID[i].SetActive(false);
                 }
