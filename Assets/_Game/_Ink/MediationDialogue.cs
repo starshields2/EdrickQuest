@@ -36,11 +36,9 @@ public class MediationDialogue : MonoBehaviour
     public Slider _tensionSlider; //public slider where this mediation's tension value will be displayed. 
 
     //for calculating tension 
-    public float _newTensionValue; 
-    public float _oldTensionValue;
-
-    public int _flaggedNeeds;
-    public int _flaggedBounds;
+    public int _CurrentTension;
+    public bool _highTension;
+    public bool _lowTension;
     public int _flaggedCoreNeed;
 
     public float _valuesMult; 
@@ -51,8 +49,6 @@ public class MediationDialogue : MonoBehaviour
     // Define the UI prefab for narrator text
     [SerializeField]
     private Text narratorTextPrefab = null;
-
-    private
 
  void Start()
     {
@@ -103,17 +99,27 @@ public class MediationDialogue : MonoBehaviour
 
     void Update()
     {
-        _tensDisplay.value = (int)story.variablesState["tension"];
+        _CurrentTension = (int)story.variablesState["tension"];
+        _tensDisplay.value = _CurrentTension;
+       
+
+        if(_CurrentTension > 14)
+        {
+            _highTension = true;
+            _lowTension = false;
+
+        }
+        if(_CurrentTension < 5)
+        {
+            _lowTension = true;
+            _highTension = false;
+        }
     }
 
     //on closing the mediation window + clicking on choices, calculate tension with this: (depreciated lowkey)
     public void CheckNewTensionValue()
     {
-        _newTensionValue = _oldTensionValue + ((_flaggedBounds * _valuesMult) + (_flaggedNeeds * _commonsMult));
-        print(_newTensionValue);
-        _oldTensionValue = _newTensionValue;
-        _tensMeter._tension = _newTensionValue;
-        _tensDisplay.value = _newTensionValue; 
+
     }
 
     //what happens when choices are clicked, but can be called any time?
@@ -245,7 +251,7 @@ public class MediationDialogue : MonoBehaviour
     {
         //Display Text and debug who is talking.
         DisplayTags();
-        Text storyText = Instantiate(textPrefab, container.transform);
+        TextMeshProUGUI storyText = Instantiate(textPrefab, container.transform);
         storyText.text = text;
 
         //dialogeTRACKING
@@ -455,7 +461,7 @@ public class MediationDialogue : MonoBehaviour
 
     // UI Prefabs
     [SerializeField]
-    private Text textPrefab = null;
+    private TextMeshProUGUI textPrefab = null;
     [SerializeField]
     private Button buttonPrefab = null;
 }

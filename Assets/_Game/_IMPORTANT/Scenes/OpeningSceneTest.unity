@@ -306,6 +306,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1920053202}
     - target: {fileID: 1733406836, guid: c07674579fe76a34b9045a3236077479, type: 3}
+      propertyPath: textPrefab
+      value: 
+      objectReference: {fileID: -7450272683130587119, guid: cefcf158f3e39484dbef332774f9c757,
+        type: 3}
+    - target: {fileID: 1733406836, guid: c07674579fe76a34b9045a3236077479, type: 3}
       propertyPath: speakerID.Array.size
       value: 5
       objectReference: {fileID: 0}

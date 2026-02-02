@@ -10,7 +10,7 @@ LIST CurrentNotes = Food
 VAR CorrectNote = Respect 
 VAR tension = 10
 #Jasper 
-You’re not seriously stopping us for this, are you? We’ve already lost precious time. If we are late for the Ritual, we’ll have set out for nothing. 
+You’re not <b> seriously </b> stopping us for this, are you? We’ve already lost precious time. If we are late for the <color=red> Ritual </color>, we’ll have set out for nothing. 
 +[Continue]
 
 #Yael
