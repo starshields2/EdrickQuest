@@ -380,7 +380,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2916780685461484255}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -595,7 +595,7 @@ RectTransform:
   m_Children:
   - {fileID: 1574866073654344294}
   m_Father: {fileID: 2916780685461484255}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -857,69 +857,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1 &2916780684802240684
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2916780684802240683}
-  - component: {fileID: 2916780684802240682}
-  m_Layer: 5
-  m_Name: NotesContainer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2916780684802240683
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2916780684802240684}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2916780685461484255}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2916780684802240682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2916780684802240684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!1 &2916780685461484240
 GameObject:
   m_ObjectHideFlags: 0
@@ -951,7 +888,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2916780684769021718}
-  - {fileID: 2916780684802240683}
   - {fileID: 1783852063080771681}
   - {fileID: 379754901443999896}
   - {fileID: 2499243147183262541}
@@ -1732,7 +1668,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2916780685461484255}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3004,6 +2940,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc082ebe45117f14dbe9f5e17160b47a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  notes: []
+  notesPFButton: {fileID: 0}
+  notesContainer: {fileID: 0}
   _DialogueHistoryTextPF: {fileID: 8161239119773859609, guid: 67819a4e8b9ea4241b363697e4ce1cd6,
     type: 3}
   _HistoryContainer: {fileID: 8244542441728447735}
@@ -3020,10 +2959,10 @@ MonoBehaviour:
   - {fileID: 770509523}
   _tensMeter: {fileID: 0}
   _tensionSlider: {fileID: 8244542441845800541}
-  _newTensionValue: 0
-  _oldTensionValue: 0
-  _flaggedNeeds: 0
-  _flaggedBounds: 0
+  tensionMaterial: {fileID: 0}
+  _CurrentTension: 0
+  _highTension: 0
+  _lowTension: 0
   _flaggedCoreNeed: 0
   _valuesMult: 0
   _commonsMult: 0
@@ -3031,8 +2970,7 @@ MonoBehaviour:
   narratorTextPrefab: {fileID: 11456674, guid: 53ded069d74a3c84ba76e1eee3bff0e6, type: 3}
   inkJSONAsset: {fileID: 4900000, guid: 18a85ef48b244924685132f38b411965, type: 3}
   canvas: {fileID: 8244542442289223647}
-  textPrefab: {fileID: -6551986770472855962, guid: 1aab6ef84d87c416f8f0b3e1ef3d77d2,
-    type: 3}
+  textPrefab: {fileID: 0}
   buttonPrefab: {fileID: 11455116, guid: 13160b57522477e42a21bae2361be907, type: 3}
 --- !u!1 &8244542442394352354
 GameObject:

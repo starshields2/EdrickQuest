@@ -5,16 +5,22 @@ VAR violations = 0
 VAR commonalities = 0
 VAR YaelTell = 0
 VAR medPoints = 0
-LIST AllNotes = Respect, Friendship, GiftEtiquitte, Food
-LIST CurrentNotes = Food
-VAR CorrectNote = Respect 
 VAR tension = 10
+VAR highTen = false
+VAR jasperVocab = false
+VAR AllNotesIndex = 0
+
+=== notes ===
+- "First note text"
+- "Second note text"
+- "Third note text"
+
 #Jasper 
-You’re not <b> seriously </b> stopping us for this, are you? We’ve already lost precious time. If we are late for the <color=red> Ritual </color>, we’ll have set out for nothing. 
-+[Continue]
+You’re not <b>seriously</b> stopping us for this, are you? We’ve already lost precious time. If we are late for the <color=orange> Ritual </color>, we’ll have set out for nothing. 
++[I just want everyone to get along.]
 
 #Yael
-If Edrick won’t stop us for this, I will. No Fate-struck person should be as ill mannered and gross as you’re acting right now, especially not during the Ritual.
+If Edrick won’t stop us for this, I will. No <color=orange>Fate-struck</color> person should be as ill mannered and gross as you’re acting right now, especially not during the Ritual.
 ++[Continue]
 
 #Jasper
@@ -34,6 +40,7 @@ Calm yourselves. Please confide in me, so I can help you two walk in each others
 
 =COOLOFF
 #Edrick
+{jasperVocab}
 +[Talk to Yael]-> Yael
 +[Talk to Jasper] ->JASPER
 +[Regroup]  -> REGROUP
@@ -42,22 +49,20 @@ Calm yourselves. Please confide in me, so I can help you two walk in each others
 =Yael
 #Yael
 You don’t understand, Edrick. She’s making us look like idiots out there. 
-
 +[Why do you think that?]
 
 #Yael
-We are not average people. Not anymore. Our decorum around villagers should reflect that. How can they look up to us as Fate-struck if we’re taking handouts from everyone we cross?
+We are not average people. Not <i>anymore</i>. Our decorum around villagers should reflect that. How can they look up to us as Fate-struck if we’re taking handouts from everyone we cross?
 	++[Are they handouts, or offerings of goodwill?]
 #Yael
 What’s the difference? We shouldn’t be so eager to show that we are fragile. They may lose faith in us - it’s better to kindly refuse a gift than to show dependence on it.
-~CurrentNotes = CurrentNotes + Respect
 	+++[Our gods have chosen us for a reason. Any god fearing person will also have faith in us.]
 #YaelPensive
 Well, that’s certainly true. Though it does little to ease my nerves.
 	++++[It sounds like you’re concerned about giving away our apprehensions about this journey, is that right?] 
 #YaelTell
-That’s right. I mean. Think about it. This kind of thing has never happened before. Fate-struck are usually friends, or at least amiable. But her… I can’t stand her. 
-    +++++ [Continue]
+That’s right. I mean. Think about it. This kind of thing has never happened before. Fate-struck are <color=blue>usually friends</color>, or at least amiable. But her… I can’t stand her. 
+    +++++ [Can you elaborate?]
     {YaelTell == 1: Don't poke at me.} 
     {YaelTell == 2: Maybe there's something more to this?} 
     #Yael
@@ -90,14 +95,14 @@ And I think you should stop telling me what to do, Edrick.
 #Edrick
 It doesn't seem like Yael wants to make amends this way. Maybe there's something else I can say. 
 +++++[Continue] 
-~IncreaseTension(1)
+~IncreaseTension(4)
 -> COOLOFF
 ++++[Unfortunately my friend, that is my job.] ->COOLOFF
 ++ [I understand Moonwalkers have rituals they must perform before eating. Jasper shouldn’t have to abide by those.]
 #Yael
 Well, I shouldn’t have to witness her sacrilege at every other moment, either.
 +++[Maybe you should look away next time?] ->COOLOFF
-+[I think Jasper is a little frustrated by your vocabulary.]
++{jasperVocab} [I think Jasper is a little frustrated by your vocabulary.]
 #Yael
 It’s certainly not my fault. We do have state of the art education in the city. 
 
@@ -106,7 +111,7 @@ It’s certainly not my fault. We do have state of the art education in the city
 
 =JASPER
 #Jasper
-Why’s Yael so concerned with how prim and proper we look anyway? We’re trudging through dirt. 
+Why’s Yael so concerned with how prim and proper we look, anyways? We’re trudging through dirt. 
 +[Can you share a bit more about this argument from your perspective, Jasper?]
 #Jasper: 
 There’s not much to share. I was offered food, I said “thank you,” and I tried to eat it, before Yael decided I should starve.
@@ -136,7 +141,9 @@ Can you believe she asked me to have a proper “decorum?” What does decoratin
 ++++[…I see. Did she tell you what that actually means?]
 #Jasper
 No! And she’s been doing that on purpose - using fancy language just to complicate everything. 
-+++++[How about we bring that up when we regroup?] ->COOLOFF
++++++[How about we bring that up when we regroup?]
+~SetJasperVocabTrue()
+->COOLOFF
 
 ->DONE
 
@@ -161,6 +168,15 @@ Wow. Never before has anyone tested my patience like this. I need to start prayi
 ++[Maybe that wasn't the right move...]
 ->DONE
 =JASPAPOLOGIES
+//if you ask Jasper to apologize
+#Jasper
+There is <b>no</b> way I'm apologizing to her.
++[Continue]
+#Yael
+Oh, that's okay, I didn't think you were capable of it.
+++[Come on, you two...]
+#Jasper
+What is your problem? Seriously, tell me. 
 ->DONE
 
 =CORECHOOSER
@@ -169,12 +185,12 @@ Wow. Never before has anyone tested my patience like this. I need to start prayi
 ***[Friendship] ->FRIENDS
 ***[The mission] ->MISSIONSTATEMENT
 +++[Unsure] -> COOLOFF
-->DONE
 
 =RESPECT
 #Edrick
 You both wish to be respected, both by each other and by those who depend on you during this quest. You just haven't communicated what will earn respect from each other; if you could be clear about that now, I'm sure this will be resolved.
 +[Continue] 
+~DecreaseTension(5)
 //(If you pointed out to Yael that she should respect Jasper’s space)
 #YaelTell
 A bit hard to say this, I’ll admit, but I was wrong, Jasper. I should not have gone to such lengths to prevent you from eating. Even if you were doing it in a weird, gross way. 
@@ -190,7 +206,6 @@ I suppose if it will ease our communications, I could be a bit more cognizant of
 ++++[Looks like this is wrapping up nicely.]
 #Edrick
 I'm happy we could find something nice to say to each other! Now let's move on.
-~DecreaseTension(5)
 ->DONE
 =FRIENDS
 #Jasper
@@ -211,7 +226,6 @@ The next time we see a prayer stone, I'm going to pray the Tether is cut so I ca
 ++[There must be something they can agree on...]
 ~IncreaseTension(1)
 ->COOLOFF
-->DONE
 
 ==function YaelTellFalse(amount)
 ~YaelTell = 1
@@ -225,3 +239,6 @@ The next time we see a prayer stone, I'm going to pray the Tether is cut so I ca
 
 ==function DecreaseTension(amount)
 ~tension = tension - amount
+
+==function SetJasperVocabTrue
+~jasperVocab = true

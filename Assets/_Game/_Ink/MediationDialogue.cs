@@ -9,8 +9,11 @@ using TMPro;
 public class MediationDialogue : MonoBehaviour
 {
     public static event Action<Story> OnCreateStory;
-
     [Header("Dialogue History")]
+    public string[] notesDescriptions; //
+    public string[] notesTitles;
+    public Button notesPFButton;
+    public GameObject notesContainer;
 
     private List<string> dialogueHistory = new List<string>(); //all dialogue to be logged in history
     [SerializeField]
@@ -34,6 +37,7 @@ public class MediationDialogue : MonoBehaviour
     [Header("Tension")]
     public TensionCounter _tensMeter; // the tension management script.
     public Slider _tensionSlider; //public slider where this mediation's tension value will be displayed. 
+    public Material tensionMaterial;
 
     //for calculating tension 
     public int _CurrentTension;
@@ -83,30 +87,39 @@ public class MediationDialogue : MonoBehaviour
         DisplayTags();
     }
 
-    // This is the main function called every time the story changes. It does a few things:
-    // Destroys all the old content and choices.
-    // Continues over all the lines of text, then displays all the choices. If there are no choices, the story is finished!
+    //Debug log for tag display
     void DisplayTags()
     {
         foreach (string tag in story.currentTags)
         {
             Debug.Log("Tag: " + tag);
         }
-
     }
 
+    [ContextMenu("Create New Note")]
+    public void CreateNotesButton(int noteIndex)
+    {
+        GameObject notesContainer = GameObject.Find("NotesContainer");
+        Button clone = Instantiate(notesPFButton);
+        clone.transform.SetParent(notesContainer.transform, false);
+        Transform child = clone.transform.GetChild(0);
+        TextMeshProUGUI noteTitleText = child.GetComponent<TextMeshProUGUI>();
+        noteTitleText.text = notesDescriptions[noteIndex];
+    }
 
 
     void Update()
     {
         _CurrentTension = (int)story.variablesState["tension"];
         _tensDisplay.value = _CurrentTension;
-       
 
-        if(_CurrentTension > 14)
+
+
+        if (_CurrentTension > 14)
         {
             _highTension = true;
             _lowTension = false;
+
 
         }
         if(_CurrentTension < 5)
@@ -187,9 +200,9 @@ public class MediationDialogue : MonoBehaviour
         // If we've read all the content and there are no choices, the story is finished!
         else
         {
-           
-              string  text = "There's nothing else to say here.";
 
+            string  text = "There's nothing else to say here.";
+            text = text.Trim();
             // Display the narrator line
             CreateContentView(text, textContainer);
 
@@ -330,6 +343,21 @@ public class MediationDialogue : MonoBehaviour
             }
         }
 
+        if (story.currentTags.Contains("YaelTell"))
+        {
+            speakerName.text = "Yael";
+            speakerID[5].SetActive(true);
+
+            // Disable all other speakerID game objects
+            for (int i = 1; i < speakerID.Length; i++)
+            {
+                if (i != 5) // Skip index 3 (YaelTell)
+                {
+                    speakerID[i].SetActive(false);
+                }
+            }
+        }
+
         TrackDialogueHistory(text);
     }
 
@@ -363,9 +391,15 @@ public class MediationDialogue : MonoBehaviour
         }
     }
 
+    [ContextMenu("Take Notes")]
+    public void TrackNotes()
+    {
+
+    }
+
     public void CheckTellStrength() //when clicking on a tell, check if tension is low enough to warrant providing new information.
     {
-        if(_tensMeter.lowTension == true)
+        if(_lowTension == true)
         {
             Debug.Log("Tension Low, Proceed");
             //call yaeltell true
@@ -373,7 +407,7 @@ public class MediationDialogue : MonoBehaviour
             var result = story.EvaluateFunction("YaelTellTrue", 2);
             Debug.Log("Result from Ink: " + result);
         }
-        else if(_tensMeter.highTension == true)
+        else if(_highTension== true)
         {
             Debug.Log("Tension too High, Do not Proceed");
             //call yaeltell false
