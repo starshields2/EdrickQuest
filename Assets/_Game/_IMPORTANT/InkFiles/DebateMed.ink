@@ -8,7 +8,7 @@ VAR medPoints = 0
 VAR tension = 10
 VAR highTen = false
 VAR jasperVocab = false
-VAR AllNotesIndex = 0
+VAR NotesIndex = 0
 
 === notes ===
 - "First note text"
@@ -242,3 +242,6 @@ The next time we see a prayer stone, I'm going to pray the Tether is cut so I ca
 
 ==function SetJasperVocabTrue
 ~jasperVocab = true
+
+==function ChangeNotesIndex(amount)
+~NotesIndex = amount

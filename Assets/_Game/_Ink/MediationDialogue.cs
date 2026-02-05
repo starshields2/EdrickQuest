@@ -11,9 +11,11 @@ public class MediationDialogue : MonoBehaviour
     public static event Action<Story> OnCreateStory;
     [Header("Dialogue History")]
     public string[] notesDescriptions; //
-    public string[] notesTitles;
+    public List<string> notesTitles;
     public Button notesPFButton;
     public GameObject notesContainer;
+    public GameObject notesTextPF;
+    public int noteIndex;
 
     private List<string> dialogueHistory = new List<string>(); //all dialogue to be logged in history
     [SerializeField]
@@ -96,6 +98,11 @@ public class MediationDialogue : MonoBehaviour
         }
     }
 
+    public void SetNoteIndex(int notesIndexSetter)
+    {
+        noteIndex = notesIndexSetter;
+    }
+
     [ContextMenu("Create New Note")]
     public void CreateNotesButton(int noteIndex)
     {
@@ -104,7 +111,14 @@ public class MediationDialogue : MonoBehaviour
         clone.transform.SetParent(notesContainer.transform, false);
         Transform child = clone.transform.GetChild(0);
         TextMeshProUGUI noteTitleText = child.GetComponent<TextMeshProUGUI>();
-        noteTitleText.text = notesDescriptions[noteIndex];
+        noteTitleText.text = notesTitles[noteIndex];
+        notesTitles.RemoveAt(noteIndex);
+
+        GameObject descContainer = GameObject.Find("NotesDescriptionsContainer");
+        GameObject notesClone = Instantiate(notesTextPF);
+        notesClone.transform.SetParent(descContainer.transform, false);
+        TextMeshProUGUI notesTextComponent = notesClone.GetComponent<TextMeshProUGUI>();
+        notesTextComponent.text = notesDescriptions[noteIndex];
     }
 
 
