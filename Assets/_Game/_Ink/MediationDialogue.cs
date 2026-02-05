@@ -64,12 +64,14 @@ public class MediationDialogue : MonoBehaviour
     {
         //_UIBinder = GameObject.Find("DataManager").GetComponent<UIBinder>();
         // _UIBinder.GetDialogueInfo();
-        RemoveChildren();
-        StartStory();
+      
+       
         // _oldTensionValue = _tensMeter._tension;
         //  Debug.Log(story.currentTags.Length);
-        _tensDisplay.value = (int)story.variablesState["tension"];
+      
 
+        RemoveChildren();
+        StartStory();
     }
 
     public void BindSliders(Slider tension, Slider tp, Companion[] comps = null)
@@ -85,6 +87,11 @@ public class MediationDialogue : MonoBehaviour
         story = new Story(inkJSONAsset.text);
 
         if (OnCreateStory != null) OnCreateStory(story);
+
+        story.BindExternalFunction("UpdateNote", () =>
+        {
+            CreateNotesButton();
+        });
         RefreshView();
         DisplayTags();
     }
@@ -104,7 +111,7 @@ public class MediationDialogue : MonoBehaviour
     }
 
     [ContextMenu("Create New Note")]
-    public void CreateNotesButton(int noteIndex)
+    public void CreateNotesButton()
     {
         GameObject notesContainer = GameObject.Find("NotesContainer");
         Button clone = Instantiate(notesPFButton);
@@ -126,7 +133,7 @@ public class MediationDialogue : MonoBehaviour
     {
         _CurrentTension = (int)story.variablesState["tension"];
         _tensDisplay.value = _CurrentTension;
-
+        noteIndex = (int)story.variablesState["NotesIndex"];
 
 
         if (_CurrentTension > 14)

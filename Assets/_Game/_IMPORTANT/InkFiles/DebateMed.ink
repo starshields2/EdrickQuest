@@ -57,6 +57,8 @@ We are not average people. Not <i>anymore</i>. Our decorum around villagers shou
 #Yael
 What’s the difference? We shouldn’t be so eager to show that we are fragile. They may lose faith in us - it’s better to kindly refuse a gift than to show dependence on it.
 	+++[Our gods have chosen us for a reason. Any god fearing person will also have faith in us.]
+	~ChangeNotesIndex(2)
+	~UpdateNote()
 #YaelPensive
 Well, that’s certainly true. Though it does little to ease my nerves.
 	++++[It sounds like you’re concerned about giving away our apprehensions about this journey, is that right?] 
@@ -245,3 +247,5 @@ The next time we see a prayer stone, I'm going to pray the Tether is cut so I ca
 
 ==function ChangeNotesIndex(amount)
 ~NotesIndex = amount
+
+EXTERNAL UpdateNote()
