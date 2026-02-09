@@ -77,8 +77,7 @@ public class MediationDialogue : MonoBehaviour
     public void BindSliders(Slider tension, Slider tp, Companion[] comps = null)
     {
         _tensionSlider = tension;
-        //_TPSlider = tp;
-
+        //_TPSlider = tp
     }
 
     // Creates a new Story object with the compiled story which we can then play!
@@ -221,11 +220,8 @@ public class MediationDialogue : MonoBehaviour
         // If we've read all the content and there are no choices, the story is finished!
         else
         {
-
-            string  text = "There's nothing else to say here.";
-            text = text.Trim();
             // Display the narrator line
-            CreateContentView(text, textContainer);
+            CreateContentView("There's nothing else to say here.", textContainer);
 
             // Then show the Back button
             CreateChoiceView("Back", choicesContainer);

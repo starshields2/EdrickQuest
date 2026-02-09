@@ -8,8 +8,12 @@ VAR medPoints = 0
 VAR tension = 10
 VAR highTen = false
 VAR jasperVocab = false
-VAR yaelRitual = false
 VAR NotesIndex = 0
+
+=== notes ===
+- "First note text"
+- "Second note text"
+- "Third note text"
 
 #Jasper 
 You’re not <b>seriously</b> stopping us for this, are you? We’ve already lost precious time. If we are late for the <color=orange> Ritual </color>, we’ll have set out for nothing. 
@@ -36,7 +40,7 @@ Calm yourselves. Please confide in me, so I can help you two walk in each others
 
 =COOLOFF
 #Edrick
-Okay, let's figure this out. 
+{jasperVocab}
 +[Talk to Yael]-> Yael
 +[Talk to Jasper] ->JASPER
 +[Regroup]  -> REGROUP
@@ -44,23 +48,22 @@ Okay, let's figure this out.
 
 =Yael
 #Yael
-You don’t understand, Edrick. She’s making us look like idiots out there.
-+[Never mind.] ->COOLOFF
-*[Why do you think that?]
+You don’t understand, Edrick. She’s making us look like idiots out there. 
++[Why do you think that?]
 
 #Yael
 We are not average people. Not <i>anymore</i>. Our decorum around villagers should reflect that. How can they look up to us as Fate-struck if we’re taking handouts from everyone we cross?
 	++[Are they handouts, or offerings of goodwill?]
 #Yael
-What’s the difference? We shouldn’t be so eager to show that we are fragile. They may lose faith in us - <color=blue>it’s better to kindly refuse a gift than to show dependence on it.</color>
+What’s the difference? We shouldn’t be so eager to show that we are fragile. They may lose faith in us - it’s better to kindly refuse a gift than to show dependence on it.
 	+++[Our gods have chosen us for a reason. Any god fearing person will also have faith in us.]
 	~ChangeNotesIndex(2)
-	~UpdateNote()
+	//~UpdateNote()
 #YaelPensive
 Well, that’s certainly true. Though it does little to ease my nerves.
 	++++[It sounds like you’re concerned about giving away our apprehensions about this journey, is that right?] 
 #YaelTell
-That’s right. I mean. Think about it. This kind of thing has never happened before. Fate-struck are <color=blue><b>usually friends</b></color>, or at least amiable. But her… I can’t stand her. 
+That’s right. I mean. Think about it. This kind of thing has never happened before. Fate-struck are <color=blue>usually friends</color>, or at least amiable. But her… I can’t stand her. 
     +++++ [Can you elaborate?]
     {YaelTell == 1: Don't poke at me.} 
     {YaelTell == 2: Maybe there's something more to this?} 
@@ -69,7 +72,7 @@ That’s right. I mean. Think about it. This kind of thing has never happened be
     ++++++[That is strange, but the Tether has chosen you both for a reason.] ->COOLOFF
     ++++++[Why do you care?]
     #YaelTell
-    I had my entire life planned before this. I was <color/blue>hoping to be tethered to my beloved,</color> but that's a pipe dream now. I don't even know why I bothered falling in love if I was just going to be tied to an oaf.
+    I had my entire life planned before this. I was hoping to be tethered to my beloved, but that's a pipe dream now. I don't even know why I bothered falling in love if I was just going to be tied to an oaf.
     +++++++[I'm sorry, Yael. That must be tough to come to terms with.]
     #Yael
     Yes, but it feels good to get it out there.
@@ -79,8 +82,8 @@ That’s right. I mean. Think about it. This kind of thing has never happened be
     
     +[Reacting rashly didn’t help our image either.]
 #Yael 
-It was a rash decision, I won’t lie. But I was only trying to help. We can’t invite any <color=blue>bad omens</color> on our journey with unwashed hands.
-**[What motivated you to go so far as to lay hands on her?]
+It was a rash decision, I won’t lie. But I was only trying to help. We can’t invite any bad omens on our journey with unwashed hands.
+++[What motivated you to go so far as to lay hands on her?]
 #Yael
 Well, I told her to put the hotcakes down and clean her hands, and it was as if she had cotton stuck in her ears. So I just. Acted on it.
 	+++[Regardless of how put off you feel, Jasper is your colleague. It would be just as unfair of you to disrespect her space.]
@@ -101,24 +104,10 @@ It doesn't seem like Yael wants to make amends this way. Maybe there's something
 #Yael
 Well, I shouldn’t have to witness her sacrilege at every other moment, either.
 +++[Maybe you should look away next time?] ->COOLOFF
-+++[Remember, it's not sacrilege to her. It's just eating food.]
-#YaelPensive
-Knowing this, I suppose I was acting a bit rashly. The Moonwalkers will <color=red>never accept a gift with dirty hands.</color> But Jasper is no cleric.
-++++[It's alright to be a bit frustrated. How about we bring this up?] ->COOLOFF
-
 +{jasperVocab} [I think Jasper is a little frustrated by your vocabulary.]
 #Yael
-It’s certainly not my fault. We do have state of the art education in the city. If she wanted to communicate with me respectfully, her tone would reflect that.
-++[Yael, how will policing Jasper's tone get her to respect you?]
-~IncreaseTension(3)
-#YaelPensive
-W-well, if she really cared about the status we hold, she would be more respectful!
-+++[I'm right.] ->COOLOFF
-++[You're not exactly communicating respectfully yourself.]
-#Yael
-You may be right.
-+++[I'm right.] ->COOLOFF
-->COOLOFF
+It’s certainly not my fault. We do have state of the art education in the city. 
+
    
 ->DONE
 
@@ -126,11 +115,9 @@ You may be right.
 #Jasper
 Why’s Yael so concerned with how prim and proper we look, anyways? We’re trudging through dirt. 
 +[Can you share a bit more about this argument from your perspective, Jasper?]
-	//~ChangeNotesIndex(1)
-	//~UpdateNote()
 #Jasper: 
 There’s not much to share. I was offered food, I said “thank you,” and I tried to eat it, before Yael decided I should starve.
-++{yaelRitual}[In Yael’s sect, hand washing is a ritual that cannot be forgone before eating. ]
+++[In Yael’s sect, hand washing is a ritual that cannot be forgone before eating. Doing so could invite chaos and ill-intended spirits from the hands into the body.]
 #Jasper
 I don’t really care what Moonwalkers do before eating. We don’t do that. 
 +++[ You don’t have to do that. I’m just letting you know.] 
@@ -149,7 +136,7 @@ It seems like Jasper is very hurt by Yael's actions. Maybe I should talk to her.
 +++++[Continue]->COOLOFF
 ++[You seem quite irritated about this. May I ask why?]
 #Jasper
-<color=red>Ugh, few people enjoy being roughhoused</color>, Edrick. And besides that. She keeps saying things she knows I’m not going to understand.
+Few people enjoy being roughhoused, Edrick. And besides that. She keeps saying things she knows I’m not going to understand.
 +++[Like what? Elaborate?]
 #Jasper
 Can you believe she asked me to have a proper “decorum?” What does decorating anything have to do with this?
@@ -159,7 +146,7 @@ No! And she’s been doing that on purpose - using fancy language just to compli
 +++++[How about we bring that up when we regroup?]
 ~SetJasperVocabTrue()
 ->COOLOFF
-+[Never mind.] -> COOLOFF
+
 ->DONE
 
 =REGROUP
@@ -181,7 +168,6 @@ Well Jasper, our Calibrator has asked me to apologize to you, so I must say, I�
 #Jasper
 Wow. Never before has anyone tested my patience like this. I need to start praying for more patience. 
 ++[Maybe that wasn't the right move...]
-->COOLOFF
 ->DONE
 =JASPAPOLOGIES
 //if you ask Jasper to apologize
@@ -230,7 +216,7 @@ Yael and I don't need to be friends for this to work. And furthermore, I wouldn'
 #Yael
 This journey isn't about making friends, Edrick. Did the gods send someone so daft to help us, really?
 ++[There must be something they can agree on...]
-~IncreaseTension(3) 
+~IncreaseTension(2) 
 ->COOLOFF
 ->DONE
 =MISSIONSTATEMENT
@@ -240,7 +226,7 @@ It doesn't matter who the Tether chose or how much I can't stand Yael, that's tr
 #Yael
 The next time we see a prayer stone, I'm going to pray the Tether is cut so I can die in peace.
 ++[There must be something they can agree on...]
-~IncreaseTension(4)
+~IncreaseTension(1)
 ->COOLOFF
 
 ==function YaelTellFalse(amount)
@@ -258,9 +244,6 @@ The next time we see a prayer stone, I'm going to pray the Tether is cut so I ca
 
 ==function SetJasperVocabTrue
 ~jasperVocab = true
-
-==function SetYaelRitualTrue
-~yaelRitual = true
 
 ==function ChangeNotesIndex(amount)
 ~NotesIndex = amount
