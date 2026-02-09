@@ -10,7 +10,7 @@ public class MediationDialogue : MonoBehaviour
 {
     public static event Action<Story> OnCreateStory;
     [Header("Dialogue History")]
-    public string[] notesDescriptions; //
+    public List<string> notesDescriptions; //
     public List<string> notesTitles;
     public Button notesPFButton;
     public GameObject notesContainer;
@@ -110,7 +110,7 @@ public class MediationDialogue : MonoBehaviour
     }
 
     [ContextMenu("Create New Note")]
-    public void CreateNotesButton()
+    public void CreateNotesButton() //currently just removes top of the list.
     {
         GameObject notesContainer = GameObject.Find("NotesContainer");
         Button clone = Instantiate(notesPFButton);
@@ -125,6 +125,7 @@ public class MediationDialogue : MonoBehaviour
         notesClone.transform.SetParent(descContainer.transform, false);
         TextMeshProUGUI notesTextComponent = notesClone.GetComponent<TextMeshProUGUI>();
         notesTextComponent.text = notesDescriptions[noteIndex];
+        notesDescriptions.RemoveAt(noteIndex);
     }
 
 

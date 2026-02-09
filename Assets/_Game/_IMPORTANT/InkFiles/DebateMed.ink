@@ -11,28 +11,37 @@ VAR jasperVocab = false
 VAR yaelRitual = false
 VAR NotesIndex = 0
 
+#Yael
+Edrick! Edrick! We have to stop. There's hotcake crumbs all over my skirt and it's all this hooligan's fault! 
++[...okay, let's take a breather.]
+#Jasper
+You're the one who grabbed my hand like the cakes were poisonous. And in front of the nice townsfolk, too! You saw that, right Edrick?
+++[I did see that.]
+#Yael
+I wouldn't have had to do anything if you knew how to act! 
++++[Okay, okay. we're stopping.]
 #Jasper 
 You’re not <b>seriously</b> stopping us for this, are you? We’ve already lost precious time. If we are late for the <color=orange> Ritual </color>, we’ll have set out for nothing. 
-+[I just want everyone to get along.]
++++++[I just want everyone to get along.]
 
 #Yael
 If Edrick won’t stop us for this, I will. No <color=orange>Fate-struck</color> person should be as ill mannered and gross as you’re acting right now, especially not during the Ritual.
-++[Continue]
+++++++[There won't be a ritual at this rate if you two keep arguing.]
 
 #Jasper
-I’m ill mannered? You made me drop food onto the ground! 
-+++[Continue]
+I’m ill mannered? You made me drop food onto the ground!
++++++++[Right...]
 
 #Yael
-I had to act quickly, before you ruined the food by inhaling it!
-++++[Continue]
+I had to act quickly, <i>Jester,</i> before you ruined the food by inhaling it!
+++++++++[Okay, okay, calm down...]
 
 #Jasper
-It’s food, that’s what you’re supposed to do! 
-+++++[Continue]
+It’s <b>JASPER.</b> And that’s what you’re supposed to do with food. You're supposed to eat it!
++++++++++[Continue]
 #Edrick
 Calm yourselves. Please confide in me, so I can help you two walk in each others’ shoes.
-++++++[Continue] -> COOLOFF
+++++++++++[Continue] -> COOLOFF
 
 =COOLOFF
 #Edrick
@@ -46,7 +55,7 @@ Okay, let's figure this out.
 #Yael
 You don’t understand, Edrick. She’s making us look like idiots out there.
 +[Never mind.] ->COOLOFF
-*[Why do you think that?]
++[Why do you think that?]
 
 #Yael
 We are not average people. Not <i>anymore</i>. Our decorum around villagers should reflect that. How can they look up to us as Fate-struck if we’re taking handouts from everyone we cross?
@@ -54,22 +63,22 @@ We are not average people. Not <i>anymore</i>. Our decorum around villagers shou
 #Yael
 What’s the difference? We shouldn’t be so eager to show that we are fragile. They may lose faith in us - <color=blue>it’s better to kindly refuse a gift than to show dependence on it.</color>
 	+++[Our gods have chosen us for a reason. Any god fearing person will also have faith in us.]
-	~ChangeNotesIndex(2)
-	~UpdateNote()
+	//~ChangeNotesIndex(2)
+	//~UpdateNote()
 #YaelPensive
 Well, that’s certainly true. Though it does little to ease my nerves.
 	++++[It sounds like you’re concerned about giving away our apprehensions about this journey, is that right?] 
 #YaelTell
 That’s right. I mean. Think about it. This kind of thing has never happened before. Fate-struck are <color=blue><b>usually friends</b></color>, or at least amiable. But her… I can’t stand her. 
     +++++ [Can you elaborate?]
-    {YaelTell == 1: Don't poke at me.} 
-    {YaelTell == 2: Maybe there's something more to this?} 
+    {YaelTell == 1: Don't poke at me, Edrick!} 
+    {YaelTell == 2: It just makes me so frustrated.} 
     #Yael
-    Well, don't you think it's weird that the Tether has chosen two people who despise each other?
+    And don't you think it's weird that the Tether has chosen two people who despise each other?
     ++++++[That is strange, but the Tether has chosen you both for a reason.] ->COOLOFF
     ++++++[Why do you care?]
-    #YaelTell
-    I had my entire life planned before this. I was <color/blue>hoping to be tethered to my beloved,</color> but that's a pipe dream now. I don't even know why I bothered falling in love if I was just going to be tied to an oaf.
+    #YaelPensive
+    I had my entire life planned before this. I was <color=blue>hoping to be tethered to my beloved,</color> but that's a pipe dream now. I don't even know why I bothered falling in love if I was just going to be tied to an oaf.
     +++++++[I'm sorry, Yael. That must be tough to come to terms with.]
     #Yael
     Yes, but it feels good to get it out there.
@@ -80,14 +89,14 @@ That’s right. I mean. Think about it. This kind of thing has never happened be
     +[Reacting rashly didn’t help our image either.]
 #Yael 
 It was a rash decision, I won’t lie. But I was only trying to help. We can’t invite any <color=blue>bad omens</color> on our journey with unwashed hands.
-**[What motivated you to go so far as to lay hands on her?]
+++[What motivated you to go so far as to lay hands on her?]
 #Yael
 Well, I told her to put the hotcakes down and clean her hands, and it was as if she had cotton stuck in her ears. So I just. Acted on it.
 	+++[Regardless of how put off you feel, Jasper is your colleague. It would be just as unfair of you to disrespect her space.]
 #Yael
 You do know I despise it when you start making sense, right Edrick?
 ++++[I think I can tell.] ->COOLOFF
-	***[I think you should apologize for making her drop the food.] 
+	+++[I think you should apologize for making her drop the food.] 
 #Yael
 And I think you should stop telling me what to do, Edrick.
 ++++[Right, sorry. Maybe that's a sore subject.] 
@@ -106,18 +115,36 @@ Well, I shouldn’t have to witness her sacrilege at every other moment, either.
 Knowing this, I suppose I was acting a bit rashly. The Moonwalkers will <color=red>never accept a gift with dirty hands.</color> But Jasper is no cleric.
 ++++[It's alright to be a bit frustrated. How about we bring this up?] ->COOLOFF
 
+//UNLOCKED ONLY BY TALKING TO JASPER ABOUT VOCAB FIRST.
 +{jasperVocab} [I think Jasper is a little frustrated by your vocabulary.]
 #Yael
 It’s certainly not my fault. We do have state of the art education in the city. If she wanted to communicate with me respectfully, her tone would reflect that.
+
+//OPTION 1
 ++[Yael, how will policing Jasper's tone get her to respect you?]
 ~IncreaseTension(3)
 #YaelPensive
 W-well, if she really cared about the status we hold, she would be more respectful!
-+++[I'm right.] ->COOLOFF
++++[To you? Or to the townsfolk?]
+#Yael
+To me! If I'm going to be stuck here with her, I at least deserve some respect. Not some clown who won't stop poking fun at me.
+++++[Right.]
+#Edrick
+I think I have everything I need from Yael... Looks like she's mostly miffed about Jasper's antics.
++++++[Continue]->COOLOFF
+
+
+//OPTION 2
 ++[You're not exactly communicating respectfully yourself.]
 #Yael
-You may be right.
-+++[I'm right.] ->COOLOFF
+W-well, what do you mean by that? I'm using proper ettiqute, speaking clearly. Jasper's the one who can't keep her hands to herself.
++++[I have it in my notes here, that you called her an "oaf," "bloke," and "jester".] 
+#YaelPensive
+...yes.
+++++[So I think you can tone it down a little bit. For the sake of the mission?]
+#YaelPensive
+...I. I suppose. 
++++++[Okay, now let me see about Jasper...]
 ->COOLOFF
    
 ->DONE
@@ -132,20 +159,19 @@ Why’s Yael so concerned with how prim and proper we look, anyways? We’re tru
 There’s not much to share. I was offered food, I said “thank you,” and I tried to eat it, before Yael decided I should starve.
 ++{yaelRitual}[In Yael’s sect, hand washing is a ritual that cannot be forgone before eating. ]
 #Jasper
-I don’t really care what Moonwalkers do before eating. We don’t do that. 
+I don’t really care what Moonwalkers do before eating. <i>We</i> don’t do that. 
 +++[ You don’t have to do that. I’m just letting you know.] 
 #Jasper
 Well, why don’t you tell her that I’m not going to abide by her rules. So she can shove it wherever she shoves all those books she can't get her nose out of.
-++++[Uhh... how about we loop back around to this?]
-~IncreaseTension(2)
+++++[...I may word that a bit differently.]
 ->COOLOFF
 +++[Could you at least wipe or wash your hands before eating next time?]
+~IncreaseTension(2)
 #Jasper
-Why are you asking me to compromise first? She’s literally insulting me left and right. I deserve some respect! 
+Why are you asking me to compromise first? She’s literally insulting me left and right. I deserve some <color = blue>respect!</color> 
 ++++[I understand. I'll ask her about this.]
 #Edrick
 It seems like Jasper is very hurt by Yael's actions. Maybe I should talk to her.
-~IncreaseTension(2)
 +++++[Continue]->COOLOFF
 ++[You seem quite irritated about this. May I ask why?]
 #Jasper
@@ -160,6 +186,27 @@ No! And she’s been doing that on purpose - using fancy language just to compli
 ~SetJasperVocabTrue()
 ->COOLOFF
 +[Never mind.] -> COOLOFF
++[I can imagine you're still pretty hungry.]
+#Jasper
+Yeah, I never got to eat my hotcake, man. All because Yael decided to crash out.
+++[And then she started yelling.]
+#Jasper
+Yeah. I didn't mean to be offensive, but if she's going to be nasty, I'm gonna be nasty back. That's how things worked where I'm from.
++++[Where you're from? The Sunblades, right?]
+#Jasper
+That's right! My friends and I would always be pretty blunt with each other. That way, everything is laid bare. No secrets! 
+++++[I see. Very different from Yael.]
+#Jasper
+Yeah, she doesn't really have friends, huh.
++++++[Well I wouldn't go so far as to say that.] ->COOLOFF
++++[Do you feel like being nasty could contribute to a harsher work environment?]
+#Jasper
+~IncreaseTension(3)
+Yael's gotta grow a thicker skin if a few crumbs throw her off. We can't let the mission be derailed by petty arguments, right? We're heroes. That's much more important.
+++++[I agree, actually! The mission is more important.]
+#Edrick
+It seems like Jasper really holds her purpose above these arguments. Maybe that's something to think about...
+++++++[Back to the group, then.] ->COOLOFF
 ->DONE
 
 =REGROUP
@@ -168,8 +215,9 @@ I think I know what's wrong.
 +[Continue] 
 #Yael
 And what is that, Edrick?
-++[Yael, you should apologize to Jasper.] ->YAELAPOLOGIES
-++[Jasper, you should apologize to Yael.] ->JASPAPOLOGIES
+++[One of you needs to apologize.]
++++[Yael, you should apologize to Jasper.] ->YAELAPOLOGIES
++++[Jasper, you should apologize to Yael.] ->JASPAPOLOGIES
 ++[There is one thing you both value most.] ->CORECHOOSER
 ++[This is something you must figure out for yourselves.] -> COOLOFF
 
