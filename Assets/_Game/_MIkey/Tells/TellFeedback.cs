@@ -29,8 +29,16 @@ public class TellFeedback : MonoBehaviour
     [SerializeField] private GameObject _shadow01;
     [SerializeField] private GameObject _shadow02;
 
+    public static TellFeedback Instance { get; private set; }
+
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+            return;
+        }
+
         if (_spriteRenderer == null)
         {
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -233,4 +241,5 @@ public class TellFeedback : MonoBehaviour
 
         GameObject.Destroy(go);
     }
+    
 }
