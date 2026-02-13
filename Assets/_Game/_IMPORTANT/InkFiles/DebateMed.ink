@@ -204,6 +204,7 @@ Yeah, she doesn't really have friends, huh.
 ~IncreaseTension(3)
 Yael's gotta grow a thicker skin if a few crumbs throw her off. We can't let the mission be derailed by petty arguments, right? We're heroes. That's much more important.
 ++++[I agree, actually! The mission is more important.]
+~DecreaseTension(4)
 #Edrick
 It seems like Jasper really holds her purpose above these arguments. Maybe that's something to think about...
 ++++++[Back to the group, then.] ->COOLOFF
@@ -225,7 +226,8 @@ And what is that, Edrick?
 //(If you asked Yael to apologize)
 #YaelAnger
 Well Jasper, our Calibrator has asked me to apologize to you, so I must say, I’m sorry for ever trying to teach you any manners. 
-+[No, wait, not like that!] 
++[No, wait, not like that!]
+~IncreaseTension(6)
 #Jasper
 Wow. Never before has anyone tested my patience like this. I need to start praying for more patience. 
 ++[Maybe that wasn't the right move...]
@@ -238,16 +240,18 @@ There is <b>no</b> way I'm apologizing to her.
 +[Continue]
 #Yael
 Oh, that's okay, I didn't think you were capable of it.
+~IncreaseTension(6)
 ++[Come on, you two...]
 #Jasper
 What is your problem? Seriously, tell me. 
++++[Alright, alright. Let's try again.] ->COOLOFF
 ->DONE
 
 =CORECHOOSER
 #Edrick
-***[Respect] ->RESPECT
-***[Friendship] ->FRIENDS
-***[The mission] ->MISSIONSTATEMENT
+***[You're not communicating with each other about how you'd like to be respected.] ->RESPECT
+***[You both miss your friends, and would like to be friends.] ->FRIENDS
+***[You both value the mission more than anything else.] ->MISSIONSTATEMENT
 +++[Unsure] -> COOLOFF
 
 =RESPECT
