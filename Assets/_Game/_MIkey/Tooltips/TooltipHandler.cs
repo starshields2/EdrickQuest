@@ -18,8 +18,8 @@ public class TooltipHandler : MonoBehaviour
     [SerializeField] private GameObject _tooltipPrefab;
     [SerializeField] private Vector2 _screenOffset = new Vector2(0, 150);
 
-    private List<TooltipInfo> _tooltipContentList = new List<TooltipInfo>();
     private TMP_Text _tooltipDescriptionTMP;
+    private List<TooltipInfo> _tooltipContentList = new List<TooltipInfo>();
     private RectTransform _tooltipRect;
     private Canvas _canvas;
 
@@ -43,7 +43,7 @@ public class TooltipHandler : MonoBehaviour
             _tooltipContentList = MarkdownParser.Parse(_tooltipMarkdownFile);
         }
 
-        UpdateText(null); // initial tagging
+        //UpdateText(null, null); // initial tagging
     }
 
     private void OnEnable()
@@ -156,15 +156,17 @@ public class TooltipHandler : MonoBehaviour
         }
     }
 
-    public void UpdateText(string newText)
+    public void UpdateText(TMP_Text textRef, string newText)
     {
         // MarkdownTagger is a utility to wrap keywords in the text with <link> tags for interactivity.
-        TMP_Text text = GetComponentInChildren<TMP_Text>();
+        TMP_Text text = textRef;
     
         if(newText == null) newText = text.text; // if null, re-tag existing text (useful if tooltip content list changed)
 
         var tagged = MarkdownTagger.TagText(newText, _tooltipContentList);
         text.text = tagged;
         text.ForceMeshUpdate();
+        
+        Debug.Log("TMP_Text: " + text.name);
     }
 }

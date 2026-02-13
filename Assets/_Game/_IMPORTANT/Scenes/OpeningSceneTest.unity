@@ -401,6 +401,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1733406836, guid: c07674579fe76a34b9045a3236077479, type: 3}
+      propertyPath: _tooltipHandlerRef
+      value: 
+      objectReference: {fileID: 284842923}
+    - target: {fileID: 1733406836, guid: c07674579fe76a34b9045a3236077479, type: 3}
       propertyPath: speakerID.Array.size
       value: 6
       objectReference: {fileID: 0}
@@ -619,6 +623,12 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: UnityEngine.CanvasGroup, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 7442514655180769428, guid: c07674579fe76a34b9045a3236077479,
+        type: 3}
+      propertyPath: _tooltipDescriptionTMP
+      value: 
+      objectReference: {fileID: -7450272683130587119, guid: cefcf158f3e39484dbef332774f9c757,
+        type: 3}
     - target: {fileID: 7990062708171373378, guid: c07674579fe76a34b9045a3236077479,
         type: 3}
       propertyPath: m_Name
@@ -642,7 +652,7 @@ PrefabInstance:
     - target: {fileID: 8244542441790426572, guid: c07674579fe76a34b9045a3236077479,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8244542441791997922, guid: c07674579fe76a34b9045a3236077479,
         type: 3}
@@ -813,6 +823,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8248568635411330763, guid: c07674579fe76a34b9045a3236077479,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8943641831927371484, guid: c07674579fe76a34b9045a3236077479,
         type: 3}
@@ -3746,6 +3761,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc082ebe45117f14dbe9f5e17160b47a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &284842923 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7442514655180769428, guid: c07674579fe76a34b9045a3236077479,
+    type: 3}
+  m_PrefabInstance: {fileID: 54036228}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125863647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c75bfce474330f4f8e7d4296450a57e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &296484192

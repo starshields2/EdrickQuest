@@ -842,6 +842,7 @@ MonoBehaviour:
   _tooltipMarkdownFile: {fileID: 4900000, guid: 04c71eef3f84df3448318da7ba8436c5,
     type: 3}
   _parseOnAwake: 1
+  _tooltipDescriptionTMP: {fileID: 427123206}
   _tooltipPrefab: {fileID: 27431065}
   _screenOffset: {x: 0, y: 150}
 --- !u!1 &622651539

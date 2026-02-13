@@ -56,11 +56,9 @@ public class MediationDialogue : MonoBehaviour
     [SerializeField]
     private Text narratorTextPrefab = null;
 
- void Start()
-    {
+    [SerializeField]private TooltipHandler _tooltipHandlerRef;
 
-    }
-    void Awake()
+ void Start()
     {
         //_UIBinder = GameObject.Find("DataManager").GetComponent<UIBinder>();
         // _UIBinder.GetDialogueInfo();
@@ -68,10 +66,13 @@ public class MediationDialogue : MonoBehaviour
        
         // _oldTensionValue = _tensMeter._tension;
         //  Debug.Log(story.currentTags.Length);
-      
 
         RemoveChildren();
         StartStory();
+    }
+    void Awake()
+    {
+        
     }
 
     public void BindSliders(Slider tension, Slider tp, Companion[] comps = null)
@@ -184,7 +185,6 @@ public class MediationDialogue : MonoBehaviour
         {
             // Continue gets the next line of the story
             string text = story.ContinueMaximally();
-
             // This removes any white space from the text.
             text = text.Trim();
             // Display the text on screen within the text container
@@ -284,6 +284,7 @@ public class MediationDialogue : MonoBehaviour
         DisplayTags();
         TextMeshProUGUI storyText = Instantiate(textPrefab, container.transform);
         storyText.text = text;
+        _tooltipHandlerRef.UpdateText(storyText, storyText.text);
 
         //dialogeTRACKING
 
