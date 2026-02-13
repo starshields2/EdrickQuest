@@ -9,8 +9,13 @@ using TMPro;
 public class MediationDialogue : MonoBehaviour
 {
     public static event Action<Story> OnCreateStory;
-
     [Header("Dialogue History")]
+    public List<string> notesDescriptions; //
+    public List<string> notesTitles;
+    public Button notesPFButton;
+    public GameObject notesContainer;
+    public GameObject notesTextPF;
+    public int noteIndex;
 
     private List<string> dialogueHistory = new List<string>(); //all dialogue to be logged in history
     [SerializeField]
@@ -34,13 +39,12 @@ public class MediationDialogue : MonoBehaviour
     [Header("Tension")]
     public TensionCounter _tensMeter; // the tension management script.
     public Slider _tensionSlider; //public slider where this mediation's tension value will be displayed. 
+    public Material tensionMaterial;
 
     //for calculating tension 
-    public float _newTensionValue; 
-    public float _oldTensionValue;
-
-    public int _flaggedNeeds;
-    public int _flaggedBounds;
+    public int _CurrentTension;
+    public bool _highTension;
+    public bool _lowTension;
     public int _flaggedCoreNeed;
 
     public float _valuesMult; 
@@ -52,8 +56,6 @@ public class MediationDialogue : MonoBehaviour
     [SerializeField]
     private Text narratorTextPrefab = null;
 
-    private
-
  void Start()
     {
 
@@ -62,19 +64,20 @@ public class MediationDialogue : MonoBehaviour
     {
         //_UIBinder = GameObject.Find("DataManager").GetComponent<UIBinder>();
         // _UIBinder.GetDialogueInfo();
-        RemoveChildren();
-        StartStory();
+      
+       
         // _oldTensionValue = _tensMeter._tension;
         //  Debug.Log(story.currentTags.Length);
+      
 
-
+        RemoveChildren();
+        StartStory();
     }
 
     public void BindSliders(Slider tension, Slider tp, Companion[] comps = null)
     {
         _tensionSlider = tension;
-        //_TPSlider = tp;
-
+        //_TPSlider = tp
     }
 
     // Creates a new Story object with the compiled story which we can then play!
@@ -83,37 +86,74 @@ public class MediationDialogue : MonoBehaviour
         story = new Story(inkJSONAsset.text);
 
         if (OnCreateStory != null) OnCreateStory(story);
+
+        story.BindExternalFunction("UpdateNote", () =>
+        {
+            CreateNotesButton();
+        });
         RefreshView();
         DisplayTags();
     }
 
-    // This is the main function called every time the story changes. It does a few things:
-    // Destroys all the old content and choices.
-    // Continues over all the lines of text, then displays all the choices. If there are no choices, the story is finished!
+    //Debug log for tag display
     void DisplayTags()
     {
         foreach (string tag in story.currentTags)
         {
             Debug.Log("Tag: " + tag);
         }
-
     }
 
+    public void SetNoteIndex(int notesIndexSetter)
+    {
+        noteIndex = notesIndexSetter;
+    }
+
+    [ContextMenu("Create New Note")]
+    public void CreateNotesButton() //currently just removes top of the list.
+    {
+        GameObject notesContainer = GameObject.Find("NotesContainer");
+        Button clone = Instantiate(notesPFButton);
+        clone.transform.SetParent(notesContainer.transform, false);
+        Transform child = clone.transform.GetChild(0);
+        TextMeshProUGUI noteTitleText = child.GetComponent<TextMeshProUGUI>();
+        noteTitleText.text = notesTitles[noteIndex];
+        notesTitles.RemoveAt(noteIndex);
+
+        GameObject descContainer = GameObject.Find("NotesDescriptionsContainer");
+        GameObject notesClone = Instantiate(notesTextPF);
+        notesClone.transform.SetParent(descContainer.transform, false);
+        TextMeshProUGUI notesTextComponent = notesClone.GetComponent<TextMeshProUGUI>();
+        notesTextComponent.text = notesDescriptions[noteIndex];
+        notesDescriptions.RemoveAt(noteIndex);
+    }
 
 
     void Update()
     {
-        
+        _CurrentTension = (int)story.variablesState["tension"];
+        _tensDisplay.value = _CurrentTension;
+        noteIndex = (int)story.variablesState["NotesIndex"];
+
+
+        if (_CurrentTension > 14)
+        {
+            _highTension = true;
+            _lowTension = false;
+
+
+        }
+        if(_CurrentTension < 5)
+        {
+            _lowTension = true;
+            _highTension = false;
+        }
     }
 
-    //on closing the mediation window + clicking on choices, calculate tension with this:
+    //on closing the mediation window + clicking on choices, calculate tension with this: (depreciated lowkey)
     public void CheckNewTensionValue()
     {
-        _newTensionValue = _oldTensionValue + ((_flaggedBounds * _valuesMult) + (_flaggedNeeds * _commonsMult));
-        print(_newTensionValue);
-        _oldTensionValue = _newTensionValue;
-        _tensMeter._tension = _newTensionValue;
-        _tensDisplay.value = _newTensionValue; 
+
     }
 
     //what happens when choices are clicked, but can be called any time?
@@ -162,9 +202,9 @@ public class MediationDialogue : MonoBehaviour
         choicesLayoutGroup.childControlWidth = false;
         choicesLayoutGroup.childControlHeight = true;
         choicesLayoutGroup.childAlignment = TextAnchor.LowerLeft;
-        choicesLayoutGroup.padding.left = 26;
+        choicesLayoutGroup.padding.left = 385;
         choicesLayoutGroup.padding.right = 0;
-        choicesLayoutGroup.padding.top = 57;
+        choicesLayoutGroup.padding.top = 220;
         choicesLayoutGroup.padding.bottom = 0;
         choicesLayoutGroup.spacing = 50;
 
@@ -181,8 +221,13 @@ public class MediationDialogue : MonoBehaviour
         // If we've read all the content and there are no choices, the story is finished!
         else
         {
+            // Display the narrator line
+            CreateContentView("There's nothing else to say here.", textContainer);
+
+            // Then show the Back button
             CreateChoiceView("Back", choicesContainer);
         }
+
         //then, check tension
         CheckNewTensionValue();
     }
@@ -195,6 +240,7 @@ public class MediationDialogue : MonoBehaviour
         if (choice.text.Trim() == "Back")
         {
             //RestartStory();
+            
             Deactivate();
         }
         else
@@ -236,7 +282,7 @@ public class MediationDialogue : MonoBehaviour
     {
         //Display Text and debug who is talking.
         DisplayTags();
-        Text storyText = Instantiate(textPrefab, container.transform);
+        TextMeshProUGUI storyText = Instantiate(textPrefab, container.transform);
         storyText.text = text;
 
         //dialogeTRACKING
@@ -285,7 +331,7 @@ public class MediationDialogue : MonoBehaviour
             }
         }
 
-        if (story.currentTags.Contains("YaelTell"))
+        if (story.currentTags.Contains("YaelPensive"))
         {
             speakerName.text = "Yael";
             speakerID[3].SetActive(true);
@@ -294,6 +340,36 @@ public class MediationDialogue : MonoBehaviour
             for (int i = 1; i < speakerID.Length; i++)
             {
                 if (i != 3) // Skip index 3 (YaelTell)
+                {
+                    speakerID[i].SetActive(false);
+                }
+            }
+        }
+
+        if (story.currentTags.Contains("YaelAngry"))
+        {
+            speakerName.text = "Yael";
+            speakerID[4].SetActive(true);
+
+            // Disable all other speakerID game objects
+            for (int i = 1; i < speakerID.Length; i++)
+            {
+                if (i != 4) // Skip index 3 (YaelTell)
+                {
+                    speakerID[i].SetActive(false);
+                }
+            }
+        }
+
+        if (story.currentTags.Contains("YaelTell"))
+        {
+            speakerName.text = "Yael";
+            speakerID[5].SetActive(true);
+
+            // Disable all other speakerID game objects
+            for (int i = 1; i < speakerID.Length; i++)
+            {
+                if (i != 5) // Skip index 3 (YaelTell)
                 {
                     speakerID[i].SetActive(false);
                 }
@@ -333,9 +409,15 @@ public class MediationDialogue : MonoBehaviour
         }
     }
 
+    [ContextMenu("Take Notes")]
+    public void TrackNotes()
+    {
+
+    }
+
     public void CheckTellStrength() //when clicking on a tell, check if tension is low enough to warrant providing new information.
     {
-        if(_tensMeter.lowTension == true)
+        if(_lowTension == true)
         {
             Debug.Log("Tension Low, Proceed");
             //call yaeltell true
@@ -343,7 +425,7 @@ public class MediationDialogue : MonoBehaviour
             var result = story.EvaluateFunction("YaelTellTrue", 2);
             Debug.Log("Result from Ink: " + result);
         }
-        else if(_tensMeter.highTension == true)
+        else if(_highTension== true)
         {
             Debug.Log("Tension too High, Do not Proceed");
             //call yaeltell false
@@ -431,7 +513,7 @@ public class MediationDialogue : MonoBehaviour
 
     // UI Prefabs
     [SerializeField]
-    private Text textPrefab = null;
+    private TextMeshProUGUI textPrefab = null;
     [SerializeField]
     private Button buttonPrefab = null;
 }
