@@ -13,42 +13,42 @@ VAR NotesIndex = 0
 
 #Yael
 Edrick! Edrick! We have to stop. There's hotcake crumbs all over my skirt and it's all this hooligan's fault! 
-+[...okay, let's take a breather.]
++[...okay, let's take a breather. #EdrickContinue]
 #Jasper
 You're the one who grabbed my hand like the cakes were poisonous. And in front of the nice townsfolk, too! You saw that, right Edrick?
-++[I did see that.]
+++[I did see that. #EdrickContinue]
 #Yael
 I wouldn't have had to do anything if you knew how to act! 
-+++[Okay, okay. we're stopping.]
++++[Okay, okay. we're stopping. #EdrickContinue]
 #Jasper 
 You’re not <b>seriously</b> stopping us for this, are you? We’ve already lost precious time. If we are late for the <color=orange> Ritual </color>, we’ll have set out for nothing. 
-+++++[I just want everyone to get along.]
++++++[I just want everyone to get along. #EdrickContinue]
 
 #Yael
 If Edrick won’t stop us for this, I will. No <color=orange>Fate-struck</color> person should be as ill mannered and gross as you’re acting right now, especially not during the Ritual.
-++++++[There won't be a ritual at this rate if you two keep arguing.]
+++++++[There won't be a ritual at this rate if you two keep arguing. #EdrickContinue]
 
 #Jasper
 I’m ill mannered? You made me drop food onto the ground!
-+++++++[Right...]
++++++++[Right... #EdrickContinue]
 
 #Yael
 I had to act quickly, <i>Jester,</i> before you ruined the food by inhaling it!
-++++++++[Okay, okay, calm down...]
+++++++++[Okay, okay, calm down... #EdrickContinue]
 
 #Jasper
 It’s <b>JASPER.</b> And that’s what you’re supposed to do with food. You're supposed to eat it!
-+++++++++[Continue]
++++++++++[Continue #EdrickContinue]
 #Edrick
 Calm yourselves. Please confide in me, so I can help you two walk in each others’ shoes.
-++++++++++[Continue] -> COOLOFF
+++++++++++[Continue #EdrickContinue] -> COOLOFF
 
 =COOLOFF
 #Edrick
 Okay, let's figure this out. 
-+[Talk to Yael]-> Yael
-+[Talk to Jasper] ->JASPER
-+[Regroup]  -> REGROUP
++[Talk to Yael #EdrickChoice]-> Yael
++[Talk to Jasper #EdrickChoice] ->JASPER
++[Regroup #EdrickChoice]  -> REGROUP
 ->DONE
 
 =Yael

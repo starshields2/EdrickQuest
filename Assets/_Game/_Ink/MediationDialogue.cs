@@ -208,15 +208,47 @@ public class MediationDialogue : MonoBehaviour
         choicesLayoutGroup.padding.bottom = 0;
         choicesLayoutGroup.spacing = 125;
 
+        //Create container for Edrick's continuing speech.
+        GameObject _SPchoicesContainer = new GameObject("SpecialChoicesContainer");
+        _SPchoicesContainer.transform.SetParent(canvas.transform, false);
+
+        VerticalLayoutGroup _SPchoicesLayoutGroup = _SPchoicesContainer.AddComponent<VerticalLayoutGroup>();
+        _SPchoicesLayoutGroup.childControlHeight = false;
+        _SPchoicesLayoutGroup.childForceExpandWidth = false;
+        _SPchoicesLayoutGroup.childForceExpandHeight = false;
+        _SPchoicesLayoutGroup.childControlWidth = false;
+        _SPchoicesLayoutGroup.childControlHeight = true;
+        _SPchoicesLayoutGroup.childAlignment = TextAnchor.LowerLeft;
+        _SPchoicesLayoutGroup.padding.left = -61;
+        _SPchoicesLayoutGroup.padding.right = 0;
+        _SPchoicesLayoutGroup.padding.top = 395;
+        _SPchoicesLayoutGroup.padding.bottom = 0;
+        _SPchoicesLayoutGroup.spacing = 125;
+
         // Display all the choices, if there are any!
         if (story.currentChoices.Count > 0)
         {
             for (int i = 0; i < story.currentChoices.Count; i++)
             {
                 Choice choice = story.currentChoices[i];
-                CreateChoiceView(choice.text.Trim(), choicesContainer);
                 TrackChoiceHistory(choice.text);
+
+                foreach (string tag in choice.tags)
+                {
+                   
+                    if(tag == "EdrickContinue")
+                    {
+                        CreateChoiceView(choice.text.Trim(), _SPchoicesContainer);
+                    }
+
+                    if (tag == "EdrickChoice")
+                    {
+                        CreateChoiceView(choice.text.Trim(), choicesContainer);
+                    }
+                }
             }
+
+
         }
         // If we've read all the content and there are no choices, the story is finished!
         else
