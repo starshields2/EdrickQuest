@@ -204,9 +204,9 @@ public class MediationDialogue : MonoBehaviour
         choicesLayoutGroup.childAlignment = TextAnchor.LowerLeft;
         choicesLayoutGroup.padding.left = 385;
         choicesLayoutGroup.padding.right = 0;
-        choicesLayoutGroup.padding.top = 220;
+        choicesLayoutGroup.padding.top = -110;
         choicesLayoutGroup.padding.bottom = 0;
-        choicesLayoutGroup.spacing = 50;
+        choicesLayoutGroup.spacing = 125;
 
         // Display all the choices, if there are any!
         if (story.currentChoices.Count > 0)

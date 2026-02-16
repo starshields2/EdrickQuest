@@ -75,7 +75,11 @@ That’s right. I mean. Think about it. This kind of thing has never happened be
     {YaelTell == 2: It just makes me so frustrated.} 
     #Yael
     And don't you think it's weird that the Tether has chosen two people who despise each other?
-    ++++++[That is strange, but the Tether has chosen you both for a reason.] ->COOLOFF
+    ++++++[That is strange, but the Tether has chosen you both for a reason.] 
+    #YaelPensive
+    That reason better be good, or I'm going to have come all this way for nothing.
+        +++++++[Well, we'll see, I suppose.]
+    ->COOLOFF
     ++++++[Why do you care?]
     #YaelPensive
     I had my entire life planned before this. I was <color=blue>hoping to be tethered to my beloved,</color> but that's a pipe dream now. I don't even know why I bothered falling in love if I was just going to be tied to an oaf.
@@ -107,6 +111,7 @@ It doesn't seem like Yael wants to make amends this way. Maybe there's something
 -> COOLOFF
 ++++[Unfortunately my friend, that is my job.] ->COOLOFF
 ++ [I understand Moonwalkers have rituals they must perform before eating. Jasper shouldn’t have to abide by those.]
+~SetYaelRitualTrue()
 #Yael
 Well, I shouldn’t have to witness her sacrilege at every other moment, either.
 +++[Maybe you should look away next time?] ->COOLOFF
@@ -171,7 +176,7 @@ Well, why don’t you tell her that I’m not going to abide by her rules. So sh
 Why are you asking me to compromise first? She’s literally insulting me left and right. I deserve some <color = blue>respect!</color> 
 ++++[I understand. I'll ask her about this.]
 #Edrick
-It seems like Jasper is very hurt by Yael's actions. Maybe I should talk to her.
+It seems like Jasper is very hurt by Yael's actions. Maybe I should talk to her - looks like this is something to take note of.
 +++++[Continue]->COOLOFF
 ++[You seem quite irritated about this. May I ask why?]
 #Jasper
@@ -191,14 +196,14 @@ No! And she’s been doing that on purpose - using fancy language just to compli
 Yeah, I never got to eat my hotcake, man. All because Yael decided to crash out.
 ++[And then she started yelling.]
 #Jasper
-Yeah. I didn't mean to be offensive, but if she's going to be nasty, I'm gonna be nasty back. That's how things worked where I'm from.
+Yeah. I didn't mean to be offensive, but if she's going to be nasty, I'm gonna be nasty back. That's how things worked where I'm from, and I don't care if we're Tethered together or not.
 +++[Where you're from? The Sunblades, right?]
 #Jasper
-That's right! My friends and I would always be pretty blunt with each other. That way, everything is laid bare. No secrets! 
+That's right! My friends and I would always be pretty blunt with each other. That way, everything is laid bare. No secrets! The Sunblades don't have time to be two faced about anything.
 ++++[I see. Very different from Yael.]
 #Jasper
-Yeah, she doesn't really have friends, huh.
-+++++[Well I wouldn't go so far as to say that.] ->COOLOFF
+Yeah, she doesn't really have friends, huh. Sad.
++++++[Well... I wouldn't go so far as to say that.] ->COOLOFF
 +++[Do you feel like being nasty could contribute to a harsher work environment?]
 #Jasper
 ~IncreaseTension(3)
@@ -206,7 +211,7 @@ Yael's gotta grow a thicker skin if a few crumbs throw her off. We can't let the
 ++++[I agree, actually! The mission is more important.]
 ~DecreaseTension(4)
 #Edrick
-It seems like Jasper really holds her purpose above these arguments. Maybe that's something to think about...
+It seems like Jasper really holds her purpose above these arguments. Maybe that's something to take note of...
 ++++++[Back to the group, then.] ->COOLOFF
 ->DONE
 
@@ -220,7 +225,17 @@ And what is that, Edrick?
 +++[Yael, you should apologize to Jasper.] ->YAELAPOLOGIES
 +++[Jasper, you should apologize to Yael.] ->JASPAPOLOGIES
 ++[There is one thing you both value most.] ->CORECHOOSER
-++[This is something you must figure out for yourselves.] -> COOLOFF
+++[This is something you must figure out for yourselves.] 
+#Jasper
+Well when things get dicey, I tend to figure things out with my fists. Probably a completely foreign concept for soft hearted city folk.
++++[Wait a minute...]
+~IncreaseTension(7)
+#YaelAngry
+Your threats are of no consequence to me, brute. You forget that the Tether would cause you the same grief if you were to lay your hands on me.
+++++[This isn't working.]
+#Jasper
+Whatever. I'm done here. Let's go, Edrick. 
+->DONE
 
 =YAELAPOLOGIES
 //(If you asked Yael to apologize)

@@ -265,8 +265,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 354, y: 256.3}
-  m_SizeDelta: {x: 294.8, y: 460.2}
+  m_AnchoredPosition: {x: 239.66, y: 195}
+  m_SizeDelta: {x: 479.322, y: 659.606}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &4633070289769473770
 CanvasRenderer:
@@ -289,14 +289,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.24158254, b: 0.65882355, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6efb5e5f885888a46aa3de1bdd918bb2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dc3d905827b4581419737afb0a8db48e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1494,7 +1494,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6350106420159958177}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1506,7 +1506,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 114.33984, y: -38.403008}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1551166905969962625
@@ -2973,6 +2973,7 @@ MonoBehaviour:
   _commonsMult: 0
   _UIBinder: {fileID: 0}
   narratorTextPrefab: {fileID: 11456674, guid: 53ded069d74a3c84ba76e1eee3bff0e6, type: 3}
+  _tooltipHandlerRef: {fileID: 0}
   inkJSONAsset: {fileID: 4900000, guid: 18a85ef48b244924685132f38b411965, type: 3}
   canvas: {fileID: 8244542442289223647}
   textPrefab: {fileID: 0}
