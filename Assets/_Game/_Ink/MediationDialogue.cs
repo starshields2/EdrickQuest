@@ -367,6 +367,8 @@ public class MediationDialogue : MonoBehaviour
             speakerName.text = "Yael";
             speakerID[5].SetActive(true);
 
+            GetComponent<TellFeedback>().PlayTell();
+
             // Disable all other speakerID game objects
             for (int i = 1; i < speakerID.Length; i++)
             {

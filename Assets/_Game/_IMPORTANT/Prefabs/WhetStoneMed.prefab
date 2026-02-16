@@ -152,6 +152,42 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &735905333360242794
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 840235408454794368}
+  m_Layer: 5
+  m_Name: PopupParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &840235408454794368
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735905333360242794}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 177778809494738432}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -400, y: 176}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1252011388151071783
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,6 +377,7 @@ RectTransform:
   - {fileID: 8244542441499651683}
   - {fileID: 5963207809809361622}
   - {fileID: 5426055086133511141}
+  - {fileID: 840235408454794368}
   m_Father: {fileID: 8244542442326837769}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2837,6 +2874,7 @@ GameObject:
   - component: {fileID: 8244542442326837774}
   - component: {fileID: 1733406836}
   - component: {fileID: 7442514655180769428}
+  - component: {fileID: 8168073889332254181}
   m_Layer: 5
   m_Name: WhetStoneMed
   m_TagString: Mediation
@@ -2973,6 +3011,7 @@ MonoBehaviour:
   _commonsMult: 0
   _UIBinder: {fileID: 0}
   narratorTextPrefab: {fileID: 11456674, guid: 53ded069d74a3c84ba76e1eee3bff0e6, type: 3}
+  _tooltipHandlerRef: {fileID: 0}
   inkJSONAsset: {fileID: 4900000, guid: 18a85ef48b244924685132f38b411965, type: 3}
   canvas: {fileID: 8244542442289223647}
   textPrefab: {fileID: 0}
@@ -2994,6 +3033,38 @@ MonoBehaviour:
   _parseOnAwake: 1
   _tooltipPrefab: {fileID: 8248568635411330760}
   _screenOffset: {x: 0, y: 150}
+--- !u!114 &8168073889332254181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8244542442326837772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a160153b6a41c04d88064cf6c279c43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 0}
+  _tellSprite: {fileID: 0}
+  _useScreenFlash: 1
+  _flashColor: {r: 1, g: 1, b: 1, a: 1}
+  _flashSprite: {fileID: 0}
+  _flashDuration: 0.2
+  _useScreenShake: 1
+  _shakeDuration: 0.2
+  _shakeMagnitude: 0.1
+  _useAudio: 0
+  _tellSound: {fileID: 0}
+  _useImagePopup: 1
+  _popupDuration: 0.2
+  _popupScale: {x: 1.5, y: 1.5, z: 1.5}
+  _popupFadeDuration: 0.5
+  _popupPrefab: {fileID: 4550297642952718635, guid: 6cdf4e82e01446c4c8197640778a4db5,
+    type: 3}
+  _popupParent: {fileID: 840235408454794368}
+  _shadow01: {fileID: 0}
+  _shadow02: {fileID: 0}
 --- !u!1 &8244542442394352354
 GameObject:
   m_ObjectHideFlags: 0

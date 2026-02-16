@@ -24,32 +24,26 @@ public class TellFeedback : MonoBehaviour
     [SerializeField] private float _popupDuration = 0.5f;
     [SerializeField] private Vector3 _popupScale = Vector3.one * 1.5f;
     [SerializeField] private float _popupFadeDuration = 0.5f;
-    [SerializeField] private Sprite _popupSprite;
+    [SerializeField] private GameObject _popupPrefab;
+    [SerializeField] private Transform _popupParent;
     [Space]
     [SerializeField] private GameObject _shadow01;
     [SerializeField] private GameObject _shadow02;
 
-    public static TellFeedback Instance { get; private set; }
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-            return;
-        }
+        // if (_spriteRenderer == null)
+        // {
+        //     _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        // }
 
-        if (_spriteRenderer == null)
-        {
-            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        }
-
-        _audioSource = GetComponent<AudioSource>();
-        if (_audioSource == null && _useAudio)
-        {
-            _audioSource = gameObject.AddComponent<AudioSource>();
-            _audioSource.playOnAwake = false;
-        }
+        // _audioSource = GetComponent<AudioSource>();
+        // if (_audioSource == null && _useAudio)
+        // {
+        //     _audioSource = gameObject.AddComponent<AudioSource>();
+        //     _audioSource.playOnAwake = false;
+        // }
     }
 
     private void Update()
@@ -62,16 +56,16 @@ public class TellFeedback : MonoBehaviour
 
     public void PlayTell()
     {
-        if (_spriteRenderer != null && _tellSprite != null)
-        {
-            _spriteRenderer.sprite = _tellSprite;
-            _spriteRenderer.enabled = true;
-        }
+        // if (_spriteRenderer != null && _tellSprite != null)
+        // {
+        //     _spriteRenderer.sprite = _tellSprite;
+        //     _spriteRenderer.enabled = true;
+        // }
 
-        if (_shadow01 != null)
-            _shadow01.SetActive(true);
-        if (_shadow02 != null)
-            _shadow02.SetActive(true);
+        // if (_shadow01 != null)
+        //     _shadow01.SetActive(true);
+        // if (_shadow02 != null)
+        //     _shadow02.SetActive(true);
 
         if (_useScreenFlash)
             StartCoroutine(ScreenFlashCoroutine());
@@ -79,10 +73,10 @@ public class TellFeedback : MonoBehaviour
         if (_useScreenShake)
             StartCoroutine(CameraShakeCoroutine());
 
-        if (_useAudio && _tellSound != null && _audioSource != null)
-            _audioSource.PlayOneShot(_tellSound);
+        // if (_useAudio && _tellSound != null && _audioSource != null)
+        //     _audioSource.PlayOneShot(_tellSound);
 
-        if (_useImagePopup && _popupSprite != null)
+        if (_useImagePopup && _popupPrefab != null)
             StartCoroutine(ImagePopupCoroutine());
     }
 
@@ -205,11 +199,10 @@ public class TellFeedback : MonoBehaviour
 
     private IEnumerator ImagePopupCoroutine()
     {
-        GameObject go = new GameObject("TellPopup");
-        go.transform.position = transform.position + new Vector3(2f, 2f, 0f); // Offset above the object
-        var sr = go.AddComponent<SpriteRenderer>();
-        sr.sprite = _popupSprite;
-        sr.sortingOrder = 10000;
+        GameObject popup = Instantiate(_popupPrefab, _popupParent);
+        popup.transform.localPosition = _popupParent.transform.localPosition + new Vector3(500f, -50f, 0f); // Offset above the object
+        var sr = popup.GetComponent<Image>();
+        //sr.sortingOrder = 10000;
 
         Vector3 startScale = Vector3.zero;
         Vector3 targetScale = _popupScale;
@@ -220,7 +213,7 @@ public class TellFeedback : MonoBehaviour
         {
             elapsed += Time.deltaTime;
             float t = Mathf.Clamp01(elapsed / _popupDuration);
-            go.transform.localScale = Vector3.Lerp(startScale, targetScale, Mathf.SmoothStep(0f, 1f, t));
+            popup.transform.localScale = Vector3.Lerp(startScale, targetScale, Mathf.SmoothStep(0f, 1f, t));
             yield return null;
         }
 
@@ -239,7 +232,7 @@ public class TellFeedback : MonoBehaviour
             yield return null;
         }
 
-        GameObject.Destroy(go);
+        GameObject.Destroy(popup);
     }
     
 }
