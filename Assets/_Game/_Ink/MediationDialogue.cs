@@ -249,10 +249,13 @@ public class MediationDialogue : MonoBehaviour
 
                     if (tag == "NewInfo")
                     {
+                        Debug.Log("NEW INFO: " + buttonPrefab.gameObject.name);
                         CreateChoiceView(choice.text.Trim(), choicesContainer);
-                        Animation _ps = GetComponentInChildren<Animation>();
-                        Debug.Log("NEW INFO:" + _ps);
-                        _ps.Play();
+
+                        Animation anim = buttonPrefab.GetComponent<Animation>();
+                        Debug.Log(anim);
+                        anim.Play("NewInfoButton");
+                        Debug.Log("played.");
 
                     }
                 }
