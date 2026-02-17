@@ -32,7 +32,8 @@ public class MediationDialogue : MonoBehaviour
     public AudioSource reverseAud; //audio that plays when mediation begins
     public Text speakerName; //speaker name.
     public string[] currentInktags; //current tags to track
-    public GameObject[] speakerID; 
+    public GameObject[] speakerID;
+    private Color newNormalColor = Color.red;
 
     //public SkillMenu skillMenu; (depreciated game object ref for skills)
 
@@ -244,6 +245,15 @@ public class MediationDialogue : MonoBehaviour
                     if (tag == "EdrickChoice")
                     {
                         CreateChoiceView(choice.text.Trim(), choicesContainer);
+                    }
+
+                    if (tag == "NewInfo")
+                    {
+                        CreateChoiceView(choice.text.Trim(), choicesContainer);
+                        Animation _ps = GetComponentInChildren<Animation>();
+                        Debug.Log("NEW INFO:" + _ps);
+                        _ps.Play();
+
                     }
                 }
             }
