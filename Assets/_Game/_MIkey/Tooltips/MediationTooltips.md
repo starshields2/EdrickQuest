@@ -15,3 +15,6 @@ I should keep this in mind when we reconvene. It's probably important.
 
 ## Tether, tethered, tethering {color:#FFA500 bold}
 A string of fate binds these two heroes together - spiritually, physically, emotionally. It will take a great toll on their well-being, should they refuse to bond with one another.
+
+## Calibrator, Calibrators {color:#FFA500 bold}
+I act as the mediator between all clans in this realm. It is my purpose to understand each disciple of our faith as individuals, and guide them as a united force as they journey to appease our gods.

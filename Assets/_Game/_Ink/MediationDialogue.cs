@@ -250,14 +250,15 @@ public class MediationDialogue : MonoBehaviour
                     if (tag == "NewInfo")
                     {
                         Debug.Log("NEW INFO: " + buttonPrefab.gameObject.name);
-                        CreateChoiceView(choice.text.Trim(), choicesContainer);
 
-                        Animation anim = buttonPrefab.GetComponent<Animation>();
-                        Debug.Log(anim);
-                        anim.Play("NewInfoButton");
-                        Debug.Log("played.");
+                        Button createdButton = CreateChoiceView(choice.text.Trim(), choicesContainer);
 
+                        MediationButtonHandler handler = createdButton.GetComponent<MediationButtonHandler>();
+                        Debug.Log("ANIMATION: " + handler);
+
+                        handler.PlayPing();
                     }
+
                 }
             }
 
@@ -495,7 +496,8 @@ public class MediationDialogue : MonoBehaviour
             return null; // Skip empty choices
         }
 
-        Button choice = Instantiate(buttonPrefab, container.transform);
+        Button choice = Instantiate(buttonPrefab, container.transform);      
+            
         Text choiceText = choice.GetComponentInChildren<Text>();
         choiceText.text = text;
 
@@ -562,4 +564,6 @@ public class MediationDialogue : MonoBehaviour
     private TextMeshProUGUI textPrefab = null;
     [SerializeField]
     private Button buttonPrefab = null;
+    [SerializeField]
+    private Button continueButtonPrefab = null;
 }

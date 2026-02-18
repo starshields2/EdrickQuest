@@ -10,6 +10,7 @@ VAR highTen = false
 VAR jasperVocab = false
 VAR yaelRitual = false
 VAR NotesIndex = 0
+VAR YaelExhaust = 0
 
 #Yael
 Edrick! Edrick! We have to stop. There's hotcake crumbs all over my skirt and it's all this hooligan's fault! 
@@ -25,8 +26,8 @@ You’re not <b>seriously</b> stopping us for this, are you? We’ve already los
 +++++[I just want everyone to get along. #EdrickContinue]
 
 #Yael
-If Edrick won’t stop us for this, I will. No <color=orange>Fate-struck</color> person should be as ill mannered and gross as you’re acting right now, especially not during the Ritual.
-++++++[There won't be a ritual at this rate if you two keep arguing. #EdrickContinue]
+If Edrick won’t stop us for this, I will. No <color=orange>Fate-struck</color> person should be as ill mannered and gross as you’re acting right now, especially not during the Ritual. What kind of Calibrator are you, Edrick?
+++++++[...There won't be a ritual at this rate if you two keep arguing. #EdrickContinue]
 
 #Jasper
 I’m ill mannered? You made me drop food onto the ground!
@@ -55,11 +56,18 @@ Okay, let's figure this out.
 
 =Yael
 #Yael
-You don’t understand, Edrick. She’s making us look like idiots out there.
+//if all other options are exhausted: 
+   {YaelExhaust >= 3:My dear Calibrator, I have nothing left to say to you.}
+//regular commentary   
+#Yael
+   {YaelExhaust < 3:You don't understand, Edrick. She's making us look like idiots out there.}
+
+
 //Option 1:
 +[Never mind. #EdrickChoice] ->COOLOFF
 //Option 2: 
 *[Why do you think that? #EdrickChoice]
+~IncreaseYaelExhaust(1)
 #Yael
 We are not average people. Not <i>anymore</i>. Our decorum around villagers should reflect that. How can they look up to us as Fate-struck if we’re taking handouts from everyone we cross?
 	++[Are they handouts, or offerings of goodwill? #EdrickChoice]
@@ -75,6 +83,7 @@ Well, that’s certainly true. Though it does little to ease my nerves.
 That’s right. I mean. Think about it. This kind of thing has never happened before. Fate-struck are <color=blue><b>usually friends</b></color>, or at least amiable. But her… I can’t stand her. 
     +++++ [Can you elaborate? #EdrickChoice]
     {YaelTell == 1: Don't poke at me, Edrick! I'm already frustrated.} 
+    {YaelTell == 0: I don't want to talk about what's bothering me right now.} 
     {YaelTell == 2: It just makes me so frustrated, Edrick. I don't understand anything anymore.} 
     #Yael
     And don't you think it's weird that the Tether has chosen two people who despise each other?
@@ -94,6 +103,7 @@ That’s right. I mean. Think about it. This kind of thing has never happened be
     ->COOLOFF
 //Option 3:
     *[Reacting rashly didn’t help our image either. #EdrickChoice]
+    ~IncreaseYaelExhaust(1)
 #Yael 
 It was a rash decision, I won’t lie. But I was only trying to help. We can’t invite any <color=blue>bad omens</color> on our journey with unwashed hands.
 ++[What motivated you to go so far as to lay hands on her? #EdrickChoice]
@@ -125,6 +135,7 @@ Knowing this, I suppose I was acting a bit rashly. The Moonwalkers will <color=r
 
 //UNLOCKED ONLY BY TALKING TO JASPER ABOUT VOCAB FIRST.
 *{jasperVocab} [I think Jasper is a little frustrated by your vocabulary. #EdrickChoice, #NewInfo]
+~IncreaseYaelExhaust(1)
 #Yael
 It’s certainly not my fault. We do have state of the art education in the city. If she wanted to communicate with me respectfully, her tone would reflect that.
 //OPTION 1
@@ -164,7 +175,7 @@ Why’s Yael so concerned with how prim and proper we look, anyways? We’re tru
 	//~UpdateNote()
 #Jasper: 
 There’s not much to share. I was offered food, I said “thank you,” and I tried to eat it, before Yael decided I should starve.
-++{yaelRitual}[In Yael’s sect, hand washing is a ritual that cannot be forgone before eating. #EdrickChoice]
+++{yaelRitual}[In Yael’s sect, hand washing is a ritual that cannot be forgone before eating. #EdrickChoice, #NewInfo]
 #Jasper
 I don’t really care what Moonwalkers do before eating. <i>We</i> don’t do that. 
 +++[ You don’t have to do that. I’m just letting you know. #EdrickChoice] 
@@ -334,4 +345,6 @@ The next time we see a prayer stone, I'm going to pray the Tether is cut so I ca
 ==function ChangeNotesIndex(amount)
 ~NotesIndex = amount
 
+==function IncreaseYaelExhaust(amount)
+~YaelExhaust = YaelExhaust + amount
 EXTERNAL UpdateNote()
