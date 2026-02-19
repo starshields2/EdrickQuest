@@ -283,19 +283,17 @@ What is your problem? Seriously, tell me.
 +++[Unsure #EdrickChoice] -> COOLOFF
 
 =RESPECT
-#Edrick
 You both wish to be respected, both by each other and by those who depend on you during this quest. You just haven't communicated what will earn respect from each other; if you could be clear about that now, I'm sure this will be resolved.
 +[Continue #EdrickContinue] 
 ~DecreaseTension(5)
-//(If you pointed out to Yael that she should respect Jasper’s space)
-#YaelTell
-A bit hard to say this, I’ll admit, but I was wrong, Jasper. I should not have gone to such lengths to prevent you from eating. Even if you were doing it in a weird, gross way. 
-++[Continue #EdrickContinue]
-#Jasper
-You know, that’s all I wanted to hear. 
 
-//(If you asked Jasper to express her frustrations)
+A bit hard to say this, I’ll admit, but I was wrong, Jasper. I should not have gone to such lengths to prevent you from eating. Even if you were doing it in a weird, gross way. 
+#YaelPensive
+++[Continue #EdrickContinue]
+
+You know, that’s all I wanted to hear. 
 Listen, Moonwalker. You use a lot of words that you’ve learned in a big city. I don’t understand all of them, and I’ve been getting frustrated. Could you slow down a bit or explain what you mean? 
+#Jasper
 +++[Continue #EdrickContinue]
 #Yael
 I suppose if it will ease our communications, I could be a bit more cognizant of - I mean. I can slow down. 

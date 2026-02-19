@@ -8,12 +8,6 @@ VAR medPoints = 0
 VAR tension = 10
 VAR highTen = false
 VAR jasperVocab = false
-VAR NotesIndex = 0
-
-=== notes ===
-- "First note text"
-- "Second note text"
-- "Third note text"
 
 #Jasper 
 You’re not <b>seriously</b> stopping us for this, are you? We’ve already lost precious time. If we are late for the <color=orange> Ritual </color>, we’ll have set out for nothing. 
