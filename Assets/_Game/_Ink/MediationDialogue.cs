@@ -440,7 +440,7 @@ public class MediationDialogue : MonoBehaviour
     [ContextMenu("DisplayHistory")]
     public void DisplayDialogueHistory()
     {
-        GameObject historyContainer = GameObject.Find("Content");
+        GameObject historyContainer = GameObject.Find("Viewport");
 
         // Ensure correct parent
         historyContainer.transform.SetParent(_dHistoryParent, false);
@@ -450,7 +450,6 @@ public class MediationDialogue : MonoBehaviour
         {
             GameObject historyTextObject = Instantiate(_DialogueHistoryTextPF, historyContainer.transform);
             TextMeshProUGUI historyText = historyTextObject.GetComponent<TextMeshProUGUI>();
-
             // Set the text to the preformatted speaker + dialogue
             historyText.text = entry;
         }

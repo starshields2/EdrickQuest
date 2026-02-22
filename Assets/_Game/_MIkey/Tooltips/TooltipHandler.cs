@@ -167,6 +167,6 @@ public class TooltipHandler : MonoBehaviour
         text.text = tagged;
         text.ForceMeshUpdate();
         
-        Debug.Log("TMP_Text: " + text.name);
+        //Debug.Log("TMP_Text: " + text.name);
     }
 }

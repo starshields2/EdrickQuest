@@ -251,7 +251,6 @@ Whatever. I'm done here. Let's go, Edrick.
 ->DONE
 
 =YAELAPOLOGIES
-//(If you asked Yael to apologize)
 #YaelAnger
 Well Jasper, our Calibrator has asked me to apologize to you, so I must say, I’m sorry for ever trying to teach you any manners. 
 +[No, wait, not like that! #EdrickChoice]
@@ -276,15 +275,18 @@ What is your problem? Seriously, tell me.
 ->DONE
 
 =CORECHOOSER
-#Edrick
-***[You're not communicating with each other about how you'd like to be respected. #EdrickChoice] ->RESPECT
-***[You both miss your friends, and would like to be friends. #EdrickChoice] ->FRIENDS
-***[You both value the mission more than anything else. #EdrickChoice] ->MISSIONSTATEMENT
+*[You're not communicating with each other about how you'd like to be respected. #EdrickChoice] ->RESPECT
+*[You both miss your friends, and would like to be friends. #EdrickChoice] ->FRIENDS
+*[You both value the mission more than anything else. #EdrickChoice] ->MISSIONSTATEMENT
 +++[Unsure #EdrickChoice] -> COOLOFF
+#Edrick
+->DONE
 
 =RESPECT
 You both wish to be respected, both by each other and by those who depend on you during this quest. You just haven't communicated what will earn respect from each other; if you could be clear about that now, I'm sure this will be resolved.
+#Edrick
 +[Continue #EdrickContinue] 
+
 ~DecreaseTension(5)
 
 A bit hard to say this, I’ll admit, but I was wrong, Jasper. I should not have gone to such lengths to prevent you from eating. Even if you were doing it in a weird, gross way. 
