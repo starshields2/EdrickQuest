@@ -27,6 +27,7 @@ public class MediationDialogue : MonoBehaviour
     [Header("Story Items")]
 
     public UnityEngine.UI.Slider _tensDisplay;
+    private TensionSlider _tensionSliderScript;
 
     public GameObject backgroundCanvas; //background
     public AudioSource reverseAud; //audio that plays when mediation begins
@@ -59,7 +60,11 @@ public class MediationDialogue : MonoBehaviour
 
     [SerializeField]private TooltipHandler _tooltipHandlerRef;
 
- void Start()
+    public static event Action<int> OnTensionChanged; // Event for tension changes
+
+    private int _previousTension; // To track the previous tension value
+
+    void Start()
     {
         //_UIBinder = GameObject.Find("DataManager").GetComponent<UIBinder>();
         // _UIBinder.GetDialogueInfo();
@@ -70,7 +75,27 @@ public class MediationDialogue : MonoBehaviour
 
         RemoveChildren();
         StartStory();
+
+        _tensionSliderScript = _tensDisplay.GetComponent<TensionSlider>();
     }
+
+        // Subscribe to the OnTensionChanged event
+    void OnEnable()
+    {
+        OnTensionChanged += HandleTensionChanged;
+    }
+
+    private void HandleTensionChanged(int newTension)
+    {
+        // Update the tension slider value
+        _tensionSliderScript.SetTensionValue(newTension);
+    }
+
+    void OnDisable()
+    {
+        OnTensionChanged -= HandleTensionChanged;
+    }
+
     void Awake()
     {
         
@@ -134,9 +159,14 @@ public class MediationDialogue : MonoBehaviour
     void Update()
     {
         _CurrentTension = (int)story.variablesState["tension"];
-        _tensDisplay.value = _CurrentTension;
         noteIndex = (int)story.variablesState["NotesIndex"];
 
+        // Check if tension has changed
+        if (_CurrentTension != _previousTension)
+        {
+            OnTensionChanged?.Invoke(_CurrentTension); // Trigger the event
+            _previousTension = _CurrentTension; // Update the previous tension value
+        }
 
         if (_CurrentTension > 14)
         {
@@ -403,6 +433,8 @@ public class MediationDialogue : MonoBehaviour
         {
             speakerName.text = "Yael";
             speakerID[5].SetActive(true);
+
+            GetComponent<TellFeedback>().PlayTell();
 
             // Disable all other speakerID game objects
             for (int i = 1; i < speakerID.Length; i++)
