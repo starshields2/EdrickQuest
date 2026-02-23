@@ -9,11 +9,11 @@ public class SceneLoader : MonoBehaviour
     public Animator _transition;
     public float _transitionTime;
 
-    [SerializeField] private RoomManager roomManager;
+    //[SerializeField] private RoomManager roomManager;
 
     void Awake()
     {
-        roomManager = GameObject.Find("RoomManager").GetComponent<RoomManager>();
+    //    roomManager = GameObject.Find("RoomManager").GetComponent<RoomManager>();
     }
 
     public void LoadScene(string sceneToLoad)
@@ -52,6 +52,10 @@ public class SceneLoader : MonoBehaviour
         StartCoroutine(LoadMainScene());
     }
 
+    public void StartLoadSpecifiedScene()
+    {
+        StartCoroutine(LoadSpecifiedScene());
+    }
     IEnumerator LoadLevel()
     {
         ///animation
@@ -61,6 +65,18 @@ public class SceneLoader : MonoBehaviour
         ///load scene
         //RoomGenerationState.Instance.SaveGenerationState(RoomManager.Instance);
         SceneManager.LoadScene("TESTBATTLE");
+
+    }
+
+    IEnumerator LoadSpecifiedScene()
+    {
+        ///animation
+        _transition.SetTrigger("Start");
+        ///wait for stop
+        yield return new WaitForSeconds(_transitionTime);
+        ///load scene
+        //RoomGenerationState.Instance.SaveGenerationState(RoomManager.Instance);
+        SceneManager.LoadScene(sceneName);
 
     }
 

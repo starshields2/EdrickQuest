@@ -251,7 +251,7 @@ Whatever. I'm done here. Let's go, Edrick.
 ->DONE
 
 =YAELAPOLOGIES
-#YaelAnger
+#YaelAngry
 Well Jasper, our Calibrator has asked me to apologize to you, so I must say, I’m sorry for ever trying to teach you any manners. 
 +[No, wait, not like that! #EdrickChoice]
 ~IncreaseTension(6)
@@ -283,23 +283,26 @@ What is your problem? Seriously, tell me.
 ->DONE
 
 =RESPECT
+#Jasper
+What do you mean, respect? I'm respectful! I'm plenty respectful!
++[Continue #EdrickContinue]
 You both wish to be respected, both by each other and by those who depend on you during this quest. You just haven't communicated what will earn respect from each other; if you could be clear about that now, I'm sure this will be resolved.
 #Edrick
-+[Continue #EdrickContinue] 
+++[Continue #EdrickContinue] 
 
 ~DecreaseTension(5)
 
 A bit hard to say this, I’ll admit, but I was wrong, Jasper. I should not have gone to such lengths to prevent you from eating. Even if you were doing it in a weird, gross way. 
 #YaelPensive
-++[Continue #EdrickContinue]
++++[Continue #EdrickContinue]
 
 You know, that’s all I wanted to hear. 
 Listen, Moonwalker. You use a lot of words that you’ve learned in a big city. I don’t understand all of them, and I’ve been getting frustrated. Could you slow down a bit or explain what you mean? 
 #Jasper
-+++[Continue #EdrickContinue]
+++++[Continue #EdrickContinue]
 #Yael
 I suppose if it will ease our communications, I could be a bit more cognizant of - I mean. I can slow down. 
-++++[Looks like this is wrapping up nicely. #EdrickContinue]
++++++[Looks like this is wrapping up nicely. #EdrickContinue]
 #Edrick
 I'm happy we could find something nice to say to each other! Now let's move on.
 ->DONE

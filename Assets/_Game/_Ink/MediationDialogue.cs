@@ -220,9 +220,9 @@ public class MediationDialogue : MonoBehaviour
         _SPchoicesLayoutGroup.childControlWidth = false;
         _SPchoicesLayoutGroup.childControlHeight = true;
         _SPchoicesLayoutGroup.childAlignment = TextAnchor.LowerLeft;
-        _SPchoicesLayoutGroup.padding.left = -61;
+        _SPchoicesLayoutGroup.padding.left = -112;
         _SPchoicesLayoutGroup.padding.right = 0;
-        _SPchoicesLayoutGroup.padding.top = 395;
+        _SPchoicesLayoutGroup.padding.top = 420;
         _SPchoicesLayoutGroup.padding.bottom = 0;
         _SPchoicesLayoutGroup.spacing = 125;
 
@@ -233,37 +233,28 @@ public class MediationDialogue : MonoBehaviour
             {
                 Choice choice = story.currentChoices[i];
                 TrackChoiceHistory(choice.text);
-
                 foreach (string tag in choice.tags)
                 {
-                   
                     if(tag == "EdrickContinue")
                     {
-                        CreateChoiceView(choice.text.Trim(), _SPchoicesContainer);
+                        CreateContinueChoiceView(choice.text.Trim(), _SPchoicesContainer);
                     }
-
                     if (tag == "EdrickChoice")
                     {
                         CreateChoiceView(choice.text.Trim(), choicesContainer);
                     }
-
                     if (tag == "NewInfo")
                     {
                         Debug.Log("NEW INFO: " + buttonPrefab.gameObject.name);
-
                         Button createdButton = CreateChoiceView(choice.text.Trim(), choicesContainer);
-
                         MediationButtonHandler handler = createdButton.GetComponent<MediationButtonHandler>();
                         Debug.Log("ANIMATION: " + handler);
-
                         handler.PlayPing();
                     }
-
                 }
             }
-
-
         }
+
         // If we've read all the content and there are no choices, the story is finished!
         else
         {
@@ -484,8 +475,45 @@ public class MediationDialogue : MonoBehaviour
             
         }
     }
+    //create continue button
+    Button CreateContinueChoiceView(string text, GameObject container)
+    {
+        if (string.IsNullOrEmpty(text))
+        {
+            return null; // Skip empty choices
+        }
 
 
+        Button choice = Instantiate(continueButtonPrefab, container.transform);
+        Text choiceText = choice.GetComponentInChildren<Text>();
+        choiceText.text = text;
+
+        if (text == "Back")
+        {
+            choice.onClick.AddListener(() => Deactivate());
+            // RestartStory();
+        }
+        else
+        {
+            if (story != null && story.currentChoices != null)
+            {
+                Choice choiceToSelect = story.currentChoices.Find(c => c.text.Trim() == text);
+                if (choiceToSelect != null)
+                {
+                    choice.onClick.AddListener(() =>
+                    {
+                        // Track the choice in dialogue history
+                        TrackDialogueHistory("[You said]: " + text);
+
+                        // Continue with the selected choice
+                        OnClickChoiceButton(choiceToSelect);
+                    });
+                }
+            }
+        }
+
+        return choice;
+    }
 
     // Creates a button showing the choice text
     Button CreateChoiceView(string text, GameObject container)
@@ -495,8 +523,8 @@ public class MediationDialogue : MonoBehaviour
             return null; // Skip empty choices
         }
 
+
         Button choice = Instantiate(buttonPrefab, container.transform);      
-            
         Text choiceText = choice.GetComponentInChildren<Text>();
         choiceText.text = text;
 

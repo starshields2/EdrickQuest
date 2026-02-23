@@ -8,34 +8,39 @@ VAR medPoints = 0
 VAR tension = 10
 VAR highTen = false
 VAR jasperVocab = false
+VAR yaelRitual = false
+VAR NotesIndex = 0
+VAR YaelExhaust = 0
 
 ->BEGINNING
 =BEGINNING
 You had something to say? #Yael
 
-+[Talk #EdrickChoice] -> START
-+[Gift #EdrickChoice] -> GIFT
-+[Leave #EdrickChoice] ->DONE
++[Talk about the Ritual #EdrickChoice] -> START
++[Talk about Jasper #EdrickChoice] -> JASPER
++[Ask her about herself #EdrickChoice] ->HERSELF
++[Nevermind.] ->DONE
 ->DONE
-=GIFT
+=JASPER
 #Yael
-Oh, for me?
-*[Moonshard]
-
-Ah. We used to collect these by the lakeshore and turn them into bracelets.
-++[I'm glad you like it.] ->GIFT
-*[Rock]
+What about her?
+*[Are you and Jasper getting along well? #EdrickChoice]
+I believe that the Ritual is more important than whether or not we get along. I have my reservations about her, of course. I'm not sure why the Sunblades don't visit the city more often.
+++[. #EdrickChoice] ->JASPER
+*[Rock #EdrickChoice]
 
 What am I supposed to do with this?
-++[I don't know.] ->GIFT
-+[Nevermind.] ->START
+++[I don't know. #EdrickChoice] ->JASPER
++[Nevermind. #EdrickChoice] ->START
 
 ->DONE
 =START
 #Yael
-Well, what is it then?
-**[I]
-
+Oh yes! I have everything ready. The needle, thread and basin, I trust are with your things?
+*[Yes, I have them.]
+#Yael
+Good! 
+**[test]
 #Yael
 Do you take me for a fan of the apocalypse? I'd rather work with a country bumpkin than watch my people suffer.
 ***[Really?]
@@ -70,8 +75,14 @@ To go to bed, obviously.
 
 **[What will you do in your free time?]
 #Yael
-
 Most likely I will return to prayer. I don't find anything here endearing enough to go outside. It's just gross. 
 ->DONE
-
+=HERSELF
+#YaelPensive
+What would you like to know, Calibrator?
+*[You mentioned you were wanting to be Tethered to someone else.]
+#Yael
+...It's true. My wife, Kethora, and I were hoping to be Tethered. But I suppose it was naive. There's no way to influence the Tethering, even if it seems to favor some people.
+**[I noticed you ]
+->DONE
 ->END
