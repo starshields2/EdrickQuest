@@ -9,6 +9,8 @@ using TMPro;
 public class MediationDialogue : MonoBehaviour
 {
     public static event Action<Story> OnCreateStory;
+    public int tutorialNum;
+
     [Header("Dialogue History")]
     public List<string> notesDescriptions; //
     public List<string> notesTitles;

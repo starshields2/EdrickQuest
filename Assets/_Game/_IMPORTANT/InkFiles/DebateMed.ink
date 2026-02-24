@@ -5,22 +5,27 @@ VAR violations = 0
 VAR commonalities = 0
 VAR YaelTell = 0
 VAR medPoints = 0
-VAR tension = 10
+VAR tension = 6
 VAR highTen = false
 VAR jasperVocab = false
 VAR yaelRitual = false
 VAR NotesIndex = 0
 VAR YaelExhaust = 0
+VAR ExternalTutorialNum = 0
 
 #Yael
 Edrick! Edrick! We have to stop. There's hotcake crumbs all over my skirt and it's all this hooligan's fault! 
 +[...okay, let's take a breather. #EdrickContinue]
+~IncreaseTension(1)
 #Jasper
 You're the one who grabbed my hand like the cakes were poisonous. And in front of the nice townsfolk, too! You saw that, right Edrick?
 ++[I did see that. #EdrickContinue]
+~IncreaseTension(1)
 #Yael
 I wouldn't have had to do anything if you knew how to act! 
 +++[Okay, okay. we're stopping. #EdrickContinue]
+~ExtendedTutorial(1)
+~IncreaseTension(1)
 #Jasper 
 You’re not <b>seriously</b> stopping us for this, are you? We’ve already lost precious time. If we are late for the <color=orange> Ritual </color>, we’ll have set out for nothing. 
 +++++[I just want everyone to get along. #EdrickContinue]
@@ -31,10 +36,12 @@ If Edrick won’t stop us for this, I will. No <color=orange>Fate-struck</color>
 
 #Jasper
 I’m ill mannered? You made me drop food onto the ground!
+~IncreaseTension(1)
 +++++++[Right... #EdrickContinue]
 
 #Yael
 I had to act quickly, <i>Jester,</i> before you ruined the food by inhaling it!
+~IncreaseTension(1)
 ++++++++[Okay, okay, calm down... #EdrickContinue]
 
 #Jasper
@@ -347,6 +354,9 @@ The next time we see a prayer stone, I'm going to pray the Tether is cut so I ca
 
 ==function ChangeNotesIndex(amount)
 ~NotesIndex = amount
+
+==function ExtendedTutorial(amount)
+~ExternalTutorialNum = amount
 
 ==function IncreaseYaelExhaust(amount)
 ~YaelExhaust = YaelExhaust + amount
