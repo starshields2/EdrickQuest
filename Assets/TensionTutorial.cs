@@ -15,6 +15,11 @@ public class TensionTutorial : MonoBehaviour
         Tells,
         End
     }
+    public bool _started;
+    public bool _highlight;
+    public bool _tensBar;
+    public bool _tells;
+    public bool _finished;
 
     public TutorialType _tutorialType = TutorialType.Start;
 
@@ -27,11 +32,22 @@ public class TensionTutorial : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(_medDialogue.tutorialNum == 0)
+        if (_medDialogue.tutorialNum == 4)
         {
-            _tutorialType = TutorialType.Start;
-            _Tutorials[0].SetActive(true);
+            _tutorialType = TutorialType.End;
+            foreach (GameObject tut in _Tutorials)
+            {
+                tut.SetActive(false);
+            }
+        }
 
+        if (_medDialogue.tutorialNum == 0)
+        {
+            if (!_started)
+            {
+                _started = true;
+             _tutorialType = TutorialType.Start;
+            _Tutorials[0].SetActive(true);
             // Disable all other _Tutorials game objects
             for (int i = 1; i < _Tutorials.Length; i++)
             {
@@ -40,9 +56,15 @@ public class TensionTutorial : MonoBehaviour
                     _Tutorials[i].SetActive(false);
                 }
             }
+            }
+            
         }
+
         if (_medDialogue.tutorialNum == 1)
         {
+            if (!_highlight)
+            {
+                _highlight = true;
             _tutorialType = TutorialType.Highlight;
             _Tutorials[1].SetActive(true);
 
@@ -54,10 +76,15 @@ public class TensionTutorial : MonoBehaviour
                     _Tutorials[i].SetActive(false);
                 }
             }
+            }
+           
         }
         if (_medDialogue.tutorialNum == 2)
         {
-            _tutorialType = TutorialType.TensionBar;
+            if (!_tells)
+            {
+                _tells = true;
+                _tutorialType = TutorialType.TensionBar;
             _Tutorials[2].SetActive(true);
 
             // Disable all other _Tutorials game objects
@@ -68,34 +95,40 @@ public class TensionTutorial : MonoBehaviour
                     _Tutorials[i].SetActive(false);
                 }
             }
+            }
+           
         }
+
         if (_medDialogue.tutorialNum == 3)
         {
-            _tutorialType = TutorialType.Tells;
-            _Tutorials[3].SetActive(true);
-
-            // Disable all other _Tutorials game objects
-            for (int i = 1; i < _Tutorials.Length; i++)
+            if (!_tensBar)
             {
-                if (i != 3) // Skip index 0
+                _tensBar = true;
+
+                _tutorialType = TutorialType.Tells;
+                _Tutorials[3].SetActive(true);
+
+                // Disable all other _Tutorials game objects
+                for (int i = 1; i < _Tutorials.Length; i++)
                 {
-                    _Tutorials[i].SetActive(false);
+                    if (i != 3) // Skip index 0
+                    {
+                        _Tutorials[i].SetActive(false);
+                    }
                 }
             }
+           
         }
 
-        if(_medDialogue.tutorialNum == 4)
-        {
-            _tutorialType = TutorialType.End;
-                foreach(GameObject tut in _Tutorials)
-            {
-                tut.SetActive(false);
-            }
-        }
     }
 
     public void DisplayTutorial()
     {
 
+      
+       
+       
+
+        
     }
 }

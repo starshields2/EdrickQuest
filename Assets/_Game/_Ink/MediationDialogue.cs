@@ -161,6 +161,7 @@ public class MediationDialogue : MonoBehaviour
     void Update()
     {
         _CurrentTension = (int)story.variablesState["tension"];
+        tutorialNum = (int)story.variablesState["ExternalTutorialNum"];
         noteIndex = (int)story.variablesState["NotesIndex"];
 
         // Check if tension has changed
