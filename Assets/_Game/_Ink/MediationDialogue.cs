@@ -4,11 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
+using System.Collections;
 
 
 public class MediationDialogue : MonoBehaviour
 {
     public static event Action<Story> OnCreateStory;
+
+
+    [Header("Popups")]
+    [SerializeField] private GameObject[] _answer;
+    [SerializeField] private int _answerIndex;
     public int tutorialNum;
 
     [Header("Dialogue History")]
@@ -18,6 +24,8 @@ public class MediationDialogue : MonoBehaviour
     public GameObject notesContainer;
     public GameObject notesTextPF;
     public int noteIndex;
+
+
 
     private List<string> dialogueHistory = new List<string>(); //all dialogue to be logged in history
     [SerializeField]
@@ -79,7 +87,11 @@ public class MediationDialogue : MonoBehaviour
         StartStory();
 
         _tensionSliderScript = _tensDisplay.GetComponent<TensionSlider>();
+
+
     }
+    
+
 
         // Subscribe to the OnTensionChanged event
     void OnEnable()
@@ -116,10 +128,17 @@ public class MediationDialogue : MonoBehaviour
 
         if (OnCreateStory != null) OnCreateStory(story);
 
+        //bind external functions from Ink here:
         story.BindExternalFunction("UpdateNote", () =>
         {
             CreateNotesButton();
         });
+        story.BindExternalFunction("ShowObjection", () => {
+            Debug.Log("OBJECTION!");
+            PopupPortrait();
+        });
+
+
         RefreshView();
         DisplayTags();
     }
@@ -163,6 +182,7 @@ public class MediationDialogue : MonoBehaviour
         _CurrentTension = (int)story.variablesState["tension"];
         tutorialNum = (int)story.variablesState["ExternalTutorialNum"];
         noteIndex = (int)story.variablesState["NotesIndex"];
+        _answerIndex = (int)story.variablesState["PopupNum"];
 
         // Check if tension has changed
         if (_CurrentTension != _previousTension)
@@ -345,6 +365,7 @@ public class MediationDialogue : MonoBehaviour
         this.gameObject.SetActive(false);
         backgroundCanvas.SetActive(false);
 
+        story.UnbindExternalFunction("ShowObjection");
     }
 
     // Creates a textbox showing the line of text
@@ -590,6 +611,21 @@ public class MediationDialogue : MonoBehaviour
         return choice;
     }
 
+    //for the popups on correct answer choices, objections, affirmations, etc.
+    [ContextMenu("PopupPortrait")]
+    public void PopupPortrait()
+    {
+        StartCoroutine(PopupPortraitLogic());
+    }
+
+    private IEnumerator PopupPortraitLogic()
+    {
+        int currentAnswerIndex;
+        currentAnswerIndex = (int)story.variablesState["PopupNum"];
+        _answer[currentAnswerIndex].SetActive(true);
+        yield return new WaitForSeconds(2);
+        _answer[currentAnswerIndex].SetActive(false);
+    }
 
     // Destroys all the children of this game object (all the UI)
     void RemoveChildren()

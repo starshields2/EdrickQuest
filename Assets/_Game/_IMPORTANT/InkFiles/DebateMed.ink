@@ -1,17 +1,14 @@
-VAR core = 0
-VAR needs = 0
-VAR bounds = 0
-VAR violations = 0
-VAR commonalities = 0
+
 VAR YaelTell = 0
-VAR medPoints = 0
+
 VAR tension = 6
-VAR highTen = false
 VAR jasperVocab = false
 VAR yaelRitual = false
 VAR NotesIndex = 0
 VAR YaelExhaust = 0
+VAR JasperExhaust = 0
 VAR ExternalTutorialNum = 0
+VAR PopupNum = 0
 
 #Yael
 Edrick! Edrick! We have to stop. There's hotcake crumbs all over my skirt and it's all this hooligan's fault! 
@@ -31,7 +28,7 @@ You’re not <b>seriously</b> stopping us for this, are you? We’ve already los
 +++++[I just want everyone to get along. #EdrickContinue]
 
 #Yael
-If Edrick won’t stop us for this, I will. No <color=orange>Fate-struck</color> person should be as ill mannered and gross as you’re acting right now, especially not during the Ritual. What kind of Calibrator are you, Edrick?
+If Edrick won’t stop us for this, I will. No Fate-Struck person should be as ill mannered and gross as you’re acting right now, especially not during the Ritual. What kind of Calibrator are you, Edrick?
 ++++++[...There won't be a ritual at this rate if you two keep arguing. #EdrickContinue]
 
 #Jasper
@@ -68,8 +65,6 @@ Okay, let's figure this out.
 //regular commentary   
 #Yael
    {YaelExhaust < 3:You don't understand, Edrick. She's making us look like idiots out there.}
-
-
 //Option 1:
 +[Never mind. #EdrickChoice] ->COOLOFF
 //Option 2: 
@@ -147,6 +142,8 @@ Knowing this, I suppose I was acting a bit rashly. The Moonwalkers will <color=r
 It’s certainly not my fault. We do have state of the art education in the city. If she wanted to communicate with me respectfully, her tone would reflect that.
 //OPTION 1
 ++[Yael, how will policing Jasper's tone get her to respect you? #EdrickChoice]
+~UpdatePopupNumber(1)
+~ShowObjection()
 ~IncreaseTension(3)
 #YaelPensive
 W-well, if she really cared about the status we hold, she would be more respectful!
@@ -182,7 +179,7 @@ Why’s Yael so concerned with how prim and proper we look, anyways? We’re tru
 	//~UpdateNote()
 #Jasper: 
 There’s not much to share. I was offered food, I said “thank you,” and I tried to eat it, before Yael decided I should starve.
-++{yaelRitual}[In Yael’s sect, hand washing is a ritual that cannot be forgone before eating. #EdrickChoice, #NewInfo]
+++{yaelRitual == true}[In Yael’s sect, hand washing is a ritual that cannot be forgone before eating. #EdrickChoice, #NewInfo]
 #Jasper
 I don’t really care what Moonwalkers do before eating. <i>We</i> don’t do that. 
 +++[ You don’t have to do that. I’m just letting you know. #EdrickChoice] 
@@ -282,7 +279,7 @@ What is your problem? Seriously, tell me.
 ->DONE
 
 =CORECHOOSER
-*[You're not communicating with each other about how you'd like to be respected. #EdrickChoice] ->RESPECT
+*[You're not communicating with each other about how you'd like to be respected. #EdrickChoice]->RESPECT
 *[You both miss your friends, and would like to be friends. #EdrickChoice] ->FRIENDS
 *[You both value the mission more than anything else. #EdrickChoice] ->MISSIONSTATEMENT
 +++[Unsure #EdrickChoice] -> COOLOFF
@@ -290,26 +287,52 @@ What is your problem? Seriously, tell me.
 ->DONE
 
 =RESPECT
+~UpdatePopupNumber(0)
+~ShowObjection()
 #Jasper
 What do you mean, respect? I'm respectful! I'm plenty respectful!
+
+
 +[Continue #EdrickContinue]
 You both wish to be respected, both by each other and by those who depend on you during this quest. You just haven't communicated what will earn respect from each other; if you could be clear about that now, I'm sure this will be resolved.
 #Edrick
 ++[Continue #EdrickContinue] 
+#YaelAngry
+It's not like I've acted out of turn! 
++++[Continue #EdrickContinue]
+#Edrick
+Actually, you did, when you...
+****[Shoved the cake away #EdrickChoice]
+~UpdatePopupNumber(0)
+~ShowObjection()
+#Edrick
+Jasper <color=red>hates being roughhoused</color>. You've completely shattered her respect for you by shoving her so unecessarily.
++++++[Continue #EdrickContinue]
+#YaelPensive
+W-well that's true.
+++++++[Continue #EdrickContinue] ->CORRECTCONCLUSION
+****[Called her a hooligan #EdrickChoice]
+~IncreaseTension(2)
+#Jasper
+I don't really care about that! I can handle being insulted.
++++++[Continue #EdrickContinue]
+#Edrick
+She can handle an insult or two, that's right. She had mentioned something earlier that might give me a clue...
+++++++[Continue #EdrickContinue] ->RESPECT
+->DONE
 
-~DecreaseTension(5)
-
+=CORRECTCONCLUSION
 A bit hard to say this, I’ll admit, but I was wrong, Jasper. I should not have gone to such lengths to prevent you from eating. Even if you were doing it in a weird, gross way. 
 #YaelPensive
-+++[Continue #EdrickContinue]
++[Continue #EdrickContinue]
 
 You know, that’s all I wanted to hear. 
 Listen, Moonwalker. You use a lot of words that you’ve learned in a big city. I don’t understand all of them, and I’ve been getting frustrated. Could you slow down a bit or explain what you mean? 
 #Jasper
-++++[Continue #EdrickContinue]
+++[Continue #EdrickContinue]
 #Yael
 I suppose if it will ease our communications, I could be a bit more cognizant of - I mean. I can slow down. 
-+++++[Looks like this is wrapping up nicely. #EdrickContinue]
++++[Looks like this is wrapping up nicely. #EdrickContinue]
 #Edrick
 I'm happy we could find something nice to say to each other! Now let's move on.
 ->DONE
@@ -358,6 +381,11 @@ The next time we see a prayer stone, I'm going to pray the Tether is cut so I ca
 ==function ExtendedTutorial(amount)
 ~ExternalTutorialNum = amount
 
+==function UpdatePopupNumber(amount)
+~PopupNum = amount
+
 ==function IncreaseYaelExhaust(amount)
 ~YaelExhaust = YaelExhaust + amount
+
 EXTERNAL UpdateNote()
+EXTERNAL ShowObjection()
