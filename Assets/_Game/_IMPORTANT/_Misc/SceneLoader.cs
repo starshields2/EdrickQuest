@@ -91,6 +91,11 @@ public class SceneLoader : MonoBehaviour
 
     }
 
+    public void EndGameNow()
+    {
+        Application.Quit();
+    }
+
     //public void TransitionToCombatScene()
     //{
     //    RoomGenerationState.Instance.SaveGenerationState(RoomManager.Instance);
