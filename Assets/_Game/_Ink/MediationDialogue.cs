@@ -16,6 +16,7 @@ public class MediationDialogue : MonoBehaviour
     [SerializeField] private GameObject[] _answer;
     [SerializeField] private int _answerIndex;
     public int tutorialNum;
+    [SerializeField] private GameObject NotesUpdateIndicator;
 
     [Header("Dialogue History")]
     public List<string> notesDescriptions; //
@@ -23,11 +24,11 @@ public class MediationDialogue : MonoBehaviour
     public Button notesPFButton;
     public GameObject notesContainer;
     public GameObject notesTextPF;
-    public int noteIndex;
+    //public int noteIndex;
 
 
 
-    private List<string> dialogueHistory = new List<string>(); //all dialogue to be logged in history
+    public List<string> dialogueHistory = new List<string>(); //all dialogue to be logged in history
     [SerializeField]
     private GameObject _DialogueHistoryTextPF = null; // Reference to your existing dialogue history prefab
     [SerializeField]
@@ -152,28 +153,34 @@ public class MediationDialogue : MonoBehaviour
         }
     }
 
-    public void SetNoteIndex(int notesIndexSetter)
-    {
-        noteIndex = notesIndexSetter;
-    }
 
     [ContextMenu("Create New Note")]
     public void CreateNotesButton() //currently just removes top of the list.
     {
-        GameObject notesContainer = GameObject.Find("NotesContainer");
-        Button clone = Instantiate(notesPFButton);
-        clone.transform.SetParent(notesContainer.transform, false);
-        Transform child = clone.transform.GetChild(0);
-        TextMeshProUGUI noteTitleText = child.GetComponent<TextMeshProUGUI>();
-        noteTitleText.text = notesTitles[noteIndex];
-        notesTitles.RemoveAt(noteIndex);
-
+        //GameObject notesContainer = GameObject.Find("NotesContainer");
+        //Button clone = Instantiate(notesPFButton);
+        //clone.transform.SetParent(notesContainer.transform, false);
+        //Transform child = clone.transform.GetChild(0);
+        //TextMeshProUGUI noteTitleText = child.GetComponent<TextMeshProUGUI>();
+        //noteTitleText.text = notesTitles[noteIndex];
+        //notesTitles.RemoveAt(noteIndex);
+        int noteIndex;
+        noteIndex = (int)story.variablesState["NotesIndex"];
         GameObject descContainer = GameObject.Find("NotesDescriptionsContainer");
         GameObject notesClone = Instantiate(notesTextPF);
         notesClone.transform.SetParent(descContainer.transform, false);
         TextMeshProUGUI notesTextComponent = notesClone.GetComponent<TextMeshProUGUI>();
         notesTextComponent.text = notesDescriptions[noteIndex];
-        notesDescriptions.RemoveAt(noteIndex);
+        StartCoroutine(UpdateNotesFlash());
+        //notesDescriptions.RemoveAt(noteIndex);
+    }
+
+    private IEnumerator UpdateNotesFlash()
+    {
+        Debug.Log("FlashNotes");
+        NotesUpdateIndicator.SetActive(true);
+        yield return new WaitForSeconds(1);
+        NotesUpdateIndicator.SetActive(false);
     }
 
 
@@ -181,7 +188,7 @@ public class MediationDialogue : MonoBehaviour
     {
         _CurrentTension = (int)story.variablesState["tension"];
         tutorialNum = (int)story.variablesState["ExternalTutorialNum"];
-        noteIndex = (int)story.variablesState["NotesIndex"];
+        //noteIndex = (int)story.variablesState["NotesIndex"];
         _answerIndex = (int)story.variablesState["PopupNum"];
 
         // Check if tension has changed
@@ -256,9 +263,9 @@ public class MediationDialogue : MonoBehaviour
         choicesLayoutGroup.childControlWidth = false;
         choicesLayoutGroup.childControlHeight = true;
         choicesLayoutGroup.childAlignment = TextAnchor.LowerLeft;
-        choicesLayoutGroup.padding.left = 385;
+        choicesLayoutGroup.padding.left = 366;
         choicesLayoutGroup.padding.right = 0;
-        choicesLayoutGroup.padding.top = -110;
+        choicesLayoutGroup.padding.top = -183;
         choicesLayoutGroup.padding.bottom = 0;
         choicesLayoutGroup.spacing = 125;
 
@@ -320,6 +327,9 @@ public class MediationDialogue : MonoBehaviour
 
         //then, check tension
         CheckNewTensionValue();
+
+      
+        
     }
 
 
@@ -471,17 +481,25 @@ public class MediationDialogue : MonoBehaviour
         }
 
         TrackDialogueHistory(text);
+        DisplayDialogueHistory();
     }
 
     private void TrackDialogueHistory(string line)
     {
         string currentSpeaker = speakerName != null ? speakerName.text : "Unknown";
-        dialogueHistory.Add(currentSpeaker + ": " + line);
+ 
+            dialogueHistory.Add(currentSpeaker + ": " + line);
+        
     }
 
     private void TrackChoiceHistory(string line)
     {
-        dialogueHistory.Add(line);
+        //dialogueHistory.Add(line);   
+    }
+
+    private void ClearDialogueHistory()
+    {
+        dialogueHistory.Clear();
     }
 
     [ContextMenu("DisplayHistory")]
@@ -500,6 +518,8 @@ public class MediationDialogue : MonoBehaviour
             // Set the text to the preformatted speaker + dialogue
             historyText.text = entry;
         }
+
+        ClearDialogueHistory();
     }
 
     [ContextMenu("Take Notes")]
@@ -559,7 +579,7 @@ public class MediationDialogue : MonoBehaviour
                     choice.onClick.AddListener(() =>
                     {
                         // Track the choice in dialogue history
-                        TrackDialogueHistory("[You said]: " + text);
+                        TrackDialogueHistory("Edrick: " + text);
 
                         // Continue with the selected choice
                         OnClickChoiceButton(choiceToSelect);

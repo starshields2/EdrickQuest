@@ -74,10 +74,11 @@ Okay, let's figure this out.
 We are not average people. Not <i>anymore</i>. Our decorum around villagers should reflect that. How can they look up to us as Fate-struck if we’re taking handouts from everyone we cross?
 	++[Are they handouts, or offerings of goodwill? #EdrickChoice]
 #Yael
+~ExtendedTutorial(4)
 What’s the difference? We shouldn’t be so eager to show that we are fragile. They may lose faith in us - <color=blue>it’s better to kindly refuse a gift than to show dependence on it.</color>
-	+++[Our gods have chosen us for a reason. Any god fearing person will also have faith in us. #EdrickChoice]
-	//~ChangeNotesIndex(2)
-	//~UpdateNote()
+	+++[Our gods have chosen us for a reason. Any god-fearing person will also have faith in us. #EdrickChoice]
+	~ChangeNotesIndex(2)
+	~UpdateNote()
 #YaelPensive
 Well, that’s certainly true. Though it does little to ease my nerves.
 	++++[It sounds like you’re concerned about giving away our apprehensions about this journey, is that right? #EdrickChoice] 
@@ -98,6 +99,8 @@ That’s right. I mean. Think about it. This kind of thing has never happened be
     #YaelPensive
     I had my entire life planned before this. I was <color=blue>hoping to be tethered to my beloved,</color> but that's a pipe dream now. I don't even know why I bothered falling in love if I was just going to be tied to an oaf.
     +++++++[I'm sorry, Yael. That must be tough to come to terms with. #EdrickChoice]
+    ~ChangeNotesIndex(3)
+    ~UpdateNote()
     #Yael
     Yes, but it feels good to get it out there.
     ++++++++[Continue #EdrickContinue]
@@ -109,6 +112,8 @@ That’s right. I mean. Think about it. This kind of thing has never happened be
 #Yael 
 It was a rash decision, I won’t lie. But I was only trying to help. We can’t invite any <color=blue>bad omens</color> on our journey with unwashed hands.
 ++[What motivated you to go so far as to lay hands on her? #EdrickChoice]
+~ChangeNotesIndex(5)
+~UpdateNote()
 #Yael
 Well, I told her to put the hotcakes down and clean her hands, and it was as if she had cotton stuck in her ears. So I just. Acted on it.
 	+++[Regardless of how put off you feel, Jasper is your colleague. It would be just as unfair of you to disrespect her space. #EdrickChoice]
@@ -134,6 +139,8 @@ Well, I shouldn’t have to witness her sacrilege at every other moment, either.
 #YaelPensive
 Knowing this, I suppose I was acting a bit rashly. The Moonwalkers will <color=red>never accept a gift with dirty hands.</color> But Jasper is no cleric.
 ++++[It's alright to be a bit frustrated. How about we bring this up? #EdrickChoice] ->COOLOFF
+~ChangeNotesIndex(5)
+~UpdateNote()
 
 //UNLOCKED ONLY BY TALKING TO JASPER ABOUT VOCAB FIRST.
 *{jasperVocab} [I think Jasper is a little frustrated by your vocabulary. #EdrickChoice, #NewInfo]
@@ -151,6 +158,8 @@ W-well, if she really cared about the status we hold, she would be more respectf
 #Yael
 To me! If I'm going to be stuck here with her, I at least deserve some respect. Not some clown who won't stop poking fun at me.
 ++++[Right. #EdrickContinue]
+~ChangeNotesIndex(6)
+~UpdateNote()
 #Edrick
 I think I have everything I need from Yael... Looks like she's mostly miffed about Jasper's antics.
 +++++[Continue #EdrickContinue]->COOLOFF
@@ -175,8 +184,8 @@ W-well, what do you mean by that? I'm using proper ettiqute, speaking clearly. J
 #Jasper
 Why’s Yael so concerned with how prim and proper we look, anyways? We’re trudging through dirt. 
 +[Can you share a bit more about this argument from your perspective, Jasper? #EdrickChoice]
-	//~ChangeNotesIndex(1)
-	//~UpdateNote()
+	~ChangeNotesIndex(1)
+	~UpdateNote()
 #Jasper: 
 There’s not much to share. I was offered food, I said “thank you,” and I tried to eat it, before Yael decided I should starve.
 ++{yaelRitual == true}[In Yael’s sect, hand washing is a ritual that cannot be forgone before eating. #EdrickChoice, #NewInfo]

@@ -41,13 +41,13 @@ Material:
     m_Floats:
     - _BUILTIN_QueueControl: -1
     - _BUILTIN_QueueOffset: 0
-    - _Noise_Amp: 0
-    - _Noise_Scale: 4.5
+    - _Noise_Amp: 2.77
+    - _Noise_Scale: 31
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Speed: 0.05
-    - _Wave_Amplitude: 0.04
-    - _Wave_Strength: 12.6
+    - _Wave_Amplitude: 0.518
+    - _Wave_Strength: 13.1
     m_Colors:
     - _Color: {r: 0, g: 1, b: 0.7038727, a: 0}
   m_BuildTextureStacks: []

@@ -13,12 +13,14 @@ public class TensionTutorial : MonoBehaviour
         Highlight,
         TensionBar,
         Tells,
+        Value,
         End
     }
     public bool _started;
     public bool _highlight;
     public bool _tensBar;
     public bool _tells;
+    public bool _values;
     public bool _finished;
 
     public TutorialType _tutorialType = TutorialType.Start;
@@ -32,7 +34,7 @@ public class TensionTutorial : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_medDialogue.tutorialNum == 4)
+        if (_medDialogue.tutorialNum == 5)
         {
             _tutorialType = TutorialType.End;
             foreach (GameObject tut in _Tutorials)
@@ -120,6 +122,26 @@ public class TensionTutorial : MonoBehaviour
            
         }
 
+        if (_medDialogue.tutorialNum == 4)
+        {
+            if (!_values)
+            {
+                _values = true;
+
+                _tutorialType = TutorialType.Value;
+                _Tutorials[4].SetActive(true);
+
+                // Disable all other _Tutorials game objects
+                for (int i = 1; i < _Tutorials.Length; i++)
+                {
+                    if (i != 4) // Skip index 0
+                    {
+                        _Tutorials[i].SetActive(false);
+                    }
+                }
+            }
+
+        }
     }
 
     public void DisplayTutorial()
