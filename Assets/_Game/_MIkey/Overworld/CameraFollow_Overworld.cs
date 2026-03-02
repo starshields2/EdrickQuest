@@ -2,20 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OverworldCameraFollow : MonoBehaviour
+public class CameraFollow_Overworld : MonoBehaviour
 {
     [SerializeField] private Transform _playerfollow;
-    private OverworldPlayerMovement _Player;
+    private PlayerMovement_Overworld _Player;
     private bool isFacingRight;
     [SerializeField] private float flipRotationTime;
     private Coroutine turnCo;
 
     void Awake()
     {
-        _Player = _playerfollow.gameObject.GetComponent<OverworldPlayerMovement>();
+        _Player = _playerfollow.gameObject.GetComponent<PlayerMovement_Overworld>();
         isFacingRight = _Player.isFacingRight;
     }
-    // Start is called before the first frame update
     void Start()
     {
         
@@ -24,7 +23,6 @@ public class OverworldCameraFollow : MonoBehaviour
     {
         turnCo = StartCoroutine(FlipYLerp());
     }
-    // Update is called once per frame
     void Update()
     {
         transform.position = _playerfollow.position;
