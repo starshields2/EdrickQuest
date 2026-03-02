@@ -10,7 +10,9 @@ using System.Collections;
 public class MediationDialogue : MonoBehaviour
 {
     public static event Action<Story> OnCreateStory;
+    public static bool IsDialogueActive { get; private set; }
 
+    [SerializeField] private bool startAutomatically = true; // Option to start the story immediately
 
     [Header("Popups")]
     [SerializeField] private GameObject[] _answer;
@@ -84,7 +86,17 @@ public class MediationDialogue : MonoBehaviour
         //  Debug.Log(story.currentTags.Length);
 
         RemoveChildren();
-        StartStory();
+
+        if (startAutomatically)
+        {
+            StartStory();
+        }
+        else
+        {
+            this.gameObject.SetActive(false);
+            if (backgroundCanvas != null)
+                backgroundCanvas.SetActive(false);
+        }
 
         _tensionSliderScript = _tensDisplay.GetComponent<TensionSlider>();
 
@@ -124,6 +136,7 @@ public class MediationDialogue : MonoBehaviour
     // Creates a new Story object with the compiled story which we can then play!
     public void StartStory()
     {
+        IsDialogueActive = true;
         story = new Story(inkJSONAsset.text);
 
         if (OnCreateStory != null) OnCreateStory(story);
@@ -179,10 +192,27 @@ public class MediationDialogue : MonoBehaviour
 
     void Update()
     {
-        _CurrentTension = (int)story.variablesState["tension"];
-        tutorialNum = (int)story.variablesState["ExternalTutorialNum"];
-        noteIndex = (int)story.variablesState["NotesIndex"];
-        _answerIndex = (int)story.variablesState["PopupNum"];
+        if(story == null) return;
+
+        if(story.variablesState["tension"] != null)
+        {
+            _CurrentTension = (int)story.variablesState["tension"];
+        }
+
+        if(story.variablesState["ExternalTutorialNum"] != null)
+        {
+            tutorialNum = (int)story.variablesState["ExternalTutorialNum"];
+        }
+
+        if(story.variablesState["NotesIndex"] != null)
+        {
+            noteIndex = (int)story.variablesState["NotesIndex"];
+        }
+
+        if(story.variablesState["PopupNum"] != null)
+        {
+            _answerIndex = (int)story.variablesState["PopupNum"];
+        }
 
         // Check if tension has changed
         if (_CurrentTension != _previousTension)
@@ -360,6 +390,7 @@ public class MediationDialogue : MonoBehaviour
 
     void Deactivate()
     {
+        IsDialogueActive = false;
         CheckNewTensionValue();
         Debug.Log("deactivating...");
         this.gameObject.SetActive(false);
@@ -648,6 +679,10 @@ public class MediationDialogue : MonoBehaviour
 
         // Call a function to display the first content
         //DisplayNextLine();
+    }
+    public void SetNewStory(TextAsset newJSON)
+    {
+        this.inkJSONAsset = newJSON;
     }
 
     [SerializeField]
