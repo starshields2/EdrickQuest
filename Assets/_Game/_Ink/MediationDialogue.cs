@@ -12,6 +12,16 @@ public class MediationDialogue : MonoBehaviour
     public static event Action<Story> OnCreateStory;
     public static bool IsDialogueActive { get; private set; }
 
+    public enum DialogueType
+    {
+        None,
+        Mediation,
+        Event,
+        Cutscene
+    }
+
+    public DialogueType _dType = DialogueType.Mediation;
+
     [SerializeField] private bool startAutomatically = true; // Option to start the story immediately
 
     [Header("Popups")]
@@ -22,8 +32,8 @@ public class MediationDialogue : MonoBehaviour
 
     [Header("Dialogue History")]
     public List<string> notesDescriptions; //
-    public List<string> notesTitles;
-    public Button notesPFButton;
+   // public List<string> notesTitles;
+    //public Button notesPFButton;
     public GameObject notesContainer;
     public GameObject notesTextPF;
     //public int noteIndex;
@@ -54,15 +64,17 @@ public class MediationDialogue : MonoBehaviour
     [Header("Tension")]
     public TensionCounter _tensMeter; // the tension management script.
     public Slider _tensionSlider; //public slider where this mediation's tension value will be displayed. 
-    public Material tensionMaterial;
+    //public Material tensionMaterial; // <- old material for tension slider
+    public OverworldManager _overworldManager; // <- overworld manager for tension and other global variables
 
     //for calculating tension 
     public int _CurrentTension;
+
     public bool _highTension;
     public bool _lowTension;
     public int _flaggedCoreNeed;
 
-    public float _valuesMult; 
+    public float _valuesMult;
     public float _commonsMult;
 
     public UIBinder _UIBinder;
@@ -71,7 +83,7 @@ public class MediationDialogue : MonoBehaviour
     [SerializeField]
     private Text narratorTextPrefab = null;
 
-    [SerializeField]private TooltipHandler _tooltipHandlerRef;
+    [SerializeField] private TooltipHandler _tooltipHandlerRef;
 
     public static event Action<int> OnTensionChanged; // Event for tension changes
 
@@ -81,8 +93,8 @@ public class MediationDialogue : MonoBehaviour
     {
         //_UIBinder = GameObject.Find("DataManager").GetComponent<UIBinder>();
         // _UIBinder.GetDialogueInfo();
-      
-       
+
+
         // _oldTensionValue = _tensMeter._tension;
         //  Debug.Log(story.currentTags.Length);
 
@@ -100,13 +112,40 @@ public class MediationDialogue : MonoBehaviour
         }
 
         _tensionSliderScript = _tensDisplay.GetComponent<TensionSlider>();
+        SetDialogueType(); //gets ink  variable of Type and sets enum.
+        story.variablesState["tension"] = _overworldManager._publicTension;
+    }
 
+    //get global tension and set this mediation to that value. 
+    private void SetCurrentTension()
+    {
 
     }
-    
 
+    private void SetDialogueType()
+    {
+        int _getInkTypeValue;
+        _getInkTypeValue = (int)story.variablesState["type"];
 
-        // Subscribe to the OnTensionChanged event
+        if(_getInkTypeValue == 0)
+        {
+            _dType = DialogueType.None;
+        }
+        if (_getInkTypeValue == 1)
+        {
+            _dType = DialogueType.Mediation;
+        }
+        if (_getInkTypeValue == 2)
+        {
+            _dType = DialogueType.Event;
+        }
+        if (_getInkTypeValue == 3)
+        {
+            _dType = DialogueType.Cutscene;
+        }
+    }
+
+    // Subscribe to the OnTensionChanged event
     void OnEnable()
     {
         OnTensionChanged += HandleTensionChanged;
@@ -407,6 +446,8 @@ public class MediationDialogue : MonoBehaviour
         backgroundCanvas.SetActive(false);
 
         story.UnbindExternalFunction("ShowObjection");
+        GetandSetTension();
+        CalculateEventResult();
     }
 
     // Creates a textbox showing the line of text
@@ -703,6 +744,36 @@ public class MediationDialogue : MonoBehaviour
     public void SetNewStory(TextAsset newJSON)
     {
         this.inkJSONAsset = newJSON;
+    }
+
+
+
+    //All this does is take the ink tension and set it to a public value that can be called elsewhere?
+    public void GetandSetTension()
+    {
+        _overworldManager._publicTension = _CurrentTension;
+    }
+
+    //If it's an event dialogue, calculate success! 
+    public void CalculateEventResult()
+    {
+        if(_dType == DialogueType.Event)
+        {
+            bool pass;
+            bool fail;
+            bool critpass;
+            bool critfail;
+
+            int _diceRoll = UnityEngine.Random.Range(0, 20);
+            Debug.Log(_diceRoll);
+            if(_diceRoll >= _overworldManager._difficultyCheck)
+            {
+                pass = true;
+            }
+
+
+            
+        }
     }
 
     [SerializeField]

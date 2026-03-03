@@ -1,17 +1,22 @@
-VAR violations = 0
-VAR commonalities = 0
-VAR medPoints = 70
 VAR experience = 0
 VAR hound = 0
 VAR prep = 0
 VAR overhear = 0
 VAR misconception = 0
                                  
-VAR avoidanceSP = 0
-VAR competSP = 0
-VAR acommoSP = 0
-VAR collabSP = 0
-VAR comproSP = 0
+//InkOnly
+VAR YaelTell = 0
+VAR jasperVocab = false
+VAR yaelRitual = false
+VAR YaelExhaust = 0
+VAR JasperExhaust = 0
+
+//External Variables
+VAR ExternalTutorialNum = 0
+VAR PopupNum = 0
+VAR tension = 6
+VAR NotesIndex = 0
+
 
 //Exposure
 #Yael
@@ -79,31 +84,25 @@ If we spend time and resources on this mutt, we'll never make it. We should just
 ->DONE  
 
 =COMP
- {violations < 3: I don't see why this needed to be a conversation. #Jasper}
-{violations >= 3: Well, as long as it's over with quickly. #Jasper}
+ {tension < 3: I don't see why this needed to be a conversation. #Jasper}
+{tension >= 3: Well, as long as it's over with quickly. #Jasper}
 +[Continue]
 #Yael
- {commonalities < 3: You were going to destroy it anyway. #Yael}
-{commonalities >= 3:Let's just talk this out. #Yael}
+ {tension < 3: You were going to destroy it anyway. #Yael}
+{tension >= 3:Let's just talk this out. #Yael}
  ++{misconception > 0} [Jasper does respect these animals. She is concerned for our own safety in this moment.] 
-
-(You have {medPoints} points).
 ->DONE
 ++[I'm making an executive decision. We leave the animal.]
 
 #Jasper
 When we die in this maze, it will not be my fault. You'll have the Moonwalker to thank for that.
-(You have {medPoints} points).
 ->DONE
 ++[You two figure it out on your own, this is stupid.]
 #Yael
 I will pray wherever I please. Do see to it that you don't interrupt me again, Jasper.
 
 ->DONE
-
 ->END
-
-
 
 ==function enablePrep(amount)
 ~prep = prep + amount

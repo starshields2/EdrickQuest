@@ -322,6 +322,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1920053202}
     - target: {fileID: 1733406836, guid: c07674579fe76a34b9045a3236077479, type: 3}
+      propertyPath: inkJSONAsset
+      value: 
+      objectReference: {fileID: 4900000, guid: 18a85ef48b244924685132f38b411965, type: 3}
+    - target: {fileID: 1733406836, guid: c07674579fe76a34b9045a3236077479, type: 3}
       propertyPath: _dHistoryParent
       value: 
       objectReference: {fileID: 2008467260}
@@ -647,18 +651,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c07674579fe76a34b9045a3236077479, type: 3}
---- !u!1 &54036229 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5152993643998603227, guid: c07674579fe76a34b9045a3236077479,
-    type: 3}
-  m_PrefabInstance: {fileID: 54036228}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &54036230 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5505233200703063242, guid: c07674579fe76a34b9045a3236077479,
-    type: 3}
-  m_PrefabInstance: {fileID: 54036228}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &65103474
 PrefabInstance:
   m_ObjectHideFlags: 0
