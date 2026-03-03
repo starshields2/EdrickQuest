@@ -8628,13 +8628,6 @@ MonoBehaviour:
   - 'Yael does not believe in taking gifts without anything to give in return.  '
   - 'Yael does not believe in taking gifts without anything to give in return.  '
   - 'Jasper believes that gifts should be accepted regardless.  '
-  notesTitles:
-  - Gifts
-  - Respect
-  - Friendship
-  - Mission at Hand
-  notesPFButton: {fileID: 5913350629440831428, guid: 21acf2f249b7c214594bdd8d8d02a046,
-    type: 3}
   notesContainer: {fileID: 1081955648}
   notesTextPF: {fileID: 8260441347216254583, guid: 9688bd7d24000204a8da8f3f72d2bbfe,
     type: 3}
