@@ -1,14 +1,14 @@
 //InkOnly
 VAR YaelTell = 0
-VAR jasperVocab = false
-VAR yaelRitual = false
+VAR jaspersWay = false
+VAR yaelsWay = false
 VAR YaelExhaust = 0
 VAR JasperExhaust = 0
 
 //External Variables
 VAR ExternalTutorialNum = 0
 VAR PopupNum = 0
-VAR tension = 6
+VAR tension = 14
 VAR NotesIndex = 0
 VAR success = false
 VAR failure = true
@@ -32,23 +32,28 @@ You see the gleaning whetstone, yes? Dead gods can't help us, steel can.
 
 =MEDIATIONSTART
 #Edrick
-{~What should I do?|How do I make them see eye to eye? | Another squabble.}
-+[We should keep the stone. #EdrickChoice] ->YAEL
-+[We should use the whetstone. #EdrickChoice] ->JASPER
+What should we do?
++[We should keep the stone. #EdrickChoice]
+~SetYaelsWay()
+->YAEL
++[We should use the whetstone. #EdrickChoice]
+~SetJaspersWay()
+->YAEL
 +[You two decide. #EdrickChoice] ->COMP
 ->DONE
 
 =YAEL
 #Yael
-{tension > 13: High Ten Dialogue }
-{tension <= 12: Low Ten Dialogue }
-+[Okay. #EdrickChoice] ->COMP
-->DONE
+{yaelsWay: 
+{tension > 13: You've made no mistake in listening to my wisdom!}
+{tension <= 12: Let's see if this will work. }
+}
 
-=JASPER
-#Jasper
-{tension > 13: High Ten Dialogue }
-{tension <= 12: Low Ten Dialogue }
+{jaspersWay: 
+{tension > 13: Good thing you went with my idea, Calibrator! }
+{tension <= 12: I hope it'll work, thanks for believing in me! }
+}
+
 +[Okay. #EdrickChoice] ->COMP
 ->DONE
 
@@ -74,11 +79,11 @@ You see the gleaning whetstone, yes? Dead gods can't help us, steel can.
 ==function DecreaseTension(amount)
 ~tension = tension - amount
 
-==function SetJasperVocabTrue
-~jasperVocab = true
+==function SetJaspersWay
+~jaspersWay = true
 
-==function SetYaelRitualTrue
-~yaelRitual = true
+==function SetYaelsWay
+~yaelsWay = true
 
 ==function ChangeNotesIndex(amount)
 ~NotesIndex = amount
