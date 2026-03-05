@@ -11,9 +11,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/_Game/_IMPORTANT/Scenes/TESTBATTLE.unity
     guid: 66b82a56ef3ff9447a65c3890fe4f984
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Game/_IMPORTANT/Scenes/Levels/OpeningSceneTest.unity
     guid: 5d19f72e2c039cb49be0597cf9ba678d
+  - enabled: 1
+    path: Assets/_Game/_IMPORTANT/Scenes/Levels/AJ_OverworldTest.unity
+    guid: d37a334055195e04f8a9ecd6a2f936b8
   - enabled: 1
     path: Assets/_Game/_IMPORTANT/Scenes/Levels/CAMP.unity
     guid: 1f16d0229d9b4e7419715a10820f377d

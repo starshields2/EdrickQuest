@@ -9,7 +9,7 @@ VAR YaelExhaust = 0
 VAR JasperExhaust = 0
 VAR ExternalTutorialNum = 0
 VAR PopupNum = 0
-VAR tyoe = 1
+VAR type = 1
 
 #Yael
 Edrick! Edrick! We have to stop. There's hotcake crumbs all over my skirt and it's all this hooligan's fault! 
@@ -399,3 +399,4 @@ The next time we see a prayer stone, I'm going to pray the Tether is cut so I ca
 
 EXTERNAL UpdateNote()
 EXTERNAL ShowObjection()
+EXTERNAL CalculateEventResults()

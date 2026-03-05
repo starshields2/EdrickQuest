@@ -58,6 +58,7 @@ public class MediationDialogue : MonoBehaviour
     public string[] currentInktags; //current tags to track
     public GameObject[] speakerID;
     private Color newNormalColor = Color.red;
+    public bool pass;
 
     //public SkillMenu skillMenu; (depreciated game object ref for skills)
 
@@ -112,7 +113,7 @@ public class MediationDialogue : MonoBehaviour
         }
 
         _tensionSliderScript = _tensDisplay.GetComponent<TensionSlider>();
-        SetDialogueType(); //gets ink  variable of Type and sets enum.
+        
         story.variablesState["tension"] = _overworldManager._publicTension;
     }
 
@@ -164,7 +165,7 @@ public class MediationDialogue : MonoBehaviour
 
     void Awake()
     {
-        
+        SetDialogueType(); //gets ink  variable of Type and sets enum.
     }
 
     public void BindSliders(Slider tension, Slider tp, Companion[] comps = null)
@@ -190,6 +191,13 @@ public class MediationDialogue : MonoBehaviour
             Debug.Log("OBJECTION!");
             PopupPortrait();
         });
+
+       
+            story.BindExternalFunction("CalculateEventResults", () => {
+                Debug.Log("CALCULATE EVENT RESULT!");
+                CalculateEventResult();
+            });
+        
 
 
         RefreshView();
@@ -757,23 +765,24 @@ public class MediationDialogue : MonoBehaviour
     //If it's an event dialogue, calculate success! 
     public void CalculateEventResult()
     {
-        if(_dType == DialogueType.Event)
-        {
-            bool pass;
+
+            //bool pass;
             bool fail;
             bool critpass;
             bool critfail;
-
             int _diceRoll = UnityEngine.Random.Range(0, 20);
+
             Debug.Log(_diceRoll);
             if(_diceRoll >= _overworldManager._difficultyCheck)
             {
                 pass = true;
+                Debug.Log("passed difficulty check.");
             }
-
-
-            
-        }
+            else
+            {
+                Debug.Log("failed difficulty check.");
+            }
+            story.variablesState["success"] = pass;
     }
 
     [SerializeField]

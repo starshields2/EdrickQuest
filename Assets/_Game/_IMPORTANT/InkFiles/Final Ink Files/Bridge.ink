@@ -11,35 +11,35 @@ VAR PopupNum = 0
 VAR tension = 14
 VAR NotesIndex = 0
 VAR success = false
-VAR failure = true
+//VAR failure = false
 VAR passive = false
 VAR type = 2
 // ^^^ 0 = None, 1 = Mediation, 2 = Event, 3 = Cutscene
 
 #Yael
-Look, in the bushes. A shrine. I should send a prayer to Elunia immediately.
+The path forward has been destroyed. Look. The bridge is broken.
 +[Continue. #EdrickContinue]
 ~IncreaseTension(1)
 #Jasper
-A solar whetstone! Once I remove it from this rock, my tools will be sharp for weeks.
+We can chop a tree down over the ravine and walk across.
 ++[Continue. #EdrickContinue]
-#Yael
-You can't possibly want to use this for sharpening tools. This is a sacred place.
+#YaelAngry
+That's too risky! I'll use one of my scrolls. We can easily use magic to levitate over the gap.
 +++[Contine #EdrickContinue]
 #Jasper
-You see the gleaning whetstone, yes? Dead gods can't help us, steel can. 
+And waste precious scrolls? Don't be stupid. I'm knocking a tree down. 
 ++++[Let me sort this out. #EdrickContinue]  ->MEDIATIONSTART
 
 =MEDIATIONSTART
 #Edrick
 What should we do?
-+[We should keep the whetstone. #EdrickChoice]
++[We should use magic. #EdrickChoice]
 ~SetYaelsWay()
 ->YAEL
-+[We should use the whetstone. #EdrickChoice]
++[We should use the tree. #EdrickChoice]
 ~SetJaspersWay()
-->YAEL
-+[You two decide. #EdrickChoice] ->COMP
+->JASPER
++[You two decide. #EdrickChoice] ->EDRICK
 ->DONE
 
 =YAEL
@@ -48,30 +48,46 @@ What should we do?
 {tension > 13: You've made no mistake in listening to my wisdom!}
 {tension <= 12: Let's see if this will work. }
 }
++[Let's do this. #EdrickContinue]
+~CalculateEventResults()
+->YAELCOMP
+->DONE
 
+=JASPER
 {jaspersWay: 
 {tension > 13: Good thing you went with my idea, Calibrator! }
 {tension <= 12: I hope it'll work, thanks for believing in me! }
 }
 
-+[Okay, let's try this. #EdrickChoice] ->COMP
++[Okay, let's try this. #EdrickContinue]
+~CalculateEventResults()
+->JASPERCOMP
 ->DONE
 
 ->END
-
-=COMP
-{success:  .}
-{passive: You did nothing.}
-{failure: You failed}
-
+=EDRICK
 ->DONE
 
-==function YaelTellFalse(amount)
-~YaelTell = 1
-~return YaelTell
+=JASPERCOMP
+{passive: You did nothing.}
+{ success:
+Jasper succeeded.
+- else:
+Jasper Failed.
+}
+->DONE
+=YAELCOMP
 
-==function YaelTellTrue(amount)
-~YaelTell = 2
+{passive: You did nothing.}
+
+
+{ success:
+Yael succeeded.
+- else:
+Yael Failed.
+}
+->DONE
+
 
 ==function IncreaseTension(amount)
 ~tension = tension + amount
