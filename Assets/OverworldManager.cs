@@ -7,6 +7,7 @@ public class OverworldManager : MonoBehaviour
 {
     public int _publicTension;
     public int _difficultyCheck = 10;
+    public int _modifier = 1;
     public Slider _overworldTension;
 
     // Start is called before the first frame update
@@ -19,6 +20,7 @@ public class OverworldManager : MonoBehaviour
     void Update()
     {
         _overworldTension.value = _publicTension;
-        _difficultyCheck = 5 + (_publicTension % 2); 
+
+        _difficultyCheck = (_publicTension / 2) + _modifier; 
     }
 }

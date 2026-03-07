@@ -766,7 +766,16 @@ public class MediationDialogue : MonoBehaviour
     //If it's an event dialogue, calculate success! 
     public void CalculateEventResult()
     {
+        int GetDialogueType;
+        GetDialogueType = (int)story.variablesState["type"];
 
+        if(GetDialogueType == 1)
+        {
+            //Display the Event Summary for Mediation
+        }
+
+        if(GetDialogueType == 2)
+        {
             //bool pass;
             bool fail;
             bool critpass;
@@ -785,6 +794,8 @@ public class MediationDialogue : MonoBehaviour
             }
             story.variablesState["success"] = pass;
         GameObject EventSummary = Instantiate(EventResolutionPanel, this.gameObject.transform);
+        }
+           
     }
 
     [SerializeField]
