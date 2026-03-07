@@ -100,7 +100,7 @@ public class SceneLoader_Overworld : MonoBehaviour
         }
     }
 
-    IEnumerator Fade(float targetAlpha)
+    private IEnumerator Fade(float targetAlpha)
     {
         float elapsedTime = 0f;
         float fadeTime = 0.1f;

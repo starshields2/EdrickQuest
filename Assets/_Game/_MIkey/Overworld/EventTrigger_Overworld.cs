@@ -1,5 +1,7 @@
 using System;
 using UnityEngine;
+using System.Collections;
+using Unity.VisualScripting;
 
 public class EventTrigger_Overworld : MonoBehaviour
 {
@@ -14,24 +16,34 @@ public class EventTrigger_Overworld : MonoBehaviour
     public bool IsRequired { get => _isRequired; set => _isRequired = value; }
     private bool _hasTriggered = false;
     private bool _isPlayerInRange = false;
-    
+    private SpriteRenderer _sr;
+    private SpriteRenderer _srChild;
     public Action<bool> OnEventSuccess;
+
+    void Awake()
+    {
+        _sr = GetComponent<SpriteRenderer>();
+        _srChild = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        StartCoroutine(Fade(0f));
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (_hasTriggered && _triggerOnlyOnce) return;
 
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !_isPlayerInRange)
         {
             _isPlayerInRange = true;
+            StartCoroutine(Fade(1f));
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && _isPlayerInRange)
         {
             _isPlayerInRange = false;
+            StartCoroutine(Fade(0f));
         }
     }
 
@@ -81,5 +93,24 @@ public class EventTrigger_Overworld : MonoBehaviour
         _dialogueManager.StartStory();
         
         Debug.Log($"Started Mediation: {_storyToLoad.name}");
+    }
+
+    private IEnumerator Fade(float targetAlpha)
+    {
+        float elapsedTime = 0f;
+        float fadeTime = 0.1f;
+        Color startColor = _srChild.color;
+        Color targetColor = new Color(startColor.r, startColor.g, startColor.b, targetAlpha);
+
+        while (elapsedTime < fadeTime)
+        {
+            //_sr.color = Color.Lerp(startColor, targetColor, elapsedTime / fadeTime);
+            _srChild.color = Color.Lerp(startColor, targetColor, elapsedTime / fadeTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        //_sr.color = targetColor;
+        _srChild.color = targetColor;
     }
 }
