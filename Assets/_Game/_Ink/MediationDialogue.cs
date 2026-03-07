@@ -91,6 +91,9 @@ public class MediationDialogue : MonoBehaviour
 
     private int _previousTension; // To track the previous tension value
 
+    // If a trigger started this story, we store it so we can report results back to it
+    private EventTrigger_Overworld _initiatingTrigger = null;
+
     void Start()
     {
         //_UIBinder = GameObject.Find("DataManager").GetComponent<UIBinder>();
@@ -126,8 +129,13 @@ public class MediationDialogue : MonoBehaviour
 
     private void SetDialogueType()
     {
-        int _getInkTypeValue;
-        _getInkTypeValue = (int)story.variablesState["type"];
+        if (story == null)
+        {
+            // Story is not initialized yet, so dialogue type can't be set
+            return;
+        }
+
+        int _getInkTypeValue = (int)story.variablesState["type"];
 
         if(_getInkTypeValue == 0)
         {
@@ -750,9 +758,11 @@ public class MediationDialogue : MonoBehaviour
         // Call a function to display the first content
         //DisplayNextLine();
     }
-    public void SetNewStory(TextAsset newJSON)
+    // Accept an optional initiating trigger so we can notify it of event results
+    public void SetNewStory(TextAsset newJSON, EventTrigger_Overworld initiator = null)
     {
         this.inkJSONAsset = newJSON;
+        _initiatingTrigger = initiator;
     }
 
 
@@ -784,7 +794,14 @@ public class MediationDialogue : MonoBehaviour
                 Debug.Log("failed difficulty check.");
             }
             story.variablesState["success"] = pass;
-        GameObject EventSummary = Instantiate(EventResolutionPanel, this.gameObject.transform);
+            GameObject EventSummary = Instantiate(EventResolutionPanel, this.gameObject.transform);
+
+            // Notify the initiating trigger (if any) whether the event succeeded
+            if (_initiatingTrigger != null)
+            {
+                _initiatingTrigger.OnEventSuccess?.Invoke(pass);
+                _initiatingTrigger = null;
+            }
     }
 
     [SerializeField]
