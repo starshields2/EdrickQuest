@@ -29,6 +29,7 @@ public class MediationDialogue : MonoBehaviour
     [SerializeField] private int _answerIndex;
     public int tutorialNum;
     [SerializeField] private GameObject NotesUpdateIndicator;
+    [SerializeField] private GameObject EventResolutionPanel;
 
     [Header("Dialogue History")]
     public List<string> notesDescriptions; //
@@ -59,7 +60,7 @@ public class MediationDialogue : MonoBehaviour
     public GameObject[] speakerID;
     private Color newNormalColor = Color.red;
     public bool pass;
-
+    public int _diceRoll;
     //public SkillMenu skillMenu; (depreciated game object ref for skills)
 
     [Header("Tension")]
@@ -73,10 +74,10 @@ public class MediationDialogue : MonoBehaviour
 
     public bool _highTension;
     public bool _lowTension;
-    public int _flaggedCoreNeed;
+    //public int _flaggedCoreNeed;
 
-    public float _valuesMult;
-    public float _commonsMult;
+    //public float _valuesMult;
+    //public float _commonsMult;
 
     public UIBinder _UIBinder;
 
@@ -770,7 +771,7 @@ public class MediationDialogue : MonoBehaviour
             bool fail;
             bool critpass;
             bool critfail;
-            int _diceRoll = UnityEngine.Random.Range(0, 20);
+             _diceRoll = UnityEngine.Random.Range(1, 20);
 
             Debug.Log(_diceRoll);
             if(_diceRoll >= _overworldManager._difficultyCheck)
@@ -783,6 +784,7 @@ public class MediationDialogue : MonoBehaviour
                 Debug.Log("failed difficulty check.");
             }
             story.variablesState["success"] = pass;
+        GameObject EventSummary = Instantiate(EventResolutionPanel, this.gameObject.transform);
     }
 
     [SerializeField]
