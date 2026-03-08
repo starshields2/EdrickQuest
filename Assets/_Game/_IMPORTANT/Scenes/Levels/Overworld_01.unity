@@ -3774,7 +3774,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _storyToLoad
       value: 
-      objectReference: {fileID: 4900000, guid: cca15f48ae309b442bab7ecf4234f723, type: 3}
+      objectReference: {fileID: 4900000, guid: 0e257bb8aabbdb0469df879d878fabde, type: 3}
     - target: {fileID: 4276995483235014309, guid: 4dcece56889d30b42b99163c02487530,
         type: 3}
       propertyPath: _dialogueManager
@@ -4505,6 +4505,11 @@ PrefabInstance:
       propertyPath: sceneName
       value: Overworld_02
       objectReference: {fileID: 0}
+    - target: {fileID: 2588959186965847306, guid: c51ea2702ba8a7f4ba4eb43b08ff10b8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c51ea2702ba8a7f4ba4eb43b08ff10b8, type: 3}
 --- !u!23 &2601706400025355600
@@ -4665,7 +4670,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 3c277573959bc1c40b2056d6faa76a32, type: 2}
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 4276995483235014306, guid: 4dcece56889d30b42b99163c02487530,
         type: 3}
       propertyPath: m_RootOrder
