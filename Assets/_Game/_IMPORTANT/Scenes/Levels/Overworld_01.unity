@@ -4733,9 +4733,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4276995483235014309, guid: 4dcece56889d30b42b99163c02487530,
         type: 3}
+      propertyPath: _storyToLoad
+      value: 
+      objectReference: {fileID: 4900000, guid: 18a85ef48b244924685132f38b411965, type: 3}
+    - target: {fileID: 4276995483235014309, guid: 4dcece56889d30b42b99163c02487530,
+        type: 3}
       propertyPath: _dialogueManager
       value: 
       objectReference: {fileID: 545876100}
+    - target: {fileID: 4276995483235014309, guid: 4dcece56889d30b42b99163c02487530,
+        type: 3}
+      propertyPath: _triggerOnlyOnce
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4276995483235014309, guid: 4dcece56889d30b42b99163c02487530,
+        type: 3}
+      propertyPath: _clickAnywhereWhenInRange
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4dcece56889d30b42b99163c02487530, type: 3}
 --- !u!33 &4422752116626024996

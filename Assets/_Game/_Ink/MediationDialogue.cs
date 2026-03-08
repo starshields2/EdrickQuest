@@ -94,6 +94,8 @@ public class MediationDialogue : MonoBehaviour
     // If a trigger started this story, we store it so we can report results back to it
     private EventTrigger_Overworld _initiatingTrigger = null;
 
+    private bool _isPlaying = false;
+
     void Start()
     {
         //_UIBinder = GameObject.Find("DataManager").GetComponent<UIBinder>();
@@ -464,7 +466,7 @@ public class MediationDialogue : MonoBehaviour
 
         story.UnbindExternalFunction("ShowObjection");
         GetandSetTension();
-        CalculateEventResult();
+        //CalculateEventResult();
     }
 
     // Creates a textbox showing the line of text
@@ -811,10 +813,10 @@ public class MediationDialogue : MonoBehaviour
                 _initiatingTrigger.OnEventSuccess?.Invoke(pass);
                 _initiatingTrigger = null;
             }
+        }
     }
 
-    [SerializeField]
-    private TextAsset inkJSONAsset = null;
+    [SerializeField] private TextAsset inkJSONAsset = null;
     public Story story;
 
     [SerializeField]

@@ -51,7 +51,7 @@ public class EventTrigger_Overworld : MonoBehaviour
     {
         if (_isPlayerInRange && Input.GetMouseButtonDown(0)) // Detect left mouse click
         {
-            if (_clickAnywhereWhenInRange || IsClickOnTrigger())
+            if ((_clickAnywhereWhenInRange && !_dialogueManager.isActiveAndEnabled) || (IsClickOnTrigger() && !_dialogueManager.isActiveAndEnabled))
             {
                 ExecuteMediation();
             }
