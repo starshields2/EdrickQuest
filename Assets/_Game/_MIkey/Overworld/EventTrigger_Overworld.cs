@@ -1,43 +1,116 @@
+using System;
 using UnityEngine;
+using System.Collections;
+using Unity.VisualScripting;
 
 public class EventTrigger_Overworld : MonoBehaviour
 {
     [Header("Ink Configuration")]
-    [SerializeField] private MediationDialogue dialogueManager;
-    [SerializeField] private TextAsset storyToLoad; // The specific Ink file for this trigger
+    [SerializeField] private MediationDialogue _dialogueManager;
+    [SerializeField] private TextAsset _storyToLoad; // Ink file
 
     [Header("Settings")]
-    public bool triggerOnlyOnce = true;
-    private bool hasTriggered = false;
+    [SerializeField] private bool _triggerOnlyOnce = true;
+    [SerializeField] private bool _clickAnywhereWhenInRange = false; // Allow clicking anywhere when player is in range
+    [SerializeField] private bool _isRequired;
+    public bool IsRequired { get => _isRequired; set => _isRequired = value; }
+    private bool _hasTriggered = false;
+    private bool _isPlayerInRange = false;
+    private SpriteRenderer _sr;
+    private SpriteRenderer _srChild;
+    public Action<bool> OnEventSuccess;
+
+    void Awake()
+    {
+        _sr = GetComponent<SpriteRenderer>();
+        _srChild = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        StartCoroutine(Fade(0f));
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (hasTriggered && triggerOnlyOnce) return;
+        if (_hasTriggered && _triggerOnlyOnce) return;
 
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !_isPlayerInRange)
         {
-            ExecuteMediation();
+            _isPlayerInRange = true;
+            StartCoroutine(Fade(1f));
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player") && _isPlayerInRange)
+        {
+            _isPlayerInRange = false;
+            StartCoroutine(Fade(0f));
+        }
+    }
+
+    void Update()
+    {
+        if (_isPlayerInRange && Input.GetMouseButtonDown(0)) // Detect left mouse click
+        {
+            if (_clickAnywhereWhenInRange || IsClickOnTrigger())
+            {
+                ExecuteMediation();
+            }
+        }
+    }
+
+    private bool IsClickOnTrigger()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        Ray ray = Camera.main.ScreenPointToRay(mousePos);
+        RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
+
+        if (hit.collider != null && hit.collider.gameObject == gameObject)
+        {
+            return true; // The click hit this GameObject's collider
+        }
+
+        return false;
     }
 
     private void ExecuteMediation()
     {
-        if (dialogueManager == null || storyToLoad == null)
+        if (_dialogueManager == null || _storyToLoad == null)
         {
-            Debug.LogWarning("Trigger missing Dialogue Manager or Ink File!");
+            Debug.LogWarning("Trigger missing Dialogue Manager or Ink File");
             return;
         }
 
-        hasTriggered = true;
+        _hasTriggered = true;
 
-        dialogueManager.SetNewStory(storyToLoad);
+        _dialogueManager.gameObject.SetActive(true);
 
-        dialogueManager.gameObject.SetActive(true);
-        if(dialogueManager.backgroundCanvas != null)
-            dialogueManager.backgroundCanvas.SetActive(true);
+        // Tell the dialogue manager this trigger initiated the story
+        _dialogueManager.SetNewStory(_storyToLoad, this);
 
-        dialogueManager.StartStory();
+        if(_dialogueManager.backgroundCanvas != null)
+            _dialogueManager.backgroundCanvas.SetActive(true);
+
+        _dialogueManager.StartStory();
         
-        Debug.Log($"Started Mediation: {storyToLoad.name}");
+        Debug.Log($"Started Mediation: {_storyToLoad.name}");
+    }
+
+    private IEnumerator Fade(float targetAlpha)
+    {
+        float elapsedTime = 0f;
+        float fadeTime = 0.1f;
+        Color startColor = _srChild.color;
+        Color targetColor = new Color(startColor.r, startColor.g, startColor.b, targetAlpha);
+
+        while (elapsedTime < fadeTime)
+        {
+            //_sr.color = Color.Lerp(startColor, targetColor, elapsedTime / fadeTime);
+            _srChild.color = Color.Lerp(startColor, targetColor, elapsedTime / fadeTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        //_sr.color = targetColor;
+        _srChild.color = targetColor;
     }
 }
