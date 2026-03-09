@@ -1206,7 +1206,7 @@ PrefabInstance:
     - target: {fileID: 1098976387925157828, guid: 24c29f52216850344ae7bc279ead3a0d,
         type: 3}
       propertyPath: sceneName
-      value: OpeningSceneTest
+      value: '[Test] - Room 1'
       objectReference: {fileID: 0}
     - target: {fileID: 1098976387925157829, guid: 24c29f52216850344ae7bc279ead3a0d,
         type: 3}
@@ -1271,7 +1271,7 @@ PrefabInstance:
     - target: {fileID: 1098976387925157831, guid: 24c29f52216850344ae7bc279ead3a0d,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24c29f52216850344ae7bc279ead3a0d, type: 3}

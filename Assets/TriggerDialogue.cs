@@ -23,7 +23,7 @@ public class TriggerDialogue : MonoBehaviour
         if(other.tag == "Player")
         {
             tutPop.tutNumb = ID;
-            tutPop.DisplayTutText();
+            tutPop.StartDisplayTutorial();
         }
     }
 }

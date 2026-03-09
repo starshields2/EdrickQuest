@@ -16,19 +16,20 @@ VAR passive = false
 VAR type = 2
 // ^^^ 0 = None, 1 = Mediation, 2 = Event, 3 = Cutscene
 
-#YaelPensive
+
 Ah, stop, stop. This creature is in pain.
-+[Continue. #EdrickContinue]
++[Alright, we're stopping. #EdrickContinue]
 
 #Jasper
 So unfortunate... I'll put it out of its misery. Turn around, Yael, don't look.
 ++[Continue. #EdrickContinue]
 #YaelAngry
-No! I can heal it. I regard all life with dignity, and I can prolong this one!
+No! I can heal it. I regard <b>all</b> life with dignity, and I can prolong this one!
 +++[Contine #EdrickContinue]
 #Jasper
 And waste precious time? Don't be silly.
-++++[Let me sort this out. #EdrickContinue]  ->MEDIATIONSTART
+++++[We have to make a decision. #EdrickContinue]
+->MEDIATIONSTART
 
 =MEDIATIONSTART
 #Edrick
@@ -48,6 +49,7 @@ What should we do?
 {tension > 13: You've made no mistake in listening to my wisdom! #Yael}
 {tension <= 12: Let's see if this will work. #Yael}
 }
+#Yael
 +[Let's do this. #EdrickContinue]
 ~CalculateEventResults()
 ->YAELCOMP
@@ -67,6 +69,8 @@ What should we do?
 
 ->END
 =EDRICK
+#Edrick
+{success: This is written if yourVariable is true|Otherwise this is written}
 ->DONE
 
 =JASPERCOMP
@@ -77,8 +81,8 @@ I've killed it, don't worry. It won't be in pain anymore. #Jasper
 I couldn't do it. #Jasper
 }
 ->DONE
-=YAELCOMP
 
+=YAELCOMP
 {passive: You did nothing.}
 
 
@@ -88,7 +92,9 @@ I'll sit here with it and rock it to its final resting place.
 - else:
 I wasn't able to heal it. It's passed on.
 }
+#YaelPensive
 ->DONE
+
 
 
 ==function IncreaseTension(amount)
