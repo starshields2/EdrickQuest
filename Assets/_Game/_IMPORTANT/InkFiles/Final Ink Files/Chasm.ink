@@ -16,20 +16,18 @@ VAR passive = false
 VAR type = 2
 // ^^^ 0 = None, 1 = Mediation, 2 = Event, 3 = Cutscene
 
-#Yael
-The path forward has been destroyed. Look. The bridge is broken.
+#Jasper
+Well, well, well, look where we are now.
 +[Continue. #EdrickContinue]
 ~IncreaseTension(1)
-#Jasper
-We can chop a tree down over the ravine and walk across.
-++[Continue. #EdrickContinue]
 #YaelAngry
-That's too risky! I'll use one of my scrolls. We can easily use magic to levitate over the gap.
-+++[Contine #EdrickContinue]
+And whose fault is that?
+++[Continue. #EdrickContinue]
 #Jasper
-And waste precious scrolls? Don't be stupid. I'm knocking a tree down. 
-++++[Let me sort this out. #EdrickContinue]  ->MEDIATIONSTART
-
+...Why don't we just move on?
++++[Contine #EdrickContinue]
+~SetSuccessTrue()
+->DONE
 =MEDIATIONSTART
 #Edrick
 What should we do?
@@ -74,9 +72,9 @@ What should we do?
 =JASPERCOMP
 {passive: You did nothing.}
 { success:
-This bag had fifty gold coins in it. We could use that to pay for our next meal.
+I've cut the tree down. We can progress from here with no issue.
 - else:
-Well, it's empty, anyway, so I guess we just wasted our time. 
+Blast! I've just made the chasm bigger. 
 }
 ->DONE
 =YAELCOMP
@@ -85,9 +83,9 @@ Well, it's empty, anyway, so I guess we just wasted our time.
 
 
 { success:
-See, I found a notepad in here with the owner's name. We can see if we can return it.
+See? Now we can step across, with no issue.
 - else:
-No use wasting time on this. We should keep moving.
+Ah, I see the problem. We're still not able to cross...
 }
 ->DONE
 
@@ -103,6 +101,9 @@ No use wasting time on this. We should keep moving.
 
 ==function SetYaelsWay
 ~yaelsWay = true
+
+==function SetSuccessTrue()
+~success = true
 
 ==function ChangeNotesIndex(amount)
 ~NotesIndex = amount

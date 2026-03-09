@@ -356,23 +356,48 @@ public class MediationDialogue : MonoBehaviour
         choicesLayoutGroup.padding.top = -183;
         choicesLayoutGroup.padding.bottom = 0;
         choicesLayoutGroup.spacing = 125;
-
         //Create container for Edrick's continuing speech.
+
         GameObject _SPchoicesContainer = new GameObject("SpecialChoicesContainer");
         _SPchoicesContainer.transform.SetParent(canvas.transform, false);
 
-        VerticalLayoutGroup _SPchoicesLayoutGroup = _SPchoicesContainer.AddComponent<VerticalLayoutGroup>();
-        _SPchoicesLayoutGroup.childControlHeight = false;
-        _SPchoicesLayoutGroup.childForceExpandWidth = false;
-        _SPchoicesLayoutGroup.childForceExpandHeight = false;
-        _SPchoicesLayoutGroup.childControlWidth = false;
-        _SPchoicesLayoutGroup.childControlHeight = true;
-        _SPchoicesLayoutGroup.childAlignment = TextAnchor.LowerLeft;
-        _SPchoicesLayoutGroup.padding.left = -112;
-        _SPchoicesLayoutGroup.padding.right = 0;
-        _SPchoicesLayoutGroup.padding.top = 420;
-        _SPchoicesLayoutGroup.padding.bottom = 0;
-        _SPchoicesLayoutGroup.spacing = 125;
+
+        if (_dType == DialogueType.Cutscene)
+        {
+
+            VerticalLayoutGroup _SPchoicesLayoutGroup = _SPchoicesContainer.AddComponent<VerticalLayoutGroup>();
+            _SPchoicesLayoutGroup.childControlHeight = false;
+            _SPchoicesLayoutGroup.childForceExpandWidth = false;
+            _SPchoicesLayoutGroup.childForceExpandHeight = false;
+            _SPchoicesLayoutGroup.childControlWidth = false;
+            _SPchoicesLayoutGroup.childControlHeight = true;
+            _SPchoicesLayoutGroup.childAlignment = TextAnchor.LowerLeft;
+            _SPchoicesLayoutGroup.padding.left = 305;
+            _SPchoicesLayoutGroup.padding.right = 0;
+            _SPchoicesLayoutGroup.padding.top = 392;
+            _SPchoicesLayoutGroup.padding.bottom = 0;
+            _SPchoicesLayoutGroup.spacing = 125;
+        }
+        else
+        {
+      
+
+            VerticalLayoutGroup _SPchoicesLayoutGroup = _SPchoicesContainer.AddComponent<VerticalLayoutGroup>();
+            _SPchoicesLayoutGroup.childControlHeight = false;
+            _SPchoicesLayoutGroup.childForceExpandWidth = false;
+            _SPchoicesLayoutGroup.childForceExpandHeight = false;
+            _SPchoicesLayoutGroup.childControlWidth = false;
+            _SPchoicesLayoutGroup.childControlHeight = true;
+            _SPchoicesLayoutGroup.childAlignment = TextAnchor.LowerLeft;
+            _SPchoicesLayoutGroup.padding.left = -112;
+            _SPchoicesLayoutGroup.padding.right = 0;
+            _SPchoicesLayoutGroup.padding.top = 420;
+            _SPchoicesLayoutGroup.padding.bottom = 0;
+            _SPchoicesLayoutGroup.spacing = 125;
+
+        }
+
+     
 
         // Display all the choices, if there are any!
         if (story.currentChoices.Count > 0)

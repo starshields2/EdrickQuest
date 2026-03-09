@@ -16,30 +16,33 @@ VAR passive = false
 VAR type = 2
 // ^^^ 0 = None, 1 = Mediation, 2 = Event, 3 = Cutscene
 
-#Yael
-Look, in the bushes. A shrine. I should send a prayer to Elunia immediately.
+#Jasper
+Someone's left their coin pouch here. We should take it. The money could be useful on our travels.
 +[Continue. #EdrickContinue]
 ~IncreaseTension(1)
-#Jasper
-A solar whetstone! Once I remove it from this rock, my tools will be sharp for weeks.
-++[Continue. #EdrickContinue]
 #Yael
-You can't possibly want to use this for sharpening tools. This is a sacred place.
-+++[Contine #EdrickContinue]
+Absolutely not. Taking something that belongs to someone else is <color=red>wrong</color>. Fate-Struck don't steal.
+++[Continue. #EdrickContinue]
 #Jasper
-You see the gleaning whetstone, yes? Dead gods can't help us, steel can. 
-++++[Let me sort this out. #EdrickContinue]  ->MEDIATIONSTART
+Big talk for someone who stole my hotcakes.
++++[Contine #EdrickContinue]
+#Yael
+That's a matter of perspective. Leave the coin pouch, at once.
+++++[Continue #EdrickContinue]
+#Jasper
+No way, we're taking it.
++++++[Let me sort this out. #EdrickContinue]  ->MEDIATIONSTART
 
 =MEDIATIONSTART
 #Edrick
 What should we do?
-+[We should keep the whetstone. #EdrickChoice]
++[We should keep the coin pouch. #EdrickChoice]
 ~SetYaelsWay()
 ->YAEL
-+[We should use the whetstone. #EdrickChoice]
++[We should leave the coin pouch. #EdrickChoice]
 ~SetJaspersWay()
-->YAEL
-+[You two decide. #EdrickChoice] ->COMP
+->JASPER
++[You two decide. #EdrickChoice] ->YAELCOMP
 ->DONE
 
 =YAEL
@@ -48,23 +51,47 @@ What should we do?
 {tension > 13: You've made no mistake in listening to my wisdom!}
 {tension <= 12: Let's see if this will work. }
 }
++[Okay, let's try this. #EdrickChoice]
+~CalculateEventResults()
+->YAELCOMP
 
+=JASPER
 {jaspersWay: 
 {tension > 13: Good thing you went with my idea, Calibrator! }
 {tension <= 12: I hope it'll work, thanks for believing in me! }
 }
 
-+[Okay, let's try this. #EdrickChoice] ->COMP
++[Okay, let's try this. #EdrickChoice]
+~CalculateEventResults()
+->JASPERCOMP
 ->DONE
 
 ->END
 
-=COMP
-{success:  .}
-{passive: You did nothing.}
-{failure: You failed}
-
+=EDRICK
+{success: We are going around the bridge. No arguments.| We will have to find another way forward. }
 ->DONE
+
+=JASPERCOMP
+{passive: You did nothing.}
+{ success:
+I've cut the tree down. We can progress from here with no issue.
+- else:
+Blast! I've just made the chasm bigger. 
+}
+->DONE
+=YAELCOMP
+
+{passive: You did nothing.}
+
+
+{ success:
+See? Now we can step across, with no issue.
+- else:
+Ah, I see the problem. We're still not able to cross...
+}
+->DONE
+
 
 ==function YaelTellFalse(amount)
 ~YaelTell = 1

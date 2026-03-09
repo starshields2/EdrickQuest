@@ -1,6 +1,7 @@
 ﻿using System;
 using Ink.Runtime;
 using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 
 public class BasicInkExample : MonoBehaviour
