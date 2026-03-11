@@ -11,7 +11,7 @@ public class EventTrigger_Overworld : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private bool _triggerOnlyOnce = true;
-    //[SerializeField] private bool _clickAnywhereWhenInRange = false; // Allow clicking anywhere when player is in range
+    [SerializeField] private bool _clickAnywhereWhenInRange = false; // Allow clicking anywhere when player is in range
     [SerializeField] private bool _isRequired;
     public bool IsRequired { get => _isRequired; set => _isRequired = value; }
     private bool _hasTriggered = false;
@@ -52,12 +52,20 @@ public class EventTrigger_Overworld : MonoBehaviour
 
     void Update()
     {
-        if (_isPlayerInRange && Input.GetMouseButtonDown(0)) // Detect left mouse click
+        if (_isPlayerInRange && Input.GetMouseButtonDown(0) && _clickAnywhereWhenInRange) // Detect left mouse click
         {
             if (!_dialogueManager.isActiveAndEnabled)
             {
                 ExecuteMediation();
             }
+        }
+    }
+
+    private void OnMouseDown()
+    {
+        if (_isPlayerInRange && !_dialogueManager.isActiveAndEnabled && !_clickAnywhereWhenInRange)
+        {
+            ExecuteMediation();
         }
     }
 
