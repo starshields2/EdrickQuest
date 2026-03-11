@@ -11,7 +11,7 @@ public class EventTrigger_Overworld : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private bool _triggerOnlyOnce = true;
-    [SerializeField] private bool _clickAnywhereWhenInRange = false; // Allow clicking anywhere when player is in range
+    //[SerializeField] private bool _clickAnywhereWhenInRange = false; // Allow clicking anywhere when player is in range
     [SerializeField] private bool _isRequired;
     public bool IsRequired { get => _isRequired; set => _isRequired = value; }
     private bool _hasTriggered = false;
@@ -24,6 +24,7 @@ public class EventTrigger_Overworld : MonoBehaviour
     {
         _sr = GetComponent<SpriteRenderer>();
         _srChild = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        StopAllCoroutines();
         StartCoroutine(Fade(0f));
     }
 
@@ -34,6 +35,7 @@ public class EventTrigger_Overworld : MonoBehaviour
         if (other.CompareTag("Player") && !_isPlayerInRange)
         {
             _isPlayerInRange = true;
+            StopAllCoroutines();
             StartCoroutine(Fade(1f));
         }
     }
@@ -43,6 +45,7 @@ public class EventTrigger_Overworld : MonoBehaviour
         if (other.CompareTag("Player") && _isPlayerInRange)
         {
             _isPlayerInRange = false;
+            StopAllCoroutines();
             StartCoroutine(Fade(0f));
         }
     }
@@ -51,26 +54,26 @@ public class EventTrigger_Overworld : MonoBehaviour
     {
         if (_isPlayerInRange && Input.GetMouseButtonDown(0)) // Detect left mouse click
         {
-            if ((_clickAnywhereWhenInRange && !_dialogueManager.isActiveAndEnabled) || (IsClickOnTrigger() && !_dialogueManager.isActiveAndEnabled))
+            if (!_dialogueManager.isActiveAndEnabled)
             {
                 ExecuteMediation();
             }
         }
     }
 
-    private bool IsClickOnTrigger()
-    {
-        Vector3 mousePos = Input.mousePosition;
-        Ray ray = Camera.main.ScreenPointToRay(mousePos);
-        RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
+    // private bool IsClickOnTrigger()
+    // {
+    //     Vector3 mousePos = Input.mousePosition;
+    //     Ray ray = Camera.main.ScreenPointToRay(mousePos);
+    //     RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
 
-        if (hit.collider != null && hit.collider.gameObject == gameObject)
-        {
-            return true; // The click hit this GameObject's collider
-        }
+    //     if (hit.collider != null && hit.collider.gameObject == gameObject)
+    //     {
+    //         return true; // The click hit this GameObject's collider
+    //     }
 
-        return false;
-    }
+    //     return false;
+    // }
 
     private void ExecuteMediation()
     {

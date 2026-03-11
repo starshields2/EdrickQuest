@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TensionTutorial : MonoBehaviour
 {
     public GameObject[] _Tutorials;
+    public GameObject[] _tutCutouts;
+    public Image _tutorialPanelImage;
     public MediationDialogue _medDialogue;
     public enum TutorialType
         
@@ -41,21 +44,30 @@ public class TensionTutorial : MonoBehaviour
             {
                 tut.SetActive(false);
             }
+            foreach (GameObject cut in _tutCutouts)
+            {
+                cut.SetActive(false);
+            }
         }
 
         if (_medDialogue.tutorialNum == 0)
         {
             if (!_started)
             {
-                _started = true;
-             _tutorialType = TutorialType.Start;
+            _started = true;
+            _tutorialType = TutorialType.Start;
+
             _Tutorials[0].SetActive(true);
+            _tutCutouts[0].SetActive(true);
+            _tutorialPanelImage.enabled = true;
+
             // Disable all other _Tutorials game objects
             for (int i = 1; i < _Tutorials.Length; i++)
             {
                 if (i != 0) // Skip index 0
                 {
                     _Tutorials[i].SetActive(false);
+                    _tutCutouts[i].SetActive(false);
                 }
             }
             }
@@ -66,9 +78,12 @@ public class TensionTutorial : MonoBehaviour
         {
             if (!_highlight)
             {
-                _highlight = true;
+            _highlight = true;
             _tutorialType = TutorialType.Highlight;
+
             _Tutorials[1].SetActive(true);
+            _tutCutouts[1].SetActive(true);
+            _tutorialPanelImage.enabled = true;
 
             // Disable all other _Tutorials game objects
             for (int i = 1; i < _Tutorials.Length; i++)
@@ -76,6 +91,7 @@ public class TensionTutorial : MonoBehaviour
                 if (i != 1) // Skip index 1
                 {
                     _Tutorials[i].SetActive(false);
+                    _tutCutouts[i].SetActive(false);
                 }
             }
             }
@@ -85,9 +101,12 @@ public class TensionTutorial : MonoBehaviour
         {
             if (!_tells)
             {
-                _tells = true;
-                _tutorialType = TutorialType.TensionBar;
+            _tells = true;
+            _tutorialType = TutorialType.TensionBar;
+
             _Tutorials[2].SetActive(true);
+            _tutCutouts[2].SetActive(true);
+            _tutorialPanelImage.enabled = true;
 
             // Disable all other _Tutorials game objects
             for (int i = 1; i < _Tutorials.Length; i++)
@@ -95,6 +114,7 @@ public class TensionTutorial : MonoBehaviour
                 if (i != 2) // Skip index 0
                 {
                     _Tutorials[i].SetActive(false);
+                    _tutCutouts[i].SetActive(false);
                 }
             }
             }
@@ -106,9 +126,11 @@ public class TensionTutorial : MonoBehaviour
             if (!_tensBar)
             {
                 _tensBar = true;
-
                 _tutorialType = TutorialType.Tells;
+
                 _Tutorials[3].SetActive(true);
+                _tutCutouts[3].SetActive(true);
+                _tutorialPanelImage.enabled = true;
 
                 // Disable all other _Tutorials game objects
                 for (int i = 1; i < _Tutorials.Length; i++)
@@ -116,6 +138,7 @@ public class TensionTutorial : MonoBehaviour
                     if (i != 3) // Skip index 0
                     {
                         _Tutorials[i].SetActive(false);
+                        _tutCutouts[i].SetActive(false);
                     }
                 }
             }
@@ -127,9 +150,11 @@ public class TensionTutorial : MonoBehaviour
             if (!_values)
             {
                 _values = true;
-
                 _tutorialType = TutorialType.Value;
+                
                 _Tutorials[4].SetActive(true);
+                _tutCutouts[4].SetActive(true);
+                _tutorialPanelImage.enabled = true;
 
                 // Disable all other _Tutorials game objects
                 for (int i = 1; i < _Tutorials.Length; i++)
@@ -137,6 +162,7 @@ public class TensionTutorial : MonoBehaviour
                     if (i != 4) // Skip index 0
                     {
                         _Tutorials[i].SetActive(false);
+                        _tutCutouts[i].SetActive(false);
                     }
                 }
             }
