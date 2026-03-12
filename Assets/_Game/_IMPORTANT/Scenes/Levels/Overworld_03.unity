@@ -218,9 +218,49 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3635286526302059197, guid: 9dbe5be601c83c2478eeede928d7a565,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635286526302059197, guid: 9dbe5be601c83c2478eeede928d7a565,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635286526302059197, guid: 9dbe5be601c83c2478eeede928d7a565,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635286526302059197, guid: 9dbe5be601c83c2478eeede928d7a565,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3635286527190508993, guid: 9dbe5be601c83c2478eeede928d7a565,
         type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5750536194049446342, guid: 9dbe5be601c83c2478eeede928d7a565,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5750536194049446342, guid: 9dbe5be601c83c2478eeede928d7a565,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5750536194049446342, guid: 9dbe5be601c83c2478eeede928d7a565,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5750536194049446342, guid: 9dbe5be601c83c2478eeede928d7a565,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8276216121271314456, guid: 9dbe5be601c83c2478eeede928d7a565,
@@ -3450,6 +3490,11 @@ PrefabInstance:
       propertyPath: _dialogueManager
       value: 
       objectReference: {fileID: 1751450908575677531}
+    - target: {fileID: 4276995483235014309, guid: 4dcece56889d30b42b99163c02487530,
+        type: 3}
+      propertyPath: _clickAnywhereWhenInRange
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4dcece56889d30b42b99163c02487530, type: 3}
 --- !u!1 &111755813449218052

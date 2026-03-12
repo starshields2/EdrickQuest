@@ -278,6 +278,11 @@ PrefabInstance:
       propertyPath: _dialogueManager
       value: 
       objectReference: {fileID: 1751450908575677531}
+    - target: {fileID: 4276995483235014309, guid: 4dcece56889d30b42b99163c02487530,
+        type: 3}
+      propertyPath: _clickAnywhereWhenInRange
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4dcece56889d30b42b99163c02487530, type: 3}
 --- !u!1001 &116189856
@@ -362,6 +367,11 @@ PrefabInstance:
       propertyPath: _dialogueManager
       value: 
       objectReference: {fileID: 1751450908575677531}
+    - target: {fileID: 4276995483235014309, guid: 4dcece56889d30b42b99163c02487530,
+        type: 3}
+      propertyPath: _clickAnywhereWhenInRange
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4dcece56889d30b42b99163c02487530, type: 3}
 --- !u!1001 &202634001
@@ -1497,6 +1507,11 @@ PrefabInstance:
       propertyPath: _dialogueManager
       value: 
       objectReference: {fileID: 1751450908575677531}
+    - target: {fileID: 4276995483235014309, guid: 4dcece56889d30b42b99163c02487530,
+        type: 3}
+      propertyPath: _clickAnywhereWhenInRange
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4dcece56889d30b42b99163c02487530, type: 3}
 --- !u!1 &760316725
