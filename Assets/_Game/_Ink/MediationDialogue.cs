@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
 using System.Collections;
+using UnityEngine.Rendering;
 
 
 public class MediationDialogue : MonoBehaviour
@@ -25,6 +26,8 @@ public class MediationDialogue : MonoBehaviour
     [SerializeField] private bool startAutomatically = true; // Option to start the story immediately
 
     [Header("Popups")]
+    [SerializeField] private float _postProcessBlendWeight = 1;
+    [SerializeField] private Volume _postProcess;
     [SerializeField] private GameObject[] _answer;
     [SerializeField] private int _answerIndex;
     public int tutorialNum;
@@ -177,8 +180,13 @@ public class MediationDialogue : MonoBehaviour
     void Awake()
     {
         SetDialogueType(); //gets ink  variable of Type and sets enum.
+        StartPostProcess();
     }
 
+    private void StartPostProcess()
+    {
+        _postProcess.weight = 1;
+    }
     public void BindSliders(Slider tension, Slider tp, Companion[] comps = null)
     {
         _tensionSlider = tension;
@@ -492,6 +500,7 @@ public class MediationDialogue : MonoBehaviour
         story.UnbindExternalFunction("ShowObjection");
         GetandSetTension();
         //CalculateEventResult();
+        _postProcess.weight = 0;
     }
 
     // Creates a textbox showing the line of text
