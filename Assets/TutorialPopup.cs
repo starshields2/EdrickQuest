@@ -30,13 +30,18 @@ public class TutorialPopup : MonoBehaviour
     
     private IEnumerator TutorialDisplay()
     {
+        yield return null;
         _tutorialGroup.alpha = 1;
         DisplayTutText();
-        yield return new WaitForSeconds(5f);
-        _tutorialGroup.alpha = 0;
+
     }
     public void DisplayTutText()
     {
         tutorialText.text = TutorialText[tutNumb];
+    }
+
+    public void DestroyTutText()
+    {
+        _tutorialGroup.alpha = 0;
     }
 }
