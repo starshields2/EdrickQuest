@@ -84,6 +84,8 @@ public class MediationDialogue : MonoBehaviour
 
     public UIBinder _UIBinder;
 
+    public CanvasGroup _overworldUI;
+
     // Define the UI prefab for narrator text
     [SerializeField]
     private Text narratorTextPrefab = null;
@@ -122,7 +124,7 @@ public class MediationDialogue : MonoBehaviour
         }
 
         _tensionSliderScript = _tensDisplay.GetComponent<TensionSlider>();
-
+        _overworldUI.alpha = 0;
         story.variablesState["tension"] = _overworldManager._publicTension;
     }
 
@@ -501,6 +503,7 @@ public class MediationDialogue : MonoBehaviour
         GetandSetTension();
         //CalculateEventResult();
         _postProcess.weight = 0;
+        _overworldUI.alpha = 1;
     }
 
     // Creates a textbox showing the line of text
