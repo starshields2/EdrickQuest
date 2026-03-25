@@ -23,6 +23,9 @@ public class PlayerMovement_Overworld : MonoBehaviour
     [SerializeField] protected float fallMultiplier = 2.5f;
     [SerializeField] protected float lowJumpMultiplier = 2f;
 
+    [Header("Slope Settings")]
+    [SerializeField] private float slopeFriction = 1f; // Strength of counter-force to stop sliding
+
     private Vector2 slopeNormal;
     private bool onSlope;
 
@@ -147,6 +150,17 @@ public class PlayerMovement_Overworld : MonoBehaviour
 
         CheckSlopes();
         Move();
+
+        // Prevent sliding on slopes when player is idle
+        if (onSlope && Grounded() && Mathf.Abs(xAxis) < 0.05f)
+        {
+            Vector2 tangent = new Vector2(slopeNormal.y, -slopeNormal.x).normalized;
+            Vector2 gravity = Physics2D.gravity * rb.gravityScale;
+            float gravAlongTangent = Vector2.Dot(gravity, tangent);
+            Vector2 counterForce = -gravAlongTangent * tangent * slopeFriction * rb.mass;
+            rb.AddForce(counterForce, ForceMode2D.Force);
+        }
+
         ApplyGravityModifiers();
     }
 }

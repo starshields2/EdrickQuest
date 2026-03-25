@@ -213,8 +213,9 @@ MonoBehaviour:
   _dialogueManager: {fileID: 0}
   _storyToLoad: {fileID: 4900000, guid: 18a85ef48b244924685132f38b411965, type: 3}
   _triggerOnlyOnce: 1
-  _clickAnywhereWhenInRange: 0
+  _clickAnywhereWhenInRange: 1
   _isRequired: 0
+  _hideExcaimationOnTriggerExit: 1
 --- !u!1 &4276995483293925834
 GameObject:
   m_ObjectHideFlags: 0

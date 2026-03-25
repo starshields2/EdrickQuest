@@ -13,6 +13,7 @@ public class EventTrigger_Overworld : MonoBehaviour
     [SerializeField] private bool _triggerOnlyOnce = true;
     [SerializeField] private bool _clickAnywhereWhenInRange = false; // Allow clicking anywhere when player is in range
     [SerializeField] private bool _isRequired;
+    [SerializeField] private bool _hideExcaimationOnTriggerExit = true;
     public bool IsRequired { get => _isRequired; set => _isRequired = value; }
     private bool _hasTriggered = false;
     private bool _isPlayerInRange = false;
@@ -30,8 +31,6 @@ public class EventTrigger_Overworld : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (_hasTriggered && _triggerOnlyOnce) return;
-
         if (other.CompareTag("Player") && !_isPlayerInRange)
         {
             _isPlayerInRange = true;
@@ -42,6 +41,8 @@ public class EventTrigger_Overworld : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        if(!_hideExcaimationOnTriggerExit) return;
+
         if (other.CompareTag("Player") && _isPlayerInRange)
         {
             _isPlayerInRange = false;
@@ -52,6 +53,8 @@ public class EventTrigger_Overworld : MonoBehaviour
 
     void Update()
     {
+        if(_triggerOnlyOnce && _hasTriggered) return;
+
         if (_isPlayerInRange && Input.GetMouseButtonDown(0) && _clickAnywhereWhenInRange) // Detect left mouse click
         {
             if (!_dialogueManager.isActiveAndEnabled)
@@ -63,6 +66,8 @@ public class EventTrigger_Overworld : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if(_triggerOnlyOnce && _hasTriggered) return;
+
         if (_isPlayerInRange && !_dialogueManager.isActiveAndEnabled && !_clickAnywhereWhenInRange)
         {
             ExecuteMediation();
@@ -102,6 +107,9 @@ public class EventTrigger_Overworld : MonoBehaviour
             _dialogueManager.backgroundCanvas.SetActive(true);
 
         _dialogueManager.StartStory();
+
+        StopAllCoroutines();
+        StartCoroutine(Fade(0f));
         
         Debug.Log($"Started Mediation: {_storyToLoad.name}");
     }
