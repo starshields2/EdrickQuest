@@ -11,6 +11,9 @@ public class Dialogue : MonoBehaviour
     public string unitName;
     public string[] lines;
     public float textSpeed;
+    public float waitTime;
+    [SerializeField] private Animation _animation;
+    [SerializeField] private AudioSource _notification;
 
     private int index;
     // Start is called before the first frame update
@@ -69,13 +72,32 @@ public class Dialogue : MonoBehaviour
         if(index < lines.Length - 1)
         {
             index++;
-            StopAllCoroutines();
+            //StopAllCoroutines();
             textComponent.text = string.Empty;
             StartCoroutine(TypeLine());
         }
         else
         {
-            gameObject.SetActive(false);
+         
+            textComponent.text = "Error: NO MORE LINES!";
         }
+    }
+
+    [ContextMenu("Handle Overworld Dialogue")]
+    public void HandleOverworldDialogue()
+    {
+        textComponent.text = "";
+        textStart = false;
+        StartCoroutine(HandleOverworldDialogueCoroutine());
+
+    }
+
+    public IEnumerator HandleOverworldDialogueCoroutine()
+    {
+        _notification.Play();
+        _animation.Play("PortraitNotificationUp");
+        NextLine();
+        yield return new WaitForSeconds(waitTime);
+        _animation.Play("PortraitNotificationDown");
     }
 }

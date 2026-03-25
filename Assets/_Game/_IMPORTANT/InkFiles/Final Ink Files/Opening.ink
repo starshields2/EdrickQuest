@@ -17,7 +17,7 @@ VAR type = 2
 // ^^^ 0 = None, 1 = Mediation, 2 = Event, 3 = Cutscene
 
 #Edrick
-Look. The peak looms over us.
+There is not much time.
 +[Continue #EdrickContinue]
 #Yael
 You can take us there, right? To the Temple of Scales?
@@ -28,4 +28,6 @@ You’re going to have to. The sooner we get answers, the better. Maybe they wil
 #Jasper
 I have complete faith in you, dear Calibrator! Even if Yael yaps my ears off along the way!
 +++[Continue #EdrickContinue]
+#Edrick
+We must consult the map.
 ->END

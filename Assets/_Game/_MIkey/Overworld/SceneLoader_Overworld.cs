@@ -64,6 +64,7 @@ public class SceneLoader_Overworld : MonoBehaviour
         {
             _isPlayerInRange = true;
             StartCoroutine(Fade(0.7f));
+            StartLoadSpecifiedScene();
         }
     }
 

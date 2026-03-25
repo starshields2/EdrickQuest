@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
 using System.Collections;
+using UnityEngine.Rendering;
 
 
 public class MediationDialogue : MonoBehaviour
@@ -25,6 +26,8 @@ public class MediationDialogue : MonoBehaviour
     [SerializeField] private bool startAutomatically = true; // Option to start the story immediately
 
     [Header("Popups")]
+    [SerializeField] private float _postProcessBlendWeight = 1;
+    [SerializeField] private Volume _postProcess;
     [SerializeField] private GameObject[] _answer;
     [SerializeField] private int _answerIndex;
     public int tutorialNum;
@@ -33,8 +36,8 @@ public class MediationDialogue : MonoBehaviour
 
     [Header("Dialogue History")]
     public List<string> notesDescriptions; //
-   // public List<string> notesTitles;
-    //public Button notesPFButton;
+                                           // public List<string> notesTitles;
+                                           //public Button notesPFButton;
     public GameObject notesContainer;
     public GameObject notesTextPF;
     //public int noteIndex;
@@ -81,6 +84,8 @@ public class MediationDialogue : MonoBehaviour
 
     public UIBinder _UIBinder;
 
+    public CanvasGroup _overworldUI;
+
     // Define the UI prefab for narrator text
     [SerializeField]
     private Text narratorTextPrefab = null;
@@ -119,7 +124,7 @@ public class MediationDialogue : MonoBehaviour
         }
 
         _tensionSliderScript = _tensDisplay.GetComponent<TensionSlider>();
-        
+        _overworldUI.alpha = 0;
         story.variablesState["tension"] = _overworldManager._publicTension;
     }
 
@@ -139,7 +144,7 @@ public class MediationDialogue : MonoBehaviour
 
         int _getInkTypeValue = (int)story.variablesState["type"];
 
-        if(_getInkTypeValue == 0)
+        if (_getInkTypeValue == 0)
         {
             _dType = DialogueType.None;
         }
@@ -177,8 +182,13 @@ public class MediationDialogue : MonoBehaviour
     void Awake()
     {
         SetDialogueType(); //gets ink  variable of Type and sets enum.
+        StartPostProcess();
     }
 
+    private void StartPostProcess()
+    {
+        _postProcess.weight = 1;
+    }
     public void BindSliders(Slider tension, Slider tp, Companion[] comps = null)
     {
         _tensionSlider = tension;
@@ -203,12 +213,12 @@ public class MediationDialogue : MonoBehaviour
             PopupPortrait();
         });
 
-       
-            story.BindExternalFunction("CalculateEventResults", () => {
-                Debug.Log("CALCULATE EVENT RESULT!");
-                CalculateEventResult();
-            });
-        
+
+        story.BindExternalFunction("CalculateEventResults", () => {
+            Debug.Log("CALCULATE EVENT RESULT!");
+            CalculateEventResult();
+        });
+
 
 
         RefreshView();
@@ -257,14 +267,14 @@ public class MediationDialogue : MonoBehaviour
 
     void Update()
     {
-        if(story == null) return;
+        if (story == null) return;
 
-        if(story.variablesState["tension"] != null)
+        if (story.variablesState["tension"] != null)
         {
             _CurrentTension = (int)story.variablesState["tension"];
         }
 
-        if(story.variablesState["ExternalTutorialNum"] != null)
+        if (story.variablesState["ExternalTutorialNum"] != null)
         {
             tutorialNum = (int)story.variablesState["ExternalTutorialNum"];
         }
@@ -274,7 +284,7 @@ public class MediationDialogue : MonoBehaviour
         //     noteIndex = (int)story.variablesState["NotesIndex"];
         // }
 
-        if(story.variablesState["PopupNum"] != null)
+        if (story.variablesState["PopupNum"] != null)
         {
             _answerIndex = (int)story.variablesState["PopupNum"];
         }
@@ -293,7 +303,7 @@ public class MediationDialogue : MonoBehaviour
 
 
         }
-        if(_CurrentTension < 5)
+        if (_CurrentTension < 5)
         {
             _lowTension = true;
             _highTension = false;
@@ -380,7 +390,7 @@ public class MediationDialogue : MonoBehaviour
         }
         else
         {
-      
+
 
             VerticalLayoutGroup _SPchoicesLayoutGroup = _SPchoicesContainer.AddComponent<VerticalLayoutGroup>();
             _SPchoicesLayoutGroup.childControlHeight = false;
@@ -397,7 +407,7 @@ public class MediationDialogue : MonoBehaviour
 
         }
 
-     
+
 
         // Display all the choices, if there are any!
         if (story.currentChoices.Count > 0)
@@ -408,7 +418,7 @@ public class MediationDialogue : MonoBehaviour
                 TrackChoiceHistory(choice.text);
                 foreach (string tag in choice.tags)
                 {
-                    if(tag == "EdrickContinue")
+                    if (tag == "EdrickContinue")
                     {
                         CreateContinueChoiceView(choice.text.Trim(), _SPchoicesContainer);
                     }
@@ -435,14 +445,14 @@ public class MediationDialogue : MonoBehaviour
             CreateContentView("There's nothing else to say here.", textContainer);
 
             // Then show the Back button
-            CreateChoiceView("Back", choicesContainer);
+            CreateChoiceView("Back", _SPchoicesContainer);
         }
 
         //then, check tension
         CheckNewTensionValue();
 
-      
-        
+
+
     }
 
 
@@ -450,7 +460,7 @@ public class MediationDialogue : MonoBehaviour
     // When we click the choice button, tell the story to choose that choice
     void OnClickChoiceButton(Choice choice)
     {
-        if (choice.text.Trim() == "Back")
+        if (choice.text.Trim() == "Back" || choice.text.Trim() == "Go forth.")
         {
             //RestartStory();
             
@@ -492,6 +502,8 @@ public class MediationDialogue : MonoBehaviour
         story.UnbindExternalFunction("ShowObjection");
         GetandSetTension();
         //CalculateEventResult();
+        _postProcess.weight = 0;
+        _overworldUI.alpha = 1;
     }
 
     // Creates a textbox showing the line of text
@@ -838,6 +850,15 @@ public class MediationDialogue : MonoBehaviour
                 _initiatingTrigger.OnEventSuccess?.Invoke(pass);
                 _initiatingTrigger = null;
             }
+        }
+
+        if(GetDialogueType == 3)
+        {
+            Debug.Log("Activating Cutscene");
+            //Cutscene Event
+            IntroductionManagement intro = GameObject.Find("IntroductionManagement").GetComponent<IntroductionManagement>();
+            intro.StartOpeningCutscene();
+           
         }
     }
 

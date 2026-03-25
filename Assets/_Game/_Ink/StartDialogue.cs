@@ -31,7 +31,7 @@ public class StartDialogue : MonoBehaviour
             {
                 if (!started)
                 {
-                    StartCoroutine(StartDialogueNow());
+                    dialogue.HandleOverworldDialogue();
                 }
                 
             }
@@ -74,7 +74,7 @@ public class StartDialogue : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         started = false;
-        _dialogueHolder.SetActive(false);
+       // _dialogueHolder.SetActive(false);
     }
 
     IEnumerator StartDialogueNow()
