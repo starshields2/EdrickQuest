@@ -16,7 +16,7 @@ public class IntroductionManagement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        overworldMenu.alpha = 0;
     }
 
     // Update is called once per frame
