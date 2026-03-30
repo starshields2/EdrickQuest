@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class OverworldManager : MonoBehaviour
 {
-    public int _publicTension;
+    //public int _publicTension;
     public int _difficultyCheck = 10;
     public int _modifier = 1;
     public Slider _overworldTension;
@@ -27,18 +27,18 @@ public class OverworldManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _overworldTension.value = _publicTension;
-        _publicTension = Mathf.Clamp(_publicTension, 0, 23);
-        if (_publicTension > 12)
+        _overworldTension.value = TensionSingleton.Instance.TensionLevel;
+        TensionSingleton.Instance.ClampTension();
+        if (TensionSingleton.Instance.TensionLevel > 12)
         {
             HighTensionVisual();
         }
-        if(_publicTension < 5)
+        if(TensionSingleton.Instance.TensionLevel < 5)
         {
             LowTensionVisual();
         }
 
-        _difficultyCheck = (_publicTension / 2) + _modifier; 
+        _difficultyCheck = (TensionSingleton.Instance.TensionLevel / 2) + _modifier; 
     }
 
     [ContextMenu("HighTension")]
@@ -76,4 +76,6 @@ public class OverworldManager : MonoBehaviour
         }
         
     }
+
+    
 }

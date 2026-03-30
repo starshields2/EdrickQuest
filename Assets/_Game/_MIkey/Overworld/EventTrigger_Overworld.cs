@@ -11,7 +11,7 @@ public class EventTrigger_Overworld : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private bool _triggerOnlyOnce = true;
-    [SerializeField] private bool _clickAnywhereWhenInRange = false; // Allow clicking anywhere when player is in range
+    [SerializeField] private bool _clickAnywhereWhenInRange = true; // Allow clicking anywhere when player is in range
     [SerializeField] private bool _isRequired;
     [SerializeField] private bool _hideExcaimationOnTriggerExit = true;
     public bool IsRequired { get => _isRequired; set => _isRequired = value; }
@@ -97,6 +97,17 @@ public class EventTrigger_Overworld : MonoBehaviour
         }
 
         _hasTriggered = true;
+
+        if(_triggerOnlyOnce)
+        {
+            // Disable the collider to prevent future triggers
+            Collider2D collider = GetComponent<Collider2D>();
+            if (collider != null)
+            {
+                collider.enabled = false;
+                _srChild.gameObject.SetActive(false); // Hide exclamation mark
+            }
+        }
 
         _dialogueManager.gameObject.SetActive(true);
 

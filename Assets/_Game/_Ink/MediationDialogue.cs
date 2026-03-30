@@ -125,7 +125,7 @@ public class MediationDialogue : MonoBehaviour
 
         _tensionSliderScript = _tensDisplay.GetComponent<TensionSlider>();
         _overworldUI.alpha = 0;
-        story.variablesState["tension"] = _overworldManager._publicTension;
+        story.variablesState["tension"] = TensionSingleton.Instance.TensionLevel;
     }
 
     //get global tension and set this mediation to that value. 
@@ -811,7 +811,7 @@ public class MediationDialogue : MonoBehaviour
     //All this does is take the ink tension and set it to a public value that can be called elsewhere?
     public void GetandSetTension()
     {
-        _overworldManager._publicTension = _CurrentTension;
+        TensionSingleton.Instance.TensionLevel = _CurrentTension;
     }
 
     //If it's an event dialogue, calculate success! 
