@@ -18,14 +18,14 @@ Edrick! Edrick! We have to stop. There's hotcake crumbs all over my skirt and it
 #Jasper
 You're the one who grabbed my hand like the cakes were poisonous. And in front of the nice townsfolk, too! You saw that, right Edrick?
 ++[I did see that. #EdrickContinue]
-~IncreaseTension(1)
+~IncreaseTension(2)
 #Yael
 I wouldn't have had to do anything if you knew how to act! 
 +++[Okay, okay. we're stopping. #EdrickContinue]
 ~ExtendedTutorial(1)
 ~IncreaseTension(1)
 #Jasper 
-You’re not <b>seriously</b> stopping us for this, are you? We’ve already lost precious time. If we are late for the <color=orange> Ritual </color>, we’ll have set out for nothing. 
+You’re not <b>seriously</b> stopping us for this, are you? We’ve already lost precious time. If we are late for the Ritual, we’ll have set out for nothing. 
 +++++[I just want everyone to get along. #EdrickContinue]
 
 #Yael
@@ -248,6 +248,7 @@ I think I know what's wrong.
 +[Continue #EdrickContinue] 
 #Yael
 And what is that, Edrick?
+#Edrick
 ++[One of you needs to apologize.#EdrickChoice]
 +++[Yael, you should apologize to Jasper. #EdrickChoice] ->YAELAPOLOGIES
 +++[Jasper, you should apologize to Yael. #EdrickChoice] ->JASPAPOLOGIES
@@ -301,22 +302,21 @@ What is your problem? Seriously, tell me.
 ~ShowObjection()
 #Jasper
 What do you mean, respect? I'm respectful! I'm plenty respectful!
-
-
 +[Continue #EdrickContinue]
 You both wish to be respected, both by each other and by those who depend on you during this quest. You just haven't communicated what will earn respect from each other; if you could be clear about that now, I'm sure this will be resolved.
 #Edrick
 ++[Continue #EdrickContinue] 
-#YaelAngry
+#Yael
 It's not like I've acted out of turn! 
 +++[Continue #EdrickContinue]
 #Edrick
 Actually, you did, when you...
 ****[Shoved the cake away #EdrickChoice]
+Jasper <color=red>hates being roughhoused</color>. You've completely shattered her respect for you by shoving her so unecessarily.
 ~UpdatePopupNumber(0)
 ~ShowObjection()
 #Edrick
-Jasper <color=red>hates being roughhoused</color>. You've completely shattered her respect for you by shoving her so unecessarily.
+
 +++++[Continue #EdrickContinue]
 #YaelPensive
 W-well that's true.

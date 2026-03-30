@@ -572,6 +572,7 @@ public class MediationDialogue : MonoBehaviour
                 if (i != 3) // Skip index 3 (YaelTell)
                 {
                     speakerID[i].SetActive(false);
+                    speakerID[0].SetActive(false);
                 }
             }
         }
@@ -587,6 +588,7 @@ public class MediationDialogue : MonoBehaviour
                 if (i != 4) // Skip index 3 (YaelTell)
                 {
                     speakerID[i].SetActive(false);
+                    speakerID[0].SetActive(false);
                 }
             }
         }
