@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,174 +7,63 @@ public class TensionTutorial : MonoBehaviour
     public GameObject[] _tutCutouts;
     public Image _tutorialPanelImage;
     public MediationDialogue _medDialogue;
+
     public enum TutorialType
-        
     {
-        Start,
-        Highlight,
-        TensionBar,
-        Tells,
-        Value,
-        End
+        Start = 0,
+        Highlight = 1,
+        TensionBar = 2,
+        Tells = 3,
+        Value = 4,
+        End = 5
     }
-    public bool _started;
-    public bool _highlight;
-    public bool _tensBar;
-    public bool _tells;
-    public bool _values;
-    public bool _finished;
 
     public TutorialType _tutorialType = TutorialType.Start;
+    private int _lastTutorialNum = -1; // Tracks changes to avoid running code every frame
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        if (_medDialogue.tutorialNum == 5)
+        // Only update if the tutorial number has actually changed
+        if (_medDialogue.tutorialNum != _lastTutorialNum)
         {
-            _tutorialType = TutorialType.End;
-            foreach (GameObject tut in _Tutorials)
-            {
-                tut.SetActive(false);
-            }
-            foreach (GameObject cut in _tutCutouts)
-            {
-                cut.SetActive(false);
-            }
-        }
-
-        if (_medDialogue.tutorialNum == 0)
-        {
-            if (!_started)
-            {
-            _started = true;
-            _tutorialType = TutorialType.Start;
-
-            _Tutorials[0].SetActive(true);
-            _tutCutouts[0].SetActive(true);
-            _tutorialPanelImage.enabled = true;
-
-            // Disable all other _Tutorials game objects
-            for (int i = 1; i < _Tutorials.Length; i++)
-            {
-                if (i != 0) // Skip index 0
-                {
-                    _Tutorials[i].SetActive(false);
-                    _tutCutouts[i].SetActive(false);
-                }
-            }
-            }
-            
-        }
-
-        if (_medDialogue.tutorialNum == 1)
-        {
-            if (!_highlight)
-            {
-            _highlight = true;
-            _tutorialType = TutorialType.Highlight;
-
-            _Tutorials[1].SetActive(true);
-            _tutCutouts[1].SetActive(true);
-            _tutorialPanelImage.enabled = true;
-
-            // Disable all other _Tutorials game objects
-            for (int i = 1; i < _Tutorials.Length; i++)
-            {
-                if (i != 1) // Skip index 1
-                {
-                    _Tutorials[i].SetActive(false);
-                    _tutCutouts[i].SetActive(false);
-                }
-            }
-            }
-           
-        }
-        if (_medDialogue.tutorialNum == 2)
-        {
-            if (!_tells)
-            {
-            _tells = true;
-            _tutorialType = TutorialType.TensionBar;
-
-            _Tutorials[2].SetActive(true);
-            _tutCutouts[2].SetActive(true);
-            _tutorialPanelImage.enabled = true;
-
-            // Disable all other _Tutorials game objects
-            for (int i = 1; i < _Tutorials.Length; i++)
-            {
-                if (i != 2) // Skip index 0
-                {
-                    _Tutorials[i].SetActive(false);
-                    _tutCutouts[i].SetActive(false);
-                }
-            }
-            }
-           
-        }
-
-        if (_medDialogue.tutorialNum == 3)
-        {
-            if (!_tensBar)
-            {
-                _tensBar = true;
-                _tutorialType = TutorialType.Tells;
-
-                _Tutorials[3].SetActive(true);
-                _tutCutouts[3].SetActive(true);
-                _tutorialPanelImage.enabled = true;
-
-                // Disable all other _Tutorials game objects
-                for (int i = 1; i < _Tutorials.Length; i++)
-                {
-                    if (i != 3) // Skip index 0
-                    {
-                        _Tutorials[i].SetActive(false);
-                        _tutCutouts[i].SetActive(false);
-                    }
-                }
-            }
-           
-        }
-
-        if (_medDialogue.tutorialNum == 4)
-        {
-            if (!_values)
-            {
-                _values = true;
-                _tutorialType = TutorialType.Value;
-                
-                _Tutorials[4].SetActive(true);
-                _tutCutouts[4].SetActive(true);
-                _tutorialPanelImage.enabled = true;
-
-                // Disable all other _Tutorials game objects
-                for (int i = 1; i < _Tutorials.Length; i++)
-                {
-                    if (i != 4) // Skip index 0
-                    {
-                        _Tutorials[i].SetActive(false);
-                        _tutCutouts[i].SetActive(false);
-                    }
-                }
-            }
-
+            UpdateTutorialStep(_medDialogue.tutorialNum);
         }
     }
 
-    public void DisplayTutorial()
+    private void UpdateTutorialStep(int stepIndex)
     {
+        _lastTutorialNum = stepIndex;
 
-      
-       
-       
+        // Handle the End state (Step 5)
+        if (stepIndex >= 5)
+        {
+            _tutorialType = TutorialType.End;
+            SetAllActive(false);
+            if (_tutorialPanelImage != null) _tutorialPanelImage.enabled = false;
+            return;
+        }
 
-        
+        // Update the Enum type based on the index
+        _tutorialType = (TutorialType)stepIndex;
+
+        // Loop through arrays and enable only the one matching the current index
+        for (int i = 0; i < _Tutorials.Length; i++)
+        {
+            bool isActive = (i == stepIndex);
+            
+            if (_Tutorials.Length > i && _Tutorials[i] != null)
+                _Tutorials[i].SetActive(isActive);
+
+            if (_tutCutouts.Length > i && _tutCutouts[i] != null)
+                _tutCutouts[i].SetActive(isActive);
+        }
+
+        if (_tutorialPanelImage != null) _tutorialPanelImage.enabled = true;
+    }
+
+    private void SetAllActive(bool state)
+    {
+        foreach (GameObject tut in _Tutorials) if (tut != null) tut.SetActive(state);
+        foreach (GameObject cut in _tutCutouts) if (cut != null) cut.SetActive(state);
     }
 }
