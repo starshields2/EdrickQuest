@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class TutorialPopup : MonoBehaviour
 {
@@ -11,17 +12,20 @@ public class TutorialPopup : MonoBehaviour
     public TextMeshProUGUI tutorialText;
     public int tutNumb;
     public CanvasGroup _tutorialGroup;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Space(10)]
+    public GameObject _tuorialPanelStencil;
+    public GameObject _tutorialCutout;
+    public GameObject _mapButtonCutout;
+    public GameObject _journalButtonCutout;
+    [Space(10)]
+    public Button _menuButton;
+    public Button _mapButton;
+    public Button _journalButton;
+    private PlayerMovement_Overworld _playerMovement;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        _playerMovement = FindObjectOfType<PlayerMovement_Overworld>();
     }
     public void StartDisplayTutorial()
     {
@@ -34,6 +38,19 @@ public class TutorialPopup : MonoBehaviour
         _tutorialGroup.alpha = 1;
         DisplayTutText();
 
+        switch (tutNumb)
+        {
+            case 5:
+                _mapButtonCutout.SetActive(true);
+                _tutorialCutout.SetActive(true);
+                _tuorialPanelStencil.SetActive(true);
+
+                _journalButton.enabled = false;
+                _menuButton.enabled = false;
+
+                _playerMovement.DisableMovement();
+                break;
+        }
     }
     public void DisplayTutText()
     {
@@ -42,6 +59,19 @@ public class TutorialPopup : MonoBehaviour
 
     public void DestroyTutText()
     {
+        _tutorialGroup.alpha = 0;
+    }
+
+    public void HideCutOuts()
+    {
+        _mapButton.enabled = true;
+        _journalButton.enabled = true;
+        _menuButton.enabled = true;
+
+        _mapButtonCutout.SetActive(false);
+        _journalButtonCutout.SetActive(false);
+        _tutorialCutout.SetActive(false);
+        _tuorialPanelStencil.SetActive(false);
         _tutorialGroup.alpha = 0;
     }
 }

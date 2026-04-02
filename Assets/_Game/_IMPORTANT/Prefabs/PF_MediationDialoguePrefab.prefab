@@ -467,7 +467,7 @@ RectTransform:
   m_GameObject: {fileID: 380678049400942870}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 8.5076885, y: 2.6, z: 1}
+  m_LocalScale: {x: 6.593458, y: 1.852526, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7648265526559190691}
@@ -475,7 +475,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -100, y: -361}
+  m_AnchoredPosition: {x: -100, y: -300}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6087747001305502332
@@ -4121,7 +4121,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1751450908180330164
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8346,7 +8346,7 @@ RectTransform:
   m_GameObject: {fileID: 7105598709364703904}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 8.5076885, y: 2.6, z: 1}
+  m_LocalScale: {x: 6.3808517, y: 1.7135144, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7648265526559190691}
@@ -8354,7 +8354,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -100, y: -361}
+  m_AnchoredPosition: {x: -116.8, y: -289}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5299930596187722783
@@ -9372,12 +9372,7 @@ MonoBehaviour:
   - {fileID: 7105598709364703904}
   _tutorialPanelImage: {fileID: 2258666352106554150}
   _medDialogue: {fileID: 1751450909121533150}
-  _started: 0
-  _highlight: 0
-  _tensBar: 0
-  _tells: 0
-  _values: 0
-  _finished: 0
+  _HighlightTutorialButtonToEnable: {fileID: 1751450908180330167}
   _tutorialType: 0
 --- !u!1 &7648265526625640008
 GameObject:
@@ -11074,7 +11069,7 @@ PrefabInstance:
     - target: {fileID: 4136599350564761389, guid: 82fce27b553b0d2459d8c0b0532f7519,
         type: 3}
       propertyPath: m_Size
-      value: 0.9999995
+      value: 0.9999998
       objectReference: {fileID: 0}
     - target: {fileID: 4136599350564761389, guid: 82fce27b553b0d2459d8c0b0532f7519,
         type: 3}

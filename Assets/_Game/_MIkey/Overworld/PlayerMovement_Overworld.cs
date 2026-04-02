@@ -28,6 +28,7 @@ public class PlayerMovement_Overworld : MonoBehaviour
 
     private Vector2 slopeNormal;
     private bool onSlope;
+    private bool canMove = true;
 
     public virtual bool Grounded()
     {
@@ -38,6 +39,11 @@ public class PlayerMovement_Overworld : MonoBehaviour
 
     protected virtual void GetInputs()
     {
+        if (!canMove) 
+        {
+            xAxis = 0;
+            return;
+        }
         xAxis = Input.GetAxisRaw("Horizontal");
     }
 
@@ -102,13 +108,13 @@ public class PlayerMovement_Overworld : MonoBehaviour
         }
     }
 
-    protected virtual void Jump()
-    {
-        if (Input.GetButtonDown("Jump") && Grounded())
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-        }
-    }
+    // protected virtual void Jump()
+    // {
+    //     if (Input.GetButtonDown("Jump") && Grounded())
+    //     {
+    //         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+    //     }
+    // }
 
     protected virtual void ApplyGravityModifiers()
     {
@@ -136,7 +142,7 @@ public class PlayerMovement_Overworld : MonoBehaviour
         }
 
         GetInputs();
-        Jump();
+        // Jump();
         Flip();
     }
 
@@ -162,5 +168,15 @@ public class PlayerMovement_Overworld : MonoBehaviour
         }
 
         ApplyGravityModifiers();
+    }
+
+    public void EnableMovement()
+    {
+        canMove = true;
+    }
+
+    public void DisableMovement()
+    {
+        canMove = false;
     }
 }
