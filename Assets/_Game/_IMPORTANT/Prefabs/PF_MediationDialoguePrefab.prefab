@@ -6538,9 +6538,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3473431750423096252}
-  - {fileID: 40500863519560907}
   - {fileID: 2092852489612205106}
   - {fileID: 4242812187486777319}
+  - {fileID: 40500863519560907}
   m_Father: {fileID: 7648265526205079711}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6644,7 +6644,7 @@ RectTransform:
   m_Children:
   - {fileID: 1751450908464886251}
   m_Father: {fileID: 3473431751912461941}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6859,7 +6859,7 @@ RectTransform:
   m_Children:
   - {fileID: 978806191160549068}
   m_Father: {fileID: 3473431751912461941}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -9372,12 +9372,6 @@ MonoBehaviour:
   - {fileID: 7105598709364703904}
   _tutorialPanelImage: {fileID: 2258666352106554150}
   _medDialogue: {fileID: 1751450909121533150}
-  _started: 0
-  _highlight: 0
-  _tensBar: 0
-  _tells: 0
-  _values: 0
-  _finished: 0
   _tutorialType: 0
 --- !u!1 &7648265526625640008
 GameObject:
@@ -9859,7 +9853,7 @@ RectTransform:
   m_Children:
   - {fileID: 1751450907383528240}
   m_Father: {fileID: 3473431751912461941}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11074,7 +11068,7 @@ PrefabInstance:
     - target: {fileID: 4136599350564761389, guid: 82fce27b553b0d2459d8c0b0532f7519,
         type: 3}
       propertyPath: m_Size
-      value: 0.9999995
+      value: 0.9999998
       objectReference: {fileID: 0}
     - target: {fileID: 4136599350564761389, guid: 82fce27b553b0d2459d8c0b0532f7519,
         type: 3}

@@ -33,6 +33,7 @@ public class IntroductionManagement : MonoBehaviour
 
     public IEnumerator OpeningCutscenePlayer()
     {
+        overworldMenu.alpha = 0;
         yield return new WaitForSeconds(3);
         Debug.Log("started cutscene");
         cutsceneDialogue[0].SetActive(true);

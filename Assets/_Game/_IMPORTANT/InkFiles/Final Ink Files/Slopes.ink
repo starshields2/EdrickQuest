@@ -17,7 +17,7 @@ VAR type = 2
 // ^^^ 0 = None, 1 = Mediation, 2 = Event, 3 = Cutscene
 
 
-Ah, stop, stop. This creature is in pain.
+Ah, stop, stop. This creature is in pain. Looks like a downed bird.
 +[Alright, we're stopping. #EdrickContinue]
 
 #Jasper
@@ -33,7 +33,7 @@ And waste precious time? Don't be silly.
 
 =MEDIATIONSTART
 #Edrick
-What should we do?
+What should they do?
 +[Yael should heal it. #EdrickChoice]
 ~SetYaelsWay()
 ->YAEL
@@ -45,10 +45,7 @@ What should we do?
 
 =YAEL
 #Yael
-{yaelsWay: 
-{tension > 13: You've made no mistake in listening to my wisdom! #Yael}
-{tension <= 12: Let's see if this will work. #Yael}
-}
+{tension > 13: You've made no mistake in listening to my wisdom. This bird will live! | Let's see if this will work. }
 #Yael
 +[Let's do this. #EdrickContinue]
 ~CalculateEventResults()
@@ -57,42 +54,39 @@ What should we do?
 
 =JASPER
 #Jasper
-{jaspersWay: 
-{tension > 13: Good thing you went with my idea, Calibrator! #Jasper}
-{tension <= 12: I hope it'll work, thanks for believing in me! #Jasper }
-}
+
+{tension > 13: City folk make me do everything. I'll get my hands dirty this time. Look away, Princess. | Just turn around, Yael. Sorry it had to be this way. }
 
 +[Okay, let's try this. #EdrickContinue]
+#Yael
+{tension > 13: Do whatever you want, but the stars are watching. | Gods. Should I cover my ears, too? }
+++[Do what you have to do. #EdrickChoice]
 ~CalculateEventResults()
 ->JASPERCOMP
 ->DONE
 
 ->END
 =EDRICK
-#Edrick
-{success: This is written if yourVariable is true|Otherwise this is written}
+#Yael
+{tension > 10: I can't watch the life of a creature go to waste. | ...alright. Let's just drop the subject and move on.}
+~IncreaseTension(3)
++[... #EdrickChoice]
+#Jasper
+Alright, let's go.
 ->DONE
 
 =JASPERCOMP
-{passive: You did nothing.}
-{ success:
-I've killed it, don't worry. It won't be in pain anymore. #Jasper
-- else:
-I couldn't do it. #Jasper
-}
+#Jasper
+{success: {tension > 12: There. It's been done. Now let's get going so I can find somewhere to wash up. | Sorry you had to see that. Maybe we can bury it together.} |  {tension > 12: I can't do it. I can't do it. I just can't do it. Let's just go. Poor thing. | ...You know. Maybe we shouldn't disturb the thing. Not that I'm afraid.  }}
 ->DONE
 
 =YAELCOMP
-{passive: You did nothing.}
-
-
-{ success:
 #Yael
-I'll sit here with it and rock it to its final resting place.
-- else:
-I wasn't able to heal it. It's passed on.
-}
-#YaelPensive
+{passive: You did nothing.}
+{success: {tension > 6: See Jasper, I've mended its wound. Imagine if it had died! It would have been on our consciences forever. | There. Now it can fly back home...} | {tension > 6: Even my healing magic wasn't enough for this little one. Maybe it would have been if we hadn't spent so much time bickering. | I did what I could. Now we bury it. }}
++[Continue #EdrickChoice]
+#Jasper
+{success: {tension > 6: The <i>imminent darkness</i> would have been on my conscience too, you know. Gods. | At least its alive. Now no one has to do the dirty work. } | {tension > 6: It also wouldn't be in pain if we just put it out of its misery like I said. | Now we bury it. And we move forward.}}
 ->DONE
 
 

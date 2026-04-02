@@ -67,7 +67,7 @@ public class MediationDialogue : MonoBehaviour
     //public SkillMenu skillMenu; (depreciated game object ref for skills)
 
     [Header("Tension")]
-    public TensionCounter _tensMeter; // the tension management script.
+    public IntroductionManagement introManagement; // the tension management script.
     public Slider _tensionSlider; //public slider where this mediation's tension value will be displayed. 
     //public Material tensionMaterial; // <- old material for tension slider
     public OverworldManager _overworldManager; // <- overworld manager for tension and other global variables
@@ -188,6 +188,7 @@ public class MediationDialogue : MonoBehaviour
     private void StartPostProcess()
     {
         _postProcess.weight = 1;
+
     }
     public void BindSliders(Slider tension, Slider tp, Companion[] comps = null)
     {
@@ -200,7 +201,7 @@ public class MediationDialogue : MonoBehaviour
     {
         IsDialogueActive = true;
         story = new Story(inkJSONAsset.text);
-
+        story.variablesState["tension"] = TensionSingleton.Instance.TensionLevel;
         if (OnCreateStory != null) OnCreateStory(story);
 
         //bind external functions from Ink here:
@@ -503,7 +504,11 @@ public class MediationDialogue : MonoBehaviour
         GetandSetTension();
         //CalculateEventResult();
         _postProcess.weight = 0;
-        _overworldUI.alpha = 1;
+        if(_dType != DialogueType.Cutscene)
+        {
+            _overworldUI.alpha = 1;
+        }
+        
     }
 
     // Creates a textbox showing the line of text
@@ -858,8 +863,7 @@ public class MediationDialogue : MonoBehaviour
         {
             Debug.Log("Activating Cutscene");
             //Cutscene Event
-            IntroductionManagement intro = GameObject.Find("IntroductionManagement").GetComponent<IntroductionManagement>();
-            intro.StartOpeningCutscene();
+            introManagement.StartOpeningCutscene();
            
         }
     }

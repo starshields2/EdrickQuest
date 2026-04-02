@@ -33,18 +33,18 @@ public class Dialogue : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            if(textComponent.text == lines[index])
-            {
-                NextLine();
-            }
-            else
-            {
-                StopAllCoroutines();
-                textComponent.text = lines[index];
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.F))
+        //{
+        //    if(textComponent.text == lines[index])
+        //    {
+        //        NextLine();
+        //    }
+        //    else
+        //    {
+        //        StopAllCoroutines();
+        //        textComponent.text = lines[index];
+        //    }
+        //}
     }
     [ContextMenu("Dialogue")]
     public void StartDialogue()
