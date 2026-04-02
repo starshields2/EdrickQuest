@@ -8,7 +8,7 @@ VAR JasperExhaust = 0
 //External Variables
 VAR ExternalTutorialNum = 0
 VAR PopupNum = 0
-VAR tension = 14
+VAR tension = 0
 VAR NotesIndex = 0
 VAR success = false
 //VAR failure = false
@@ -44,24 +44,29 @@ What should we do?
 ->DONE
 
 =YAEL
-#Yael
 {yaelsWay: 
-{tension > 13: You've made no mistake in listening to my wisdom!}
-{tension <= 12: Let's see if this will work. }
-}
 #Yael
-+[Let's do this. #EdrickContinue]
+{tension > 13: Good. Now let me perform this ritual, <i>with no distractions</i> That means no complaining. | I just wouldn't have liked it if any of us got squashed. }
+}
++[Continue #EdrickChoice]
+#Jasper
+{tension > 13: Then don't give me anything to complain about. Or I'll start complaining. | I wouldn't have wanted to fall to my death either, but alright. }
+
+++[Okay, let's move this along. #EdrickChoice]
 ~CalculateEventResults()
 ->YAELCOMP
-->DONE
 
 =JASPER
+
 {jaspersWay: 
-{tension > 13: Good thing you went with my idea, Calibrator! }
-{tension <= 12: I hope it'll work, thanks for believing in me! }
-}
 #Jasper
-+[Okay, let's try this. #EdrickContinue]
+{tension > 13: Step back, time for some good old fashioned elbow grease. And watch out for twigs, too. I don't know if you'd be able to lift them up with your noodle arms. | Well, make some distance so we can get going.}
+}
+
++[Continue. #EdrickChoice]
+#YaelPensive
+{tension > 13: I was trained in ritual combat, Jasper. I can lift a twig. At least a dozen. | ...This had better work, Jasper.}
+++[... #EdrickChoice]
 ~CalculateEventResults()
 ->JASPERCOMP
 ->DONE
@@ -72,23 +77,20 @@ What should we do?
 ->DONE
 
 =JASPERCOMP
-{passive: You did nothing.}
-{ success:
-This bag had fifty gold coins in it. We could use that to pay for our next meal.
-- else:
-Well, it's empty, anyway, so I guess we just wasted our time. 
-}
+#Jasper
+{success: {tension > 10: And that's where hard work will get you! Were you going to read our way across the gap? | There. Nothing like good woodworking to calm the nerves.} |  {tension > 10: I guess I just don't know my own strength. Better than falling from that height though, right? | ...you still have those scrolls, right. No? Okay.  }}
+{success: {tension > 10: {DecreaseTension(3)}|{DecreaseTension(5)} }| {tension > 10: {IncreaseTension(5)} | {IncreaseTension(3)}}}
+->DONE
 ->DONE
 =YAELCOMP
-
+#Yael
 {passive: You did nothing.}
+{success: {tension > 13: See how we don't have to destroy everything in our path in order to get across? | There. Now we can cross, safe and sound...} | {tension > 13: Well, I said no distractions, and look what happened. | ...All is well, we will find another way around. }}
++[Continue #EdrickChoice]
+#Jasper
+{success: {tension > 10: Yeah yeah, and while we're at it let's donate all our belongings and live in a tree and drink tea all day. | I guess it worked out just fine.. } | {tension > 10: I wasn't even talking. I was barely talking! What's your problem with me?!. | Fine. Let's go.}}
 
-
-{ success:
-See, I found a notepad in here with the owner's name. We can see if we can return it.
-- else:
-No use wasting time on this. We should keep moving.
-}
+{success: {tension > 10: {DecreaseTension(3)}|{DecreaseTension(5)} }| {tension > 10: {IncreaseTension(5)} | {IncreaseTension(3)}}}
 ->DONE
 
 

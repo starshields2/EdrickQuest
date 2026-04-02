@@ -78,6 +78,7 @@ Alright, let's go.
 =JASPERCOMP
 #Jasper
 {success: {tension > 12: There. It's been done. Now let's get going so I can find somewhere to wash up. | Sorry you had to see that. Maybe we can bury it together.} |  {tension > 12: I can't do it. I can't do it. I just can't do it. Let's just go. Poor thing. | ...You know. Maybe we shouldn't disturb the thing. Not that I'm afraid.  }}
+{success: {tension > 10: {DecreaseTension(3)}|{DecreaseTension(5)} }| {tension > 10: {IncreaseTension(5)} | {IncreaseTension(3)}}}
 ->DONE
 
 =YAELCOMP
@@ -87,6 +88,7 @@ Alright, let's go.
 +[Continue #EdrickChoice]
 #Jasper
 {success: {tension > 6: The <i>imminent darkness</i> would have been on my conscience too, you know. Gods. | At least its alive. Now no one has to do the dirty work. } | {tension > 6: It also wouldn't be in pain if we just put it out of its misery like I said. | Now we bury it. And we move forward.}}
+{success: {tension > 10: {DecreaseTension(3)}|{DecreaseTension(5)} }| {tension > 10: {IncreaseTension(5)} | {IncreaseTension(3)}}}
 ->DONE
 
 

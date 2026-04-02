@@ -86,6 +86,7 @@ What should we do?
 =JASPERCOMP
 #Jasper
 {success: {tension > 6: What did I ever do to you to warrant such a curse? Are you going to keep insulting me when I buy all your food tomorrow? | Damn right I am. You don't have to spend any of this.} |  {tension > 6: Eh, forget it. We've got more important things to do. | ...fine, I guess we should respect whoever dropped this. Doesn't mean you're right.  }}
+{success: {tension > 10: {DecreaseTension(3)}|{DecreaseTension(5)} }| {tension > 10: {IncreaseTension(5)} | {IncreaseTension(3)}}}
 ->DONE
 
 =YAELCOMP
@@ -95,6 +96,7 @@ What should we do?
 +[Continue #EdrickChoice]
 #Jasper
 {success: {tension > 6: You talk like you've never been robbed before. | Alright, whatever, you win. Let's move on. } | {tension > 6: Okay, whatever you say, Princess. I'm taking the bag. | Forget it. Let's go.}}
+{success: {tension > 10: {DecreaseTension(3)}|{DecreaseTension(5)} }| {tension > 10: {IncreaseTension(5)} | {IncreaseTension(3)}}}
 ->DONE
 
 
