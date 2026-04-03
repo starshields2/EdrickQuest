@@ -7,7 +7,8 @@ public class TensionTutorial : MonoBehaviour
     public GameObject[] _tutCutouts;
     public Image _tutorialPanelImage;
     public MediationDialogue _medDialogue;
-
+    // This button will be enabled when the "Ritual" keyword is hovered over for the tutorial
+    public GameObject _HighlightTutorialButtonToEnable;
     public enum TutorialType
     {
         Start = 0,
@@ -20,6 +21,22 @@ public class TensionTutorial : MonoBehaviour
 
     public TutorialType _tutorialType = TutorialType.Start;
     private int _lastTutorialNum = -1; // Tracks changes to avoid running code every frame
+
+    // Lets this script know when a tooltip is hovered over
+    private void OnEnable()
+    {
+        LinkHandler.OnHoverOnLinkEvent += GetToolTipInfo;
+    }
+
+    // Checking for the keyword "Ritual" to enable the button so the player can progress the tutorial. Unsubscribing after to prevent multiple triggers.
+    private void GetToolTipInfo(string keyword, Vector3 mousePosition)
+    {
+        if(keyword == "Ritual")
+        {
+            _HighlightTutorialButtonToEnable.SetActive(true);
+        }
+        LinkHandler.OnHoverOnLinkEvent -= GetToolTipInfo;
+    }
 
     void Update()
     {

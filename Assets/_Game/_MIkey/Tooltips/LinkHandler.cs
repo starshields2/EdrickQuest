@@ -20,12 +20,16 @@ public class LinkHandler : MonoBehaviour
     {
         _tmpTextBox = GetComponent<TMP_Text>();
         _canvasToCheck = GetComponentInParent<Canvas>();
-        _textBoxRectTransform = _tmpTextBox.GetComponent<RectTransform>();
+        _textBoxRectTransform = GetComponent<RectTransform>();
         
         if(_canvasToCheck.renderMode == RenderMode.ScreenSpaceOverlay)
+        {
             _cameraToUse = null;
+        }
         else
-        _cameraToUse = _canvasToCheck.worldCamera;
+        {
+            _cameraToUse = _canvasToCheck.worldCamera;
+        }
     }
 
     void Update()
@@ -35,36 +39,28 @@ public class LinkHandler : MonoBehaviour
 
     private void CheckForLinkAtMousePosition()
     {
-        Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
+        Vector3 mousePos = Input.mousePosition;
 
         bool isIntersectingRectTransform = TMP_TextUtilities.IsIntersectingRectTransform(_textBoxRectTransform, mousePos, _cameraToUse);
+        
+        int intersectingLink = isIntersectingRectTransform 
+            ? TMP_TextUtilities.FindIntersectingLink(_tmpTextBox, mousePos, _cameraToUse) 
+            : -1;
 
-        if (!isIntersectingRectTransform)
+        if (intersectingLink != _currentLinkIndex)
         {
-            if(_currentLinkIndex != -1)
+            if (_currentLinkIndex != -1)
             {
                 OnCloseTooltipEvent?.Invoke();
-                _currentLinkIndex = -1;
             }
-            return;
+
+            if (intersectingLink != -1)
+            {
+                TMP_LinkInfo linkInfo = _tmpTextBox.textInfo.linkInfo[intersectingLink];
+                OnHoverOnLinkEvent?.Invoke(linkInfo.GetLinkID(), mousePos);
+            }
+
+            _currentLinkIndex = intersectingLink;
         }
-
-        int intersectingLink = TMP_TextUtilities.FindIntersectingLink(_tmpTextBox, mousePos, _cameraToUse);
-
-        if(_currentLinkIndex != intersectingLink)
-        {
-            OnCloseTooltipEvent?.Invoke();
-        }
-
-        if(intersectingLink == -1)
-        {
-            return;
-        }
-
-        TMP_LinkInfo linkInfo = _tmpTextBox.textInfo.linkInfo[intersectingLink];
-        string linkId = linkInfo.GetLinkID();
-
-        OnHoverOnLinkEvent?.Invoke(linkId, mousePos);
-        _currentLinkIndex = intersectingLink;
     }
 }
