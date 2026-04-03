@@ -83,6 +83,7 @@ What’s the difference? We shouldn’t be so eager to show that we are fragile.
 #YaelPensive
 Well, that’s certainly true. Though it does little to ease my nerves.
 	++++[It sounds like you’re concerned about giving away our apprehensions about this journey, is that right? #EdrickChoice] 
+	~ExtendedTutorial(2)
 #YaelTell
 That’s right. I mean. Think about it. This kind of thing has never happened before. Fate-struck are <color=blue><b>usually friends</b></color>, or at least amiable. But her… I can’t stand her. 
     +++++ [Can you elaborate? #EdrickChoice]
