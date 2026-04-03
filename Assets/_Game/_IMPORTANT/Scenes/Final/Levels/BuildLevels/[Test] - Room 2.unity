@@ -81638,6 +81638,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -178.02063
       objectReference: {fileID: 0}
+    - target: {fileID: 1751450907435557009, guid: 332749021c9f2ae4cb22318d9aeeb140,
+        type: 3}
+      propertyPath: m_text
+      value: There are some dialogues called "Events." The level of Tension will
+        determine how difficult it is to reach a more amiable conclusion.
+      objectReference: {fileID: 0}
+    - target: {fileID: 1751450907435557009, guid: 332749021c9f2ae4cb22318d9aeeb140,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 1751450907435557009, guid: 332749021c9f2ae4cb22318d9aeeb140,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 33
+      objectReference: {fileID: 0}
     - target: {fileID: 1751450909121533150, guid: 332749021c9f2ae4cb22318d9aeeb140,
         type: 3}
       propertyPath: _overworldUI

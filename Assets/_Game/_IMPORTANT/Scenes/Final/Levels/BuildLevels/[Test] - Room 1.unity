@@ -3797,6 +3797,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4dcece56889d30b42b99163c02487530, type: 3}
+--- !u!114 &115199554 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3024726049785828804, guid: 3337875810a47ea40830c26bb0f4d4a7,
+    type: 3}
+  m_PrefabInstance: {fileID: 2111956617}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &115875104
 GameObject:
   m_ObjectHideFlags: 0
@@ -35381,7 +35393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 393b41c63fd7d0849920f36b289b81e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: 3
+  ID: 6
   tutPop: {fileID: 2141616668}
 --- !u!212 &1038201289
 SpriteRenderer:
@@ -47016,6 +47028,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1352015510 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3024726051722929024, guid: 3337875810a47ea40830c26bb0f4d4a7,
+    type: 3}
+  m_PrefabInstance: {fileID: 2111956617}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1352096461
 GameObject:
   m_ObjectHideFlags: 0
@@ -63162,6 +63186,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1822248227 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3024726050012781848, guid: 3337875810a47ea40830c26bb0f4d4a7,
+    type: 3}
+  m_PrefabInstance: {fileID: 2111956617}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1825363960
 GameObject:
   m_ObjectHideFlags: 0
@@ -69332,7 +69368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 393b41c63fd7d0849920f36b289b81e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: 5
+  ID: 0
   tutPop: {fileID: 2141616668}
 --- !u!212 &1972916130
 SpriteRenderer:
@@ -71273,6 +71309,30 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.CanvasGroup, UnityEngine
         m_MethodName: set_blocksRaycasts
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 9117128348770267266}
+        m_TargetAssemblyTypeName: PlayerMovement_Overworld, Assembly-CSharp
+        m_MethodName: EnableMovement
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2141616668}
+        m_TargetAssemblyTypeName: TutorialPopup, Assembly-CSharp
+        m_MethodName: HideCutOuts
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -74426,6 +74486,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4847397080756613124, guid: 3337875810a47ea40830c26bb0f4d4a7,
+        type: 3}
+      propertyPath: _mapButton
+      value: 
+      objectReference: {fileID: 1822248227}
+    - target: {fileID: 4847397080756613124, guid: 3337875810a47ea40830c26bb0f4d4a7,
+        type: 3}
+      propertyPath: _menuButton
+      value: 
+      objectReference: {fileID: 1352015510}
+    - target: {fileID: 4847397080756613124, guid: 3337875810a47ea40830c26bb0f4d4a7,
+        type: 3}
+      propertyPath: _journalButton
+      value: 
+      objectReference: {fileID: 115199554}
     - target: {fileID: 7589087855270783503, guid: 3337875810a47ea40830c26bb0f4d4a7,
         type: 3}
       propertyPath: m_AnchorMax.y
