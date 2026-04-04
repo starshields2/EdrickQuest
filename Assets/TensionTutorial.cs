@@ -8,7 +8,8 @@ public class TensionTutorial : MonoBehaviour
     public Image _tutorialPanelImage;
     public MediationDialogue _medDialogue;
     // This button will be enabled when the "Ritual" keyword is hovered over for the tutorial
-    public GameObject _HighlightTutorialButtonToEnable;
+    public GameObject _highlightTutorialButtonToEnable;
+    public GameObject _tellsTutorialButtonToEnable;
     public enum TutorialType
     {
         Start = 0,
@@ -33,9 +34,14 @@ public class TensionTutorial : MonoBehaviour
     {
         if(keyword == "Ritual")
         {
-            _HighlightTutorialButtonToEnable.SetActive(true);
+            _highlightTutorialButtonToEnable.SetActive(true);
         }
         LinkHandler.OnHoverOnLinkEvent -= GetToolTipInfo;
+    }
+
+    public void TellClicked()
+    {
+        _tellsTutorialButtonToEnable.SetActive(true);
     }
 
     void Update()

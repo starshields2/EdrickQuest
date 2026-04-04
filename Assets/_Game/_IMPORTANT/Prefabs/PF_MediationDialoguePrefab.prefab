@@ -2349,7 +2349,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -2427,7 +2427,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1751450907700406567
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4404,7 +4404,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -5110,7 +5110,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1751450908580945331
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9280,7 +9280,7 @@ MonoBehaviour:
   - {fileID: 1751450907359568881}
   pass: 0
   _diceRoll: 0
-  _tensMeter: {fileID: 0}
+  introManagement: {fileID: 0}
   _tensionSlider: {fileID: 2253559495934658673}
   _overworldManager: {fileID: 0}
   _CurrentTension: 0
@@ -9372,7 +9372,8 @@ MonoBehaviour:
   - {fileID: 7105598709364703904}
   _tutorialPanelImage: {fileID: 2258666352106554150}
   _medDialogue: {fileID: 1751450909121533150}
-  _HighlightTutorialButtonToEnable: {fileID: 1751450908180330167}
+  _highlightTutorialButtonToEnable: {fileID: 1751450908180330167}
+  _tellsTutorialButtonToEnable: {fileID: 1751450907700406566}
   _tutorialType: 0
 --- !u!1 &7648265526625640008
 GameObject:

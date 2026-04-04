@@ -50,6 +50,16 @@ public class TutorialPopup : MonoBehaviour
 
                 _playerMovement.DisableMovement();
                 break;
+            case 8:                
+                _journalButtonCutout.SetActive(true);
+                _tutorialCutout.SetActive(true);
+                _tuorialPanelStencil.SetActive(true);
+
+                _mapButton.enabled = false;
+                _menuButton.enabled = false;
+
+                _playerMovement.DisableMovement();
+                break;
         }
     }
     public void DisplayTutText()
