@@ -83,9 +83,10 @@ What should we do?
 ->DONE
 ->DONE
 =YAELCOMP
-#Yael
+
 {passive: You did nothing.}
 {success: {tension > 13: See how we don't have to destroy everything in our path in order to get across? | There. Now we can cross, safe and sound...} | {tension > 13: Well, I said no distractions, and look what happened. | ...All is well, we will find another way around. }}
+#YaelPensive
 +[Continue #EdrickChoice]
 #Jasper
 {success: {tension > 10: Yeah yeah, and while we're at it let's donate all our belongings and live in a tree and drink tea all day. | I guess it worked out just fine.. } | {tension > 10: I wasn't even talking. I was barely talking! What's your problem with me?!. | Fine. Let's go.}}

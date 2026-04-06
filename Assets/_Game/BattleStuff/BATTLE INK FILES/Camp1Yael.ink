@@ -48,7 +48,6 @@ Yes, really. The equinox has no preference for sun or moon. It will destroy all,
 ****[Do you think we can do it? #EdrickContinue]
 Of course I do. I know I can lead us to a favorable outcome, if Jasper listens to me.
 *****[I believe in you. #EdrickContinue]
-
 No need to believe in something that is factual. If you trust me, you simply know it. 
 ->DONE
 *****[Are you sure?]
@@ -58,8 +57,9 @@ Why are you prodding at me like a horse? Time will tell. Now go to bed.
 ***[Country bumpkin?] 
 ->DONE
 **[How will you prepare for the journey ahead?]
-#Yael
+#YaelPensive
 The Goddess will bless me and keep me, all I must do is give myself to her.
+->DONE
 ***[You seem rather devoted. #EdrickContinue]
 
 I pride myself in that. I am to be the next Cresent-maiden after all - and a priestess that strays from the path is no priestess at all. 
@@ -69,8 +69,7 @@ I pride myself in that. I am to be the next Cresent-maiden after all - and a pri
 It is our way. Moonwalkers can't see themselves as people, only vessels for her will. You will do well to not insult my tradition.
 
 ****[Well, what's her will right now? #EdrickContinue]
-To go to bed, obviously. 
-
+To go to sleep. She's tired. I'm tired. 
 ->DONE
 
 **[What will you do in your free time? #EdrickContinue] 

@@ -29,12 +29,19 @@ public class PlayerMovement_Overworld : MonoBehaviour
     private Vector2 slopeNormal;
     private bool onSlope;
     private bool canMove = true;
+    private Animator anim;
 
     public virtual bool Grounded()
     {
         return Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckY, whatIsGround) ||
                Physics2D.Raycast(groundCheck.position + new Vector3(groundCheckX, 0, 0), Vector2.down, groundCheckY, whatIsGround) ||
                Physics2D.Raycast(groundCheck.position + new Vector3(-groundCheckX, 0, 0), Vector2.down, groundCheckY, whatIsGround);
+    }
+
+    private void Start()
+    {
+        anim = visualsContainer.GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     protected virtual void GetInputs()
@@ -168,6 +175,7 @@ public class PlayerMovement_Overworld : MonoBehaviour
         }
 
         ApplyGravityModifiers();
+        HandleAnimation();
     }
 
     public void EnableMovement()
@@ -178,5 +186,11 @@ public class PlayerMovement_Overworld : MonoBehaviour
     public void DisableMovement()
     {
         canMove = false;
+    }
+
+    private void HandleAnimation()
+    {
+        if (visualsContainer == null) return;
+        anim.SetBool("IsMoving", Mathf.Abs(rb.velocity.x) > 0.1f);
     }
 }

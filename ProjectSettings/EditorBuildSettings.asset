@@ -20,9 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Game/_IMPORTANT/Scenes/Final/Levels/BuildLevels/[Test] - Room 3.unity
     guid: 582982a2af0854049b37b53ac0050a54
-  - enabled: 0
-    path: Assets/_Game/_IMPORTANT/Scenes/Levels/FinalLevels/[Test] - Room 1.unity
-    guid: db48e474df6590b46ba3222a2598182f
+  - enabled: 1
+    path: Assets/_Game/_IMPORTANT/Scenes/Final/Levels/BuildLevels/[Test] - Room 4.unity
+    guid: 9b09dd15ca7518642b06f331b84a5505
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 2eb9ee7d7896d1a4bb45ca59da817e91,
       type: 2}

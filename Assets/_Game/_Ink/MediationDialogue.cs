@@ -124,7 +124,7 @@ public class MediationDialogue : MonoBehaviour
         }
 
         _tensionSliderScript = _tensDisplay.GetComponent<TensionSlider>();
-        _overworldUI.alpha = 0;
+        
         story.variablesState["tension"] = TensionSingleton.Instance.TensionLevel;
     }
 
@@ -136,6 +136,7 @@ public class MediationDialogue : MonoBehaviour
 
     private void SetDialogueType()
     {
+
         if (story == null)
         {
             // Story is not initialized yet, so dialogue type can't be set
@@ -200,6 +201,7 @@ public class MediationDialogue : MonoBehaviour
     public void StartStory()
     {
         IsDialogueActive = true;
+        _overworldUI.alpha = 0;
         story = new Story(inkJSONAsset.text);
         story.variablesState["tension"] = TensionSingleton.Instance.TensionLevel;
         if (OnCreateStory != null) OnCreateStory(story);
@@ -508,7 +510,8 @@ public class MediationDialogue : MonoBehaviour
         {
             _overworldUI.alpha = 1;
         }
-        
+        jasperWins = false;
+        yaelWins = false;
     }
 
     // Creates a textbox showing the line of text
@@ -849,6 +852,8 @@ public class MediationDialogue : MonoBehaviour
                 Debug.Log("failed difficulty check.");
             }
             story.variablesState["success"] = pass;
+            jasperWins = (bool)story.variablesState["jaspersWay"];
+            yaelWins = (bool)story.variablesState["yaelsWay"];
             GameObject EventSummary = Instantiate(EventResolutionPanel, this.gameObject.transform);
 
             // Notify the initiating trigger (if any) whether the event succeeded
@@ -868,7 +873,7 @@ public class MediationDialogue : MonoBehaviour
         }
     }
 
-    [SerializeField] private TextAsset inkJSONAsset = null;
+    public TextAsset inkJSONAsset = null;
     public Story story;
 
     [SerializeField]
@@ -881,4 +886,6 @@ public class MediationDialogue : MonoBehaviour
     private Button buttonPrefab = null;
     [SerializeField]
     private Button continueButtonPrefab = null;
+    public bool jasperWins;
+    public bool yaelWins;
 }

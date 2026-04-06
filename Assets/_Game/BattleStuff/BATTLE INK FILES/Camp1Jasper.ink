@@ -17,12 +17,13 @@ VAR type = 3
 
 #Jasper
 What's on your mind? 
-
++[How do you feel about Yael so far? #EdrickChoice]
++[Do you miss home? #EdrickChoice]
 ->DONE
 
 =YAEL
 #Edrick
-+[How do you feel about Yael so far? #EdrickChoice]
+
 
 ->DONE
 =HERSELF
