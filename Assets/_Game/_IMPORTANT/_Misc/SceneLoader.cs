@@ -56,6 +56,12 @@ public class SceneLoader : MonoBehaviour
     {
         StartCoroutine(LoadSpecifiedScene());
     }
+
+    public void StartLoadPreviousScene()
+    {
+        StartCoroutine(LoadPreviousScene());
+    }
+
     IEnumerator LoadLevel()
     {
         ///animation
@@ -88,7 +94,16 @@ public class SceneLoader : MonoBehaviour
         yield return new WaitForSeconds(_transitionTime);
         ///load scene
         SceneManager.LoadScene("RoomTest");
+    }
 
+    IEnumerator LoadPreviousScene()
+    {
+        ///animation
+        _transition.SetTrigger("Start");
+        ///wait for stop
+        yield return new WaitForSeconds(_transitionTime);
+        ///load scene
+        SceneManager.LoadScene(TensionSingleton.Instance.PreviousScene);
     }
 
     public void EndGameNow()
