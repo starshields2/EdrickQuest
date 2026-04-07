@@ -24,7 +24,7 @@ The path forward has been destroyed. Look. The bridge is broken.
 We can chop a tree down over the ravine and walk across.
 ++[Continue. #EdrickContinue]
 #YaelAngry
-That's too risky! I'll use one of my scrolls. We can easily use magic to levitate over the gap.
+That's too risky! I'll use one of my scrolls. We can easily use magic to fix the bridge.
 +++[Contine #EdrickContinue]
 #Jasper
 And waste precious scrolls? Don't be stupid. I'm knocking a tree down. 
