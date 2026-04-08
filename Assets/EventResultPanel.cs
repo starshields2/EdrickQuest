@@ -11,7 +11,7 @@ public class EventResultPanel : MonoBehaviour
     public TextMeshProUGUI _passfail;
     public OverworldManager _manager;
     public MediationDialogue _currentDialogue;
-    
+    public Slider tensionSlider;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,7 +32,9 @@ public class EventResultPanel : MonoBehaviour
 
     private void GetDifficulty()
     {
-        _difficulty.text = _manager._difficultyCheck.ToString();
+        _difficulty.text = "";
+        tensionSlider.value = _currentDialogue._CurrentTension;
+        
     }
 
     private void GetScore()
@@ -65,11 +67,11 @@ public class EventResultPanel : MonoBehaviour
 
         if (_currentDialogue.pass == true)
         {
-            _passfail.text = "PASS";
+            _passfail.text = "STRONG";
         }
         if (_currentDialogue.pass != true)
         {
-            _passfail.text = "FAIL";
+            _passfail.text = "WEAK";
         }
     }
 }

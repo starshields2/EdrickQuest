@@ -17,7 +17,7 @@ VAR type = 2
 // ^^^ 0 = None, 1 = Mediation, 2 = Event, 3 = Cutscene
 
 
-Ah, stop, stop. This creature is in pain. Looks like a downed bird.
+Ah, stop, stop. This creature is in pain. Looks like a downed bird. Poor thing's wings are broken.
 +[Alright, we're stopping. #EdrickContinue]
 
 #Jasper
@@ -27,7 +27,7 @@ So unfortunate... I'll put it out of its misery. Turn around, Yael, don't look.
 No! I can heal it. I regard <b>all</b> life with dignity, and I can prolong this one!
 +++[Contine #EdrickContinue]
 #Jasper
-And waste precious time? Don't be silly.
+And waste precious time? Don't be silly. I've seen magic like yours. A healing spell will drain your strength.
 ++++[We have to make a decision. #EdrickContinue]
 ->MEDIATIONSTART
 
@@ -40,7 +40,8 @@ What should they do?
 +[Jasper should kill it. #EdrickChoice]
 ~SetJaspersWay()
 ->JASPER
-+[You two decide. #EdrickChoice] ->EDRICK
++[You two decide. #EdrickChoice] 
+->EDRICK
 ->DONE
 
 =YAEL
@@ -68,27 +69,38 @@ What should they do?
 ->END
 =EDRICK
 #Yael
-{tension > 10: I can't watch the life of a creature go to waste. | ...alright. Let's just drop the subject and move on.}
-~IncreaseTension(3)
+I can't let the life of a creature go to waste, Edrick. I don't care what Jasper thinks, I'm healing it. 
 +[... #EdrickChoice]
+~IncreaseTension(3)
 #Jasper
-Alright, let's go.
+You're going to waste time, and scrolls! Get that through your head! Our mission is more important than some bird!
+++[The Tether will snap if you keep arguing. #EdrickChoice]
+#Yael
+Fine.
+~IncreaseTension(3)
+#Jasper
+Let it!
+~IncreaseTension(3)
++++[... oh, dear. #EdrickChoice]
+~CalculateEventResults()
 ->DONE
 
 =JASPERCOMP
 #Jasper
-{success: {tension > 12: There. It's been done. Now let's get going so I can find somewhere to wash up. | Sorry you had to see that. Maybe we can bury it together.} |  {tension > 12: I can't do it. I can't do it. I just can't do it. Let's just go. Poor thing. | ...You know. Maybe we shouldn't disturb the thing. Not that I'm afraid.  }}
+{success: {tension > 12: There. It's been done. Now let's get going so I can find somewhere to wash up. | Sorry you had to see that. Maybe we can bury it together.} |  {tension > 12: I can't do it. I can't do it. I just can't do it. Let's just go. Poor thing. | ...You know. Maybe we shouldn't disturb the thing. Not that I'm chickening out or anything.  }}
 {success: {tension > 10: {DecreaseTension(3)}|{DecreaseTension(5)} }| {tension > 10: {IncreaseTension(5)} | {IncreaseTension(3)}}}
 ->DONE
 
 =YAELCOMP
 #Yael
+//pass: everyone is happy
+//fail: yael gets tired
 {passive: You did nothing.}
-{success: {tension > 6: See Jasper, I've mended its wound. Imagine if it had died! It would have been on our consciences forever. | There. Now it can fly back home...} | {tension > 6: Even my healing magic wasn't enough for this little one. Maybe it would have been if we hadn't spent so much time bickering. | I did what I could. Now we bury it. }}
+{success: {tension > 9: See Jasper, I've mended its wound. Imagine if it had died! It would have been on our consciences forever. | There. Now it can fly back home...} | {tension > 9: There, see. Alive and well. Doing the right thing makes one <i>tired</i>, so I'm going to need to take a break. | I need to rest. Can we take a break? }}
 +[Continue #EdrickChoice]
 #Jasper
-{success: {tension > 6: The <i>imminent darkness</i> would have been on my conscience too, you know. Gods. | At least its alive. Now no one has to do the dirty work. } | {tension > 6: It also wouldn't be in pain if we just put it out of its misery like I said. | Now we bury it. And we move forward.}}
-{success: {tension > 10: {DecreaseTension(3)}|{DecreaseTension(5)} }| {tension > 10: {IncreaseTension(5)} | {IncreaseTension(3)}}}
+{success: {tension > 6: The <i>imminent darkness</i> would have been on my conscience too, you know. Gods. | At least its alive. Now no one has to do the dirty work. } | {tension > 6: I wish I could roll my eyes into my head like a pair of marbles. | Yeah yeah, take all the time you need...}}
+{success: {tension > 10: {DecreaseTension(5)}|{DecreaseTension(3)} }| {tension > 10: {IncreaseTension(2)} | {IncreaseTension(2)}}}
 ->DONE
 
 
