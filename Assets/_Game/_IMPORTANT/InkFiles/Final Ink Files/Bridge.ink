@@ -26,9 +26,17 @@ We can chop a tree down over the ravine and walk across.
 #YaelAngry
 That's too risky! I'll use one of my scrolls. We can easily use magic to fix the bridge.
 +++[Contine #EdrickContinue]
-#Jasper
+->JASPERSTELL
+
+=JASPERSTELL
+#JasperTell
 And waste precious scrolls? Don't be stupid. I'm knocking a tree down. 
-++++[Let me sort this out. #EdrickContinue]  ->MEDIATIONSTART
+*[Jasper, what's wrong? #EdrickContinue]
+    {YaelTell == 1: You don't have to coddle me like a child, Edrick. I'm <i>fine</i> It's Yael wasting all our scrolls who needs your help!} 
+    {YaelTell == 0: Don't worry about it. Let's chop this tree down.} 
+    {YaelTell == 2: I've never used magic for something like this. What if it goes wrong, and we <i>die</i>. Who will save the Valley then?!}
+    
+++[Let me sort this out. #EdrickContinue]  ->MEDIATIONSTART
 
 =MEDIATIONSTART
 #Edrick
@@ -39,7 +47,6 @@ What should we do?
 +[We should use the tree. #EdrickChoice]
 ~SetJaspersWay()
 ->JASPER
-~CalculateEventResults()
 ->EDRICK
 ->DONE
 
@@ -50,9 +57,12 @@ What should we do?
 }
 +[Continue #EdrickChoice]
 #Jasper
-{tension > 13: Then don't give me anything to complain about. Or I'll start complaining. | I wouldn't have wanted to fall to my death either, but alright. }
+    {YaelTell == 2: Edrick! I just told you how scared I was to use magic, and you still go with <i>her</i> idea?!}
+    {tension > 13: Don't give me anything else to complain about. Or I'll start complaining. | I wouldn't have wanted to fall to my death either, but alright. }   
+{YaelTell == 2: {~IncreaseTension(6)}}
 
-++[Okay, let's move this along. #EdrickChoice]
+{YaelTell != 2} ++[Okay, let's move this along. #EdrickChoice]
+{YaelTell == 2} ++[I'm sorry, but it's the right way to go. #EdrickChoice]
 ~CalculateEventResults()
 ->YAELCOMP
 
@@ -94,6 +104,12 @@ What should we do?
 {success: {tension > 10: {DecreaseTension(3)}|{DecreaseTension(5)} }| {tension > 10: {IncreaseTension(5)} | {IncreaseTension(3)}}}
 ->DONE
 
+==function YaelTellFalse(amount)
+~YaelTell = 1
+~return YaelTell
+
+==function YaelTellTrue(amount)
+~YaelTell = 2
 
 ==function IncreaseTension(amount)
 ~tension = tension + amount

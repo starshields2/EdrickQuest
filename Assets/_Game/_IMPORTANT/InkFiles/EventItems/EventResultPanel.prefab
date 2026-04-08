@@ -1117,7 +1117,7 @@ MonoBehaviour:
   _passfail: {fileID: 750931946740988866}
   _manager: {fileID: 0}
   _currentDialogue: {fileID: 0}
-  tensionSlider: {fileID: 8761936145454380398}
+  tensionSlider: {fileID: 8761936145454380399}
 --- !u!1 &8222947761343003051
 GameObject:
   m_ObjectHideFlags: 0
@@ -1320,6 +1320,11 @@ PrefabInstance:
       propertyPath: _useParticles
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 828553117579768453, guid: e0279117dd9d0dd49a12a49493654d43,
+        type: 3}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 828553117579768454, guid: e0279117dd9d0dd49a12a49493654d43,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1432,6 +1437,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 828553118220632646, guid: e0279117dd9d0dd49a12a49493654d43,
         type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 828553118220632646, guid: e0279117dd9d0dd49a12a49493654d43,
+        type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -1443,15 +1453,15 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 8279650399734253547}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8761936145454380398 stripped
+--- !u!114 &8761936145454380399 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 828553117579768453, guid: e0279117dd9d0dd49a12a49493654d43,
+  m_CorrespondingSourceObject: {fileID: 828553117579768452, guid: e0279117dd9d0dd49a12a49493654d43,
     type: 3}
   m_PrefabInstance: {fileID: 8279650399734253547}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Script: {fileID: 11500000, guid: f17d0233bd61d1d4788329805f4a471c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

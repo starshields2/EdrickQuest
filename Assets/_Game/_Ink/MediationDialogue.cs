@@ -617,6 +617,23 @@ public class MediationDialogue : MonoBehaviour
                 }
             }
         }
+        if (story.currentTags.Contains("JasperTell"))
+        {
+            speakerName.text = "Jasper";
+            speakerID[6].SetActive(true);
+
+            GetComponent<TellFeedback>().PlayTell();
+
+            // Disable all other speakerID game objects
+            for (int i = 1; i < speakerID.Length; i++)
+            {
+                if (i != 6) // Skip index 3 (YaelTell)
+                {
+                    speakerID[i].SetActive(false);
+                }
+            }
+        }
+
 
         TrackDialogueHistory(text);
         DisplayDialogueHistory();

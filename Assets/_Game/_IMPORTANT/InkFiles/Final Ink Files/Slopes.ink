@@ -16,7 +16,7 @@ VAR passive = false
 VAR type = 2
 // ^^^ 0 = None, 1 = Mediation, 2 = Event, 3 = Cutscene
 
-
+#Yael
 Ah, stop, stop. This creature is in pain. Looks like a downed bird. Poor thing's wings are broken.
 +[Alright, we're stopping. #EdrickContinue]
 

@@ -64,6 +64,6 @@ public class EventOverworldLinkHandler : MonoBehaviour
          _OverworldObjectYael.SetActive(true);
           this.gameObject.SetActive(false);
         }
-
+        _startResolve = false;
     }
 }

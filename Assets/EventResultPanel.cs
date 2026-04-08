@@ -11,7 +11,7 @@ public class EventResultPanel : MonoBehaviour
     public TextMeshProUGUI _passfail;
     public OverworldManager _manager;
     public MediationDialogue _currentDialogue;
-    public Slider tensionSlider;
+    public TensionSlider tensionSlider;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,13 +33,16 @@ public class EventResultPanel : MonoBehaviour
     private void GetDifficulty()
     {
         _difficulty.text = "";
-        tensionSlider.value = _currentDialogue._CurrentTension;
+        tensionSlider.SetTensionValue(_currentDialogue._diceRoll);
+        
         
     }
 
     private void GetScore()
     {
-        _score.text = _currentDialogue._diceRoll.ToString();
+        _score.text = "";
+        tensionSlider.SetTensionValue(_manager._difficultyCheck);
+
     }
 
     private void GetPassFailValue()
@@ -59,7 +62,7 @@ public class EventResultPanel : MonoBehaviour
 
     public IEnumerator ScoreDisplay()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         GetDifficulty();
         yield return new WaitForSeconds(2f);
         GetScore();
