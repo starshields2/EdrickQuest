@@ -56,13 +56,15 @@ What should we do?
 {tension > 13: Good. Now let me perform this ritual, <i>with no distractions</i> That means no complaining. | I just wouldn't have liked it if any of us got squashed. }
 }
 +[Continue #EdrickChoice]
-#Jasper
-    {YaelTell == 2: Edrick! I just told you how scared I was to use magic, and you still go with <i>her</i> idea?!}
-    {tension > 13: Don't give me anything else to complain about. Or I'll start complaining. | I wouldn't have wanted to fall to my death either, but alright. }   
-{YaelTell == 2: {~IncreaseTension(6)}}
 
-{YaelTell != 2} ++[Okay, let's move this along. #EdrickChoice]
-{YaelTell == 2} ++[I'm sorry, but it's the right way to go. #EdrickChoice]
+    {YaelTell == 2: Edrick! I just told you how scared I was to use magic, and you still go with <i>her</i> idea?!}
+    {tension > 13: Don't give me anything else to complain about. Or I'll start complaining. | I wouldn't have wanted to fall to my death either, but alright! }   
+#Jasper
+++{YaelTell != 2} [Okay, let's move this along. #EdrickChoice]
+~CalculateEventResults()
+->YAELCOMP
+++{YaelTell == 2} [I'm sorry, but it's the right way to go. #EdrickChoice]
+~IncreaseTension(6)
 ~CalculateEventResults()
 ->YAELCOMP
 
@@ -98,10 +100,12 @@ What should we do?
 {success: {tension > 13: See how we don't have to destroy everything in our path in order to get across? | There. Now we can cross, safe and sound...} | {tension > 13: Well, I said no distractions, and look what happened. | ...All is well, we will find another way around. }}
 #YaelPensive
 +[Continue #EdrickChoice]
-#Jasper
-{success: {tension > 10: Yeah yeah, and while we're at it let's donate all our belongings and live in a tree and drink tea all day. | I guess it worked out just fine.. } | {tension > 10: I wasn't even talking. I was barely talking! What's your problem with me?!. | Fine. Let's go.}}
 
-{success: {tension > 10: {DecreaseTension(3)}|{DecreaseTension(5)} }| {tension > 10: {IncreaseTension(5)} | {IncreaseTension(3)}}}
+{YaelTell == 2: I won't forget what you did, Edrick. That was cold. }
+{success: {tension > 10: Yeah yeah, and while we're at it let's donate all our belongings and live in a tree and drink tea all day. | Let's just go. } | {tension > 10: I wasn't even talking. I was barely talking! What's your problem with me?!. | Fine. Let's go.}}
+
+{success: {tension > 10: {DecreaseTension(3)}|{DecreaseTension(2)} }| {tension > 10: {IncreaseTension(5)} | {IncreaseTension(3)}}}
+#Jasper
 ->DONE
 
 ==function YaelTellFalse(amount)
