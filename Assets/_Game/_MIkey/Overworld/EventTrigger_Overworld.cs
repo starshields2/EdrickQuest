@@ -7,7 +7,7 @@ public class EventTrigger_Overworld : MonoBehaviour
 {
     [Header("Ink Configuration")]
     [SerializeField] private MediationDialogue _dialogueManager;
-    [SerializeField] private TextAsset _storyToLoad; // Ink file
+    [SerializeField] public TextAsset _storyToLoad; // Ink file
 
     [Header("Settings")]
     [SerializeField] private bool _triggerOnlyOnce = true;

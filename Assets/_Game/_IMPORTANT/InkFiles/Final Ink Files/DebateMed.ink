@@ -76,7 +76,7 @@ We are not average people. Not <i>anymore</i>. Our decorum around villagers shou
 	++[Are they handouts, or offerings of goodwill? #EdrickChoice]
 #Yael
 ~ExtendedTutorial(4)
-What’s the difference? We shouldn’t be so eager to show that we are fragile. They may lose faith in us - <color=blue>it’s better to kindly refuse a gift than to show dependence on it.</color>
+What’s the difference? We shouldn’t be so eager to show that we are fragile. They may lose faith in us - <color=green>it’s better to kindly refuse a gift than to show dependence on it.</color>
 	+++[Our gods have chosen us for a reason. Any god-fearing person will also have faith in us. #EdrickChoice]
 	~ChangeNotesIndex(2)
 	~UpdateNote()
@@ -85,7 +85,7 @@ Well, that’s certainly true. Though it does little to ease my nerves.
 	++++[It sounds like you’re concerned about giving away our apprehensions about this journey, is that right? #EdrickChoice] 
 	~ExtendedTutorial(2)
 #YaelTell
-That’s right. I mean. Think about it. This kind of thing has never happened before. Fate-struck are <color=blue><b>usually friends</b></color>, or at least amiable. But her… I can’t stand her. 
+That’s right. I mean. Think about it. This kind of thing has never happened before. Fate-struck are <color=green><b>usually friends</b></color>, or at least amiable. But her… I can’t stand her. 
     +++++ [Can you elaborate? #EdrickChoice]
     {YaelTell == 1: Don't poke at me, Edrick! I'm already frustrated.} 
     {YaelTell == 0: I don't want to talk about what's bothering me right now.} 
@@ -99,7 +99,7 @@ That’s right. I mean. Think about it. This kind of thing has never happened be
     ->COOLOFF
     ++++++[Why do you care? #EdrickChoice]
     #YaelPensive
-    I had my entire life planned before this. I was <color=blue>hoping to be tethered to my beloved,</color> but that's a pipe dream now. I don't even know why I bothered falling in love if I was just going to be tied to an oaf.
+    I had my entire life planned before this. I was <color=green>hoping to be tethered to my beloved,</color> but that's a pipe dream now. I don't even know why I bothered falling in love if I was just going to be tied to an oaf.
     +++++++[I'm sorry, Yael. That must be tough to come to terms with. #EdrickChoice]
     ~ChangeNotesIndex(3)
     ~UpdateNote()
@@ -112,7 +112,7 @@ That’s right. I mean. Think about it. This kind of thing has never happened be
     *[Reacting rashly didn’t help our image either. #EdrickChoice]
     ~IncreaseYaelExhaust(1)
 #Yael 
-It was a rash decision, I won’t lie. But I was only trying to help. We can’t invite any <color=blue>bad omens</color> on our journey with unwashed hands.
+It was a rash decision, I won’t lie. But I was only trying to help. We can’t invite any <color=green>bad omens</color> on our journey with unwashed hands.
 ++[What motivated you to go so far as to lay hands on her? #EdrickChoice]
 ~ChangeNotesIndex(5)
 ~UpdateNote()

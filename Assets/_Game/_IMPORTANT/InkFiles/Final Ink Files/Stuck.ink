@@ -16,53 +16,52 @@ VAR passive = false
 VAR type = 2
 // ^^^ 0 = None, 1 = Mediation, 2 = Event, 3 = Cutscene
 
-#Yael
-The path forward has been destroyed. Look. The bridge is broken.
-+[.... #EdrickContinue]
-~IncreaseTension(1)
 #Jasper
-We can chop a tree down over the ravine and walk across.
-++[... #EdrickContinue]
-That's too risky! Do you forget your <color=red> missing finger?</color> I'll use one of my scrolls. We can easily use magic to fix the bridge.
+It's going to take at least a couple days to get back on track at this rate.
++[So it seems. #EdrickContinue]
+~IncreaseTension(1)
+#Yael
+I lost my compass on the way down. Can I see yours, Jasper? Maybe we can figure this out.
+++[Good idea. #EdrickContinue]
+I didn't bring one. Nature is my guide.
 ~ChangeNotesIndex(1)
 ~UpdateNote()
-#YaelAngry
-+++[... #EdrickContinue]
 #Jasper
-This time will be different. I'll cut that tree down. 
-++++[Right. #EdrickContinue]
-Edrick, don't be ridiculous. I will fix that bridge. 
-#YaelPensive
-+++++[I don't doubt either of your capabilities. #EdrickChoice]
++++[... #EdrickContinue]
+#YaelAngry
+What do you mean, you didn't bring one? I made such a fuss earlier about how <color = green> prepared </color> we were for this! I was starting to think you were capable! 
+++++[Hold on... #EdrickContinue]
+I am capable! I don't need all your fancy tools from the city to find my way around. 
+~ChangeNotesIndex(2)
+~UpdateNote()
+~IncreaseTension(3)
+#Jasper
++++++[Okay, let's just relax... #EdrickChoice]
 ->JASPERSTELL
 =JASPERSTELL
-#JasperTell
-And waste precious scrolls? Don't be stupid. I'm knocking a tree down. 
-*[Jasper, what's wrong? #EdrickContinue]
-    {YaelTell == 1: You don't have to coddle me like a child, Edrick. I'm <i>fine.</i> It's Yael wasting all our scrolls who needs your help!} 
-    {YaelTell == 0: Don't worry about it. Let's chop this tree down.} 
-    {YaelTell == 2: I've never used magic for something like this. What if it goes wrong, and we <i>die</i>. Who will save the Valley then?!}
+#YaelTell
+How am I supposed to relax?! How are we supposed to know where we are? 
+*[Yael, talk to me. #EdrickContinue]
+    {YaelTell == 1: Edrick, we're <i>lost!</i> What else is there to talk about?!} 
+    {YaelTell == 0: I think the problem is clear, we don't know where we are.} 
+    {YaelTell == 2: Edrick, if we are not careful, we could die here. We don't know where we are. How would we get back? What about my family? }
     
-++[Let me sort this out. #EdrickContinue]  ->MEDIATIONSTART
+++[Now just hold on, it'll be alright. #EdrickContinue]  ->MEDIATIONSTART
 
 =MEDIATIONSTART
 #Edrick
-What should we do?
-+[We should use magic. #EdrickChoice]
-~SetYaelsWay()
+What should I do?
++[Talk to Yael. #EdrickChoice]
 ->YAEL
-+[We should use the tree. #EdrickChoice]
-~SetJaspersWay()
++[Talk to Jasper. #EdrickChoice]
 ->JASPER
-->EDRICK
-->DONE
++[I think I know what's wrong. #EdrickChoice]
+->RESOLUTION
 
 =YAEL
-{yaelsWay: 
 #Yael
-{tension > 13: Good. Now let me perform this ritual, <i>with no distractions.</i> That means no complaining. | I just wouldn't have liked it if any of us got squashed. }
-}
-+[Continue #EdrickChoice]
+Jasper shouuld have brought her compass. It's insane to be so ill prepared for a journey like this. 
++[I agree. #EdrickChoice]
 
     {YaelTell == 2: Edrick! I just told you how scared I was to use magic, and you still go with <i>her</i> idea?!}
     {tension > 13: Don't give me anything else to complain about. Or I'll start complaining. | I wouldn't have wanted to fall to my death either, but alright! }   
@@ -76,23 +75,14 @@ What should we do?
 ->YAELCOMP
 
 =JASPER
-
-{jaspersWay: 
-#Jasper
-{tension > 13: Step back, time for some good old fashioned elbow grease. And watch out for twigs, too. I don't know if you'd be able to lift them up with your noodle arms. | Well, make some distance so we can get going.}
-}
-
-+[Continue. #EdrickChoice]
-#YaelPensive
-{tension > 13: I was trained in ritual combat, Jasper. I can lift a twig. At least a dozen. | ...This had better work, Jasper.}
-++[... #EdrickChoice]
-~CalculateEventResults()
+I don't know why Yael's so mad. 
++[I think she really values being prepared.]
 ->JASPERCOMP
 ->DONE
 
 ->END
-=EDRICK
-{success: We are going around the bridge. No arguments.| We will have to find another way forward. }
+=RESOLUTION
+
 ->DONE
 
 =JASPERCOMP

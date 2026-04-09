@@ -12,6 +12,7 @@ public class EventResultPanel : MonoBehaviour
     public OverworldManager _manager;
     public MediationDialogue _currentDialogue;
     public TensionSlider tensionSlider;
+    public EventOverworldLinkHandler _handler;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,8 +21,12 @@ public class EventResultPanel : MonoBehaviour
     void Awake()
     {
         _manager = GameObject.Find("OverworldManager").GetComponent<OverworldManager>();
+        _handler = GameObject.Find("EventReader").GetComponent<EventOverworldLinkHandler>();
         _currentDialogue = GameObject.Find("PF_MediationDialoguePrefab").GetComponent<MediationDialogue>();
         StartScoreDisplay();
+        _passfail.text = "";
+        _difficulty.text = "";
+        _score.text = "";
     }
 
     // Update is called once per frame
@@ -32,16 +37,17 @@ public class EventResultPanel : MonoBehaviour
 
     private void GetDifficulty()
     {
-        _difficulty.text = "";
-        tensionSlider.SetTensionValue(_currentDialogue._diceRoll);
+        
+        tensionSlider.SetTensionValue(_manager._difficultyCheck);
+        
         
         
     }
 
     private void GetScore()
     {
-        _score.text = "";
-        tensionSlider.SetTensionValue(_manager._difficultyCheck);
+       
+        tensionSlider.SetTensionValue(_currentDialogue._diceRoll);
 
     }
 
@@ -70,11 +76,12 @@ public class EventResultPanel : MonoBehaviour
 
         if (_currentDialogue.pass == true)
         {
-            _passfail.text = "STRONG";
+            _passfail.text = "WEAK";
         }
         if (_currentDialogue.pass != true)
         {
-            _passfail.text = "WEAK";
+            _passfail.text = "STRONG";
         }
+        _handler.CheckEventResolution();
     }
 }

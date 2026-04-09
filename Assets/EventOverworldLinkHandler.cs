@@ -8,6 +8,7 @@ public class EventOverworldLinkHandler : MonoBehaviour
     public GameObject _OverworldObjectYael;
     public GameObject _OverworldObjectJasper;
     public MediationDialogue _EventToRead;
+    public ChooseChasmEventHandler _chasmEvent;
     public bool _startResolve;
     public TextAsset inkJSONAsset = null;
     public Story story;
@@ -32,11 +33,17 @@ public class EventOverworldLinkHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       
+        
+    }
+
+    public void CheckEventResolution()
+    {
         inkJSONAsset = _EventToRead.inkJSONAsset;
-        if (_EventToRead.pass)
+
+        if (inkJSONAsset.name == "Bridge")
         {
-         
-            if(inkJSONAsset.name == "Bridge")
+            if (_EventToRead.pass)
             {
                 Debug.Log("Passed Event: " + _EventToRead);
                 if (!_startResolve)
@@ -45,10 +52,20 @@ public class EventOverworldLinkHandler : MonoBehaviour
                     _startResolve = true;
                     ResolveEvent();
                 }
-
+            }
+            else if (!_EventToRead.pass)
+            {
+                InitalizeVariables();
+                ChasmLogic();
             }
 
+
         }
+        else if (inkJSONAsset.name != "Bridge")
+        {
+            return; //do nothing
+        }
+
     }
 
     public void ResolveEvent()
@@ -65,5 +82,23 @@ public class EventOverworldLinkHandler : MonoBehaviour
           this.gameObject.SetActive(false);
         }
         _startResolve = false;
+
+    }
+
+    public void ChasmLogic()
+    {
+        if (JasperSolution)
+        {
+            //_OverworldObjectJasper.SetActive(true);
+            this.gameObject.SetActive(false);
+        }
+        if (YaelSolution)
+        {
+            //_OverworldObjectYael.SetActive(true);
+            this.gameObject.SetActive(false);
+        }
+        _startResolve = false;
+
+        _chasmEvent.ThreadEvent();
     }
 }
