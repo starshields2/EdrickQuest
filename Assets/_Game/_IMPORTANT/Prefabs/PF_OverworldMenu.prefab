@@ -2503,6 +2503,42 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 3024726049957906506}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PlayerMovement_Overworld, Assembly-CSharp
+        m_MethodName: EnableMovement
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4847397080756613124}
+        m_TargetAssemblyTypeName: TutorialPopup, Assembly-CSharp
+        m_MethodName: HideCutOuts
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3024726049789213104
 GameObject:
   m_ObjectHideFlags: 0
@@ -8997,6 +9033,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 828553117579768452, guid: e0279117dd9d0dd49a12a49493654d43,
+        type: 3}
+      propertyPath: _lowTension
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 828553117579768452, guid: e0279117dd9d0dd49a12a49493654d43,
+        type: 3}
+      propertyPath: _normalColor.g
+      value: 0.7944628
+      objectReference: {fileID: 0}
+    - target: {fileID: 828553117579768452, guid: e0279117dd9d0dd49a12a49493654d43,
+        type: 3}
+      propertyPath: _slideSpeedDuration
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 828553117579768454, guid: e0279117dd9d0dd49a12a49493654d43,
         type: 3}
