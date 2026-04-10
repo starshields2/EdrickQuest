@@ -76524,6 +76524,16 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -178.02063
       objectReference: {fileID: 0}
+    - target: {fileID: 1751450907887863364, guid: 332749021c9f2ae4cb22318d9aeeb140,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1751450908580945330, guid: 332749021c9f2ae4cb22318d9aeeb140,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1751450909121533150, guid: 332749021c9f2ae4cb22318d9aeeb140,
         type: 3}
       propertyPath: _overworldUI
