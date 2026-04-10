@@ -661,7 +661,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1762614309}
+  - component: {fileID: 3035319380124393495}
   m_Layer: 5
   m_Name: GameObject
   m_TagString: Untagged
@@ -669,26 +669,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &1762614309
-RectTransform:
+--- !u!4 &3035319380124393495
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1762614308}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -26.300293, y: -15.054932, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7648265526559190691}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -26.300293, y: -15.054932}
-  m_SizeDelta: {x: -1065.9196, y: -217.15}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2045288098
 GameObject:
   m_ObjectHideFlags: 0
@@ -876,8 +871,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -643, y: -66}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: -640.06, y: -87}
+  m_SizeDelta: {x: 161.6081, y: 123.4127}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7158353173964378110
 CanvasRenderer:
@@ -907,7 +902,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: c388fb8275b2afc47900473b1d1996ff, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1540,13 +1535,14 @@ GameObject:
   - component: {fileID: 1751450907233661592}
   - component: {fileID: 1751450907233661598}
   - component: {fileID: 2258666352106554150}
+  - component: {fileID: 6320145777947711722}
   m_Layer: 5
   m_Name: TutorialPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1751450907233661592
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1554,10 +1550,10 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1751450907233661595}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1751450908580945331}
   - {fileID: 1751450908756343783}
@@ -1565,12 +1561,12 @@ RectTransform:
   - {fileID: 1751450908677566951}
   - {fileID: 1751450907887863365}
   m_Father: {fileID: 7648265526559190691}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0.000061035156}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1751450907233661598
 CanvasRenderer:
@@ -1600,7 +1596,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7,
+    type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1610,6 +1607,32 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!61 &6320145777947711722
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1751450907233661595}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1751450907261568099
 GameObject:
   m_ObjectHideFlags: 0
@@ -9457,7 +9480,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7648265526559190691}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -9562,7 +9585,7 @@ RectTransform:
   m_Children:
   - {fileID: 7648265526205079711}
   - {fileID: 1889822653199315626}
-  - {fileID: 1762614309}
+  - {fileID: 3035319380124393495}
   - {fileID: 4718612709000723770}
   - {fileID: 1751450907764379013}
   - {fileID: 2458347031320999713}
@@ -9570,8 +9593,8 @@ RectTransform:
   - {fileID: 8316562502786373400}
   - {fileID: 9172270759887881431}
   - {fileID: 233128290612422375}
-  - {fileID: 1751450907233661592}
   - {fileID: 7648265526529962864}
+  - {fileID: 1751450907233661592}
   - {fileID: 7653491716342026849}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -9804,8 +9827,12 @@ MonoBehaviour:
   - {fileID: 7105598709364703904}
   _tutorialPanelImage: {fileID: 2258666352106554150}
   _medDialogue: {fileID: 1751450909121533150}
-  _highlightTutorialButtonToEnable: {fileID: 1751450908180330167}
-  _tellsTutorialButtonToEnable: {fileID: 1751450907700406566}
+  _tutorialButtons:
+  - {fileID: 1751450908180330165}
+  - {fileID: 1751450907700406564}
+  - {fileID: 1751450908516473591}
+  - {fileID: 1751450907290880137}
+  - {fileID: 1751450907280178469}
   _tutorialType: 0
 --- !u!1 &7648265526625640008
 GameObject:
