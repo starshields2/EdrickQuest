@@ -137335,6 +137335,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: d135cdefa2b98da4cb0515f256252b32,
         type: 3}
+    - target: {fileID: 1751450908699354830, guid: 332749021c9f2ae4cb22318d9aeeb140,
+        type: 3}
+      propertyPath: m_text
+      value: Pay attention to Yael and Jasper's speech. Often they will express <color=green>needs</color>
+        or <color=red>boundaries</color>. You can cross-examine these points as you
+        converse
+      objectReference: {fileID: 0}
     - target: {fileID: 1751450909031209470, guid: 332749021c9f2ae4cb22318d9aeeb140,
         type: 3}
       propertyPath: m_Enabled
