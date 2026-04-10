@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class TensionTutorial : MonoBehaviour
 {
@@ -7,9 +8,8 @@ public class TensionTutorial : MonoBehaviour
     public GameObject[] _tutCutouts;
     public Image _tutorialPanelImage;
     public MediationDialogue _medDialogue;
-    // This button will be enabled when the "Ritual" keyword is hovered over for the tutorial
-    public GameObject _highlightTutorialButtonToEnable;
-    public GameObject _tellsTutorialButtonToEnable;
+    public Button[] _tutorialButtons;
+
     public enum TutorialType
     {
         Start = 0,
@@ -21,32 +21,46 @@ public class TensionTutorial : MonoBehaviour
     }
 
     public TutorialType _tutorialType = TutorialType.Start;
-    private int _lastTutorialNum = -1; // Tracks changes to avoid running code every frame
+    private int _lastTutorialNum = -1;
+    private Button _cachedContinueButton;
 
-    // Lets this script know when a tooltip is hovered over
     private void OnEnable()
     {
         LinkHandler.OnHoverOnLinkEvent += GetToolTipInfo;
+
+        foreach (Button button in _tutorialButtons)
+        {
+            button.onClick.AddListener(EnableContinueButton);
+        }
     }
 
-    // Checking for the keyword "Ritual" to enable the button so the player can progress the tutorial. Unsubscribing after to prevent multiple triggers.
+    private void OnDisable()
+    {
+        LinkHandler.OnHoverOnLinkEvent -= GetToolTipInfo;
+
+        foreach (var button in _tutorialButtons)
+        {
+            button.onClick.RemoveAllListeners();
+        }
+    }
+
     private void GetToolTipInfo(string keyword, Vector3 mousePosition)
     {
-        if(keyword == "Ritual")
+        if (keyword == "Ritual")
         {
-            _highlightTutorialButtonToEnable.SetActive(true);
+            _tutorialButtons[0].gameObject.SetActive(true);
+
+            LinkHandler.OnHoverOnLinkEvent -= GetToolTipInfo;
         }
-        LinkHandler.OnHoverOnLinkEvent -= GetToolTipInfo;
     }
 
     public void TellClicked()
     {
-        _tellsTutorialButtonToEnable.SetActive(true);
+        _tutorialButtons[1].gameObject.SetActive(true);
     }
 
     void Update()
     {
-        // Only update if the tutorial number has actually changed
         if (_medDialogue.tutorialNum != _lastTutorialNum)
         {
             UpdateTutorialStep(_medDialogue.tutorialNum);
@@ -57,7 +71,6 @@ public class TensionTutorial : MonoBehaviour
     {
         _lastTutorialNum = stepIndex;
 
-        // Handle the End state (Step 5)
         if (stepIndex >= 5)
         {
             _tutorialType = TutorialType.End;
@@ -66,27 +79,51 @@ public class TensionTutorial : MonoBehaviour
             return;
         }
 
-        // Update the Enum type based on the index
         _tutorialType = (TutorialType)stepIndex;
 
-        // Loop through arrays and enable only the one matching the current index
         for (int i = 0; i < _Tutorials.Length; i++)
         {
             bool isActive = (i == stepIndex);
-            
-            if (_Tutorials.Length > i && _Tutorials[i] != null)
-                _Tutorials[i].SetActive(isActive);
-
-            if (_tutCutouts.Length > i && _tutCutouts[i] != null)
-                _tutCutouts[i].SetActive(isActive);
+            if (_Tutorials[i] != null) _Tutorials[i].SetActive(isActive);
+            if (_tutCutouts.Length > i && _tutCutouts[i] != null) _tutCutouts[i].SetActive(isActive);
         }
 
         if (_tutorialPanelImage != null) _tutorialPanelImage.enabled = true;
+
+        StopAllCoroutines(); 
+        StartCoroutine(DisableContinueButtonEndOfFrame());
+    }
+
+    private IEnumerator DisableContinueButtonEndOfFrame()
+    {
+        // Wait until the very end of the frame so other scripts have finished enabling the button.
+        yield return new WaitForEndOfFrame();
+
+        if (_cachedContinueButton == null)
+        {
+            GameObject go = GameObject.Find("EDRICKSPEAKBUTTON -Continue(Clone)");
+            if (go != null) _cachedContinueButton = go.GetComponent<Button>();
+        }
+
+        if (_cachedContinueButton != null)
+        {
+            _cachedContinueButton.interactable = false;
+            Debug.Log("Continue Button Disabled via Coroutine");
+        }
     }
 
     private void SetAllActive(bool state)
     {
         foreach (GameObject tut in _Tutorials) if (tut != null) tut.SetActive(state);
         foreach (GameObject cut in _tutCutouts) if (cut != null) cut.SetActive(state);
+    }
+
+    private void EnableContinueButton()
+    {
+        if (_cachedContinueButton != null)
+        {
+            _cachedContinueButton.interactable = true;
+            Debug.Log("Enabled Continue Button");
+        }
     }
 }
