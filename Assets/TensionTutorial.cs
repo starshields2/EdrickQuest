@@ -23,6 +23,7 @@ public class TensionTutorial : MonoBehaviour
     public TutorialType _tutorialType = TutorialType.Start;
     private int _lastTutorialNum = -1;
     private Button _cachedContinueButton;
+    private Button[] _cachedChoiceButtons;
 
     private void OnEnable()
     {
@@ -30,7 +31,7 @@ public class TensionTutorial : MonoBehaviour
 
         foreach (Button button in _tutorialButtons)
         {
-            button.onClick.AddListener(EnableContinueButton);
+            button.onClick.AddListener(EnableContinueButtons);
         }
     }
 
@@ -102,13 +103,35 @@ public class TensionTutorial : MonoBehaviour
         if (_cachedContinueButton == null)
         {
             GameObject go = GameObject.Find("EDRICKSPEAKBUTTON -Continue(Clone)");
-            if (go != null) _cachedContinueButton = go.GetComponent<Button>();
+            GameObject go2 = GameObject.Find("ChoicesContainer");
+            
+            if (go != null) 
+            {
+                _cachedContinueButton = go.GetComponent<Button>();
+            }
+            if (go2 != null)
+            {
+
+                int childCount = go2.transform.childCount;
+                _cachedChoiceButtons = new Button[childCount];
+                
+                for (int i = 0; i < childCount; i++)
+                {
+                    _cachedChoiceButtons[i] = go2.transform.GetChild(i).GetComponent<Button>();
+                }
+            }
         }
 
         if (_cachedContinueButton != null)
         {
             _cachedContinueButton.interactable = false;
-            Debug.Log("Continue Button Disabled via Coroutine");
+        }
+        if(_cachedChoiceButtons != null)
+        {
+            foreach (var button in _cachedChoiceButtons)
+            {
+                button.interactable = false;
+            }
         }
     }
 
@@ -118,12 +141,19 @@ public class TensionTutorial : MonoBehaviour
         foreach (GameObject cut in _tutCutouts) if (cut != null) cut.SetActive(state);
     }
 
-    private void EnableContinueButton()
+    private void EnableContinueButtons()
     {
         if (_cachedContinueButton != null)
         {
             _cachedContinueButton.interactable = true;
-            Debug.Log("Enabled Continue Button");
+        }
+
+        if(_cachedChoiceButtons != null)
+        {
+            foreach (var button in _cachedChoiceButtons)
+            {
+                button.interactable = true;
+            }
         }
     }
 }
