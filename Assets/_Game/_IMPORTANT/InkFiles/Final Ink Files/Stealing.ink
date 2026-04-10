@@ -90,9 +90,9 @@ What should we do?
 ->DONE
 
 =YAELCOMP
-#Yael
 {passive: You did nothing.}
 {success: {tension > 6: I have half a mind to march you back over to the village so you can return it yourself, Jasper. | I'll hang the pouch up on this post. I'm sure the owner will come back to look for it...} | {tension > 6: See? Edrick agrees. I think we can all agree that stealing is wrong. | I don't even care anymore, to be honest. }}
+#Yael
 +[Continue #EdrickChoice]
 #Jasper
 {success: {tension > 6: You talk like you've never been robbed before. | Alright, whatever, you win. Let's move on. } | {tension > 6: Okay, whatever you say, Princess. I'm taking the bag. | Forget it. Let's go.}}

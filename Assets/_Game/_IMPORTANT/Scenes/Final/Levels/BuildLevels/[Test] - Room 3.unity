@@ -54640,6 +54640,12 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1643649181 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3024726049957906506, guid: 3337875810a47ea40830c26bb0f4d4a7,
+    type: 3}
+  m_PrefabInstance: {fileID: 2111956617}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1647203966
 GameObject:
   m_ObjectHideFlags: 0
@@ -64111,6 +64117,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4558815087892101035, guid: b24019d0034b06147822f2720bfc21eb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1643649181}
+    - target: {fileID: 4558815087892101035, guid: b24019d0034b06147822f2720bfc21eb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 2111956619}
+    - target: {fileID: 4558815087892101035, guid: b24019d0034b06147822f2720bfc21eb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 2111956619}
+    - target: {fileID: 4558815087892101035, guid: b24019d0034b06147822f2720bfc21eb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[4].m_Target
+      value: 
+      objectReference: {fileID: 2111956619}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b24019d0034b06147822f2720bfc21eb, type: 3}
 --- !u!1 &1909509961 stripped

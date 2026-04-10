@@ -76,11 +76,11 @@ public class EventResultPanel : MonoBehaviour
 
         if (_currentDialogue.pass == true)
         {
-            _passfail.text = "WEAK";
+            _passfail.text = "STRONG";
         }
         if (_currentDialogue.pass != true)
         {
-            _passfail.text = "STRONG";
+            _passfail.text = "WEAK";
         }
         _handler.CheckEventResolution();
     }
