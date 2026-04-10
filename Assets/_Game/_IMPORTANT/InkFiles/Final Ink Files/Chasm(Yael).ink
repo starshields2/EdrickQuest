@@ -19,12 +19,12 @@ VAR type = 2
 #Jasper
 Great. We're literally in between a rock and a hard place.
 +[Continue. #EdrickContinue]
-~IncreaseTension(1)
+~IncreaseTension(2)
 #YaelAngry
 And whose fault is that?
 ++[Continue. #EdrickContinue]
 #Jasper
-...Why don't we just move on?
+...Yours?
 +++[Contine #EdrickContinue]
 ~SetSuccessTrue()
 ->DONE

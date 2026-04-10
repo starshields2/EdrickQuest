@@ -857,8 +857,8 @@ public class MediationDialogue : MonoBehaviour
             bool critpass;
             bool critfail;
              _diceRoll = UnityEngine.Random.Range(1, 20);
+             Debug.Log(_diceRoll);
 
-            Debug.Log(_diceRoll);
             if(_diceRoll >= _overworldManager._difficultyCheck)
             {
                 pass = true;

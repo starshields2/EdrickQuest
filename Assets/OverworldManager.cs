@@ -37,8 +37,15 @@ public class OverworldManager : MonoBehaviour
         {
             LowTensionVisual();
         }
-
-        _difficultyCheck = (TensionSingleton.Instance.TensionLevel / 2) + _modifier; 
+        if (highTension)
+        {
+            _modifier = TensionSingleton.Instance.TensionLevel / 2;
+        }
+        if (lowTension)
+        {
+            _modifier = TensionSingleton.Instance.TensionLevel / 4;
+        }
+        _difficultyCheck = (TensionSingleton.Instance.TensionLevel) + _modifier; 
     }
 
     [ContextMenu("HighTension")]
