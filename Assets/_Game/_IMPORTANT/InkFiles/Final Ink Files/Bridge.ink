@@ -49,6 +49,7 @@ And waste precious scrolls? Don't be stupid. I'm knocking a tree down.
 #Edrick
 What should we do?
 +[We should use magic. #EdrickChoice]
+~IncreaseTension(13)
 ~SetYaelsWay()
 ->YAEL
 +[We should use the tree. #EdrickChoice]

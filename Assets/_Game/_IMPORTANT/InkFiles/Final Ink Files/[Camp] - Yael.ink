@@ -18,10 +18,10 @@ VAR type = 3
 =TALK
 You had something to say? #Yael
 +[Ask about Jasper #EdrickChoice] ->JASPER
-
-->DONE
 +[Ask about the Ritual #EdrickChoice] ->START
 +[Ask about herself #EdrickChoice] ->HERSELF
++[Never mind.] ->DONE
+
 #Edrick
 What do you want to do?
 #Yael
@@ -32,15 +32,18 @@ What about her?
 +[How do you feel about your Tether? #EdrickChoice]
 #Yael
 There's not much I can do about that, is there? We are Tethered already. As long as she keeps her mess on her side of the camp, I'm perfectly fine.
-->DONE
+++[That's true. #EdrickChoice]
+->TALK
 +[Have you ever traveled with anyone like her before? #EdrickChoice]
-->DONE
+->TALK
 =START
 #Yael
 Oh yes! I have everything ready. The sooner we can finish, the better.
-+[Why don't you ]
-
-->DONE
++[What will you do when it's over? #EdrickChoice]
+#Yael
+I want to start a bakery. I think that would be nice. I may even travel.
+++[Sounds delicious. #EdrickContinue]
+->TALK
 =HERSELF
 #Yael
 Oh, me? You're interested?
