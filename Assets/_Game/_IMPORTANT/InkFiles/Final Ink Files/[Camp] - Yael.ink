@@ -20,7 +20,7 @@ You had something to say? #Yael
 +[Ask about Jasper #EdrickChoice] ->JASPER
 +[Ask about the Ritual #EdrickChoice] ->START
 +[Ask about herself #EdrickChoice] ->HERSELF
-+[Never mind.] ->DONE
++[Never mind. #EdrickChoice] ->DONE
 
 #Edrick
 What do you want to do?

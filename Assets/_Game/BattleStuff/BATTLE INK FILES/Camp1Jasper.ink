@@ -20,7 +20,7 @@ VAR type = 3
 +[Ask about Yael #EdrickChoice] ->YAEL
 +[Ask about the Ritual #EdrickChoice] ->START
 +[Ask about herself #EdrickChoice] ->HERSELF
-+[Never mind.] ->DONE
++[Never mind. #EdrickChoice] ->DONE
 ->DONE
 
 =YAEL
