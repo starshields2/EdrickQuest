@@ -35,12 +35,12 @@ public class TensionSingleton : MonoBehaviour
 
     private void OnEnable() 
     {
-        SceneManager.activeSceneChanged += SetPreviousScene;
+        SceneManager.sceneUnloaded += SetPreviousScene;
     }
 
     private void OnDisable() 
     {
-        SceneManager.activeSceneChanged -= SetPreviousScene;
+        SceneManager.sceneUnloaded -= SetPreviousScene;
     }
 
     public void ClampTension()
@@ -52,7 +52,7 @@ public class TensionSingleton : MonoBehaviour
     {
         _previousScene = SceneManager.GetActiveScene().name;
     }
-    public void SetPreviousScene(Scene previousScene, Scene newScene)
+    public void SetPreviousScene(Scene previousScene)
     {
         _previousScene = previousScene.name;
     }
