@@ -78097,13 +78097,17 @@ PrefabInstance:
       propertyPath: followTarget
       value: 
       objectReference: {fileID: 8413529789986615744}
+    - target: {fileID: 5498953657256368995, guid: 53078b9e061f5504f92b1a7af4370c6e,
+        type: 3}
+      propertyPath: _followTarget
+      value: 
+      objectReference: {fileID: 8413529789986615744}
     - target: {fileID: 5498953657256369006, guid: 53078b9e061f5504f92b1a7af4370c6e,
         type: 3}
       propertyPath: m_Name
       value: PF_Yael_Overworld
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 5498953657256368995, guid: 53078b9e061f5504f92b1a7af4370c6e, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53078b9e061f5504f92b1a7af4370c6e, type: 3}
 --- !u!222 &5593269721855944850
 CanvasRenderer:
