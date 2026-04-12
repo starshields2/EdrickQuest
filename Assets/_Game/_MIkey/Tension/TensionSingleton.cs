@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TensionSingleton : MonoBehaviour
 {
@@ -32,6 +33,16 @@ public class TensionSingleton : MonoBehaviour
         }
     }
 
+    private void OnEnable() 
+    {
+        SceneManager.activeSceneChanged += SetPreviousScene;
+    }
+
+    private void OnDisable() 
+    {
+        SceneManager.activeSceneChanged -= SetPreviousScene;
+    }
+
     public void ClampTension()
     {
         _tensionLevel = Mathf.Clamp(_tensionLevel, 0, 23);
@@ -39,6 +50,10 @@ public class TensionSingleton : MonoBehaviour
 
     public void SetPreviousScene()
     {
-        _previousScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        _previousScene = SceneManager.GetActiveScene().name;
+    }
+    public void SetPreviousScene(Scene previousScene, Scene newScene)
+    {
+        _previousScene = previousScene.name;
     }
 }
