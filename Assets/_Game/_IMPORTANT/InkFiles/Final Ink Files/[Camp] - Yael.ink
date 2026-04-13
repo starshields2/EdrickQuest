@@ -35,6 +35,9 @@ There's not much I can do about that, is there? We are Tethered already. As long
 ++[That's true. #EdrickChoice]
 ->TALK
 +[Have you ever traveled with anyone like her before? #EdrickChoice]
+#YaelPensive
+No. I've never left the city. I've only seen Sunblades who pass through, and I've not been a fan of any of them. Not to say that there's anything wrong with them, of course.
+++[Interesting way to put it. #EdrickContinue]
 ->TALK
 =START
 #Yael

@@ -39,13 +39,13 @@ public class OverworldManager : MonoBehaviour
         }
         if (highTension)
         {
-            _modifier = TensionSingleton.Instance.TensionLevel / 2;
+            _modifier = Random.Range(2,5);
         }
         if (lowTension)
         {
-            _modifier = TensionSingleton.Instance.TensionLevel / 4;
+            _modifier = Random.Range(-4, -2);
         }
-        _difficultyCheck = (TensionSingleton.Instance.TensionLevel) + _modifier; 
+        _difficultyCheck = 10 + _modifier; 
     }
 
     [ContextMenu("HighTension")]

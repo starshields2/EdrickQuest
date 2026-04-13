@@ -47,7 +47,7 @@ public class EventResultPanel : MonoBehaviour
     private void GetScore()
     {
        
-        tensionSlider.SetTensionValue(_currentDialogue._diceRoll);
+        tensionSlider.SetTensionValue(_currentDialogue._CurrentTension);
 
     }
 

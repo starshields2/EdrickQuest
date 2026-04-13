@@ -14,7 +14,8 @@ VAR success = false
 VAR passive = false
 VAR type = 3
 // ^^^ 0 = None, 1 = Mediation, 2 = Event, 3 = Cutscene
-
+#Jasper
+What's on your mind?
 ->TALK
 =TALK
 +[Ask about Yael #EdrickChoice] ->YAEL
@@ -27,8 +28,9 @@ VAR type = 3
 #Jasper
 A bit of a stickler, isn't she. What do you want to know?
 +[The Tether. Did you expect this to happen? #EdrickChoice]
-#Jasper
+
 Hell no. Most Sunblades are Tethered to a friend, or a sibling or something. And the achining from the Tether being established at such a long distance... I thought I was going to die.
+#Jasper
 ++[It must have been scary. #EdrickChoice]
 #Jasper
 W-Well no, not scary. I'd never be scared.

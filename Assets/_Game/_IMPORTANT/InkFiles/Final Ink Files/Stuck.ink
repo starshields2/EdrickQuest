@@ -149,7 +149,7 @@ I agree. We're tired, and getting lost wasn't in the cards, of course.
 ...do you miss your friends?
 +++[Continue. #EdrickChoice]
 #Jasper
-I don't know, do you miss your wife?
+I don't know, do you miss your fiance?
 ++++[Continue. #EdrickChoice]
 #YaelPensive
 Yes.
